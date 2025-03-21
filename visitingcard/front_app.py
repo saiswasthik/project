@@ -7,7 +7,7 @@ import io
 import os
 
 # Define backend URL
-BACKEND_URL = "http://localhost:8000"
+BACKEND_URL = "https://your-fastapi-app.onrender.com"
 
 st.set_page_config(page_title="Business Card Data Extractor", layout="wide")
 
