@@ -17,7 +17,7 @@ An AI-powered application that helps users explore famous places in any city usi
 3. Click "New app"
 4. Select your forked repository
 5. Set the following:
-   - Main file path: `frontend/app.py`
+   - Main file path: `app.py`
    - Python version: 3.9 or higher
 6. Add your Groq API key as a secret:
    - Go to app settings
@@ -45,7 +45,7 @@ An AI-powered application that helps users explore famous places in any city usi
    ```
 5. Run the app:
    ```bash
-   streamlit run frontend/app.py
+   streamlit run app.py
    ```
 
 ## Environment Variables
@@ -60,23 +60,13 @@ All information is AI-generated and may not be 100% accurate. Please verify impo
 
 ```
 .
-├── backend/
-│   └── main.py          # FastAPI backend
-├── frontend/
-│   └── app.py           # Streamlit frontend
-├── requirements.txt     # Project dependencies
-└── README.md           # This file
+├── app.py              # Main Streamlit application
+├── requirements.txt    # Project dependencies
+├── .streamlit/        # Streamlit configuration
+│   └── config.toml    # Theme and settings
+└── README.md          # This file
 ```
 
 ## API Endpoints
 
-- `GET /cities`: Get list of available cities
-- `GET /categories/{city}`: Get categories for a specific city
-- `POST /places`: Get places for a city and category
-
-## Technologies Used
-
-- FastAPI (Backend)
-- Streamlit (Frontend)
-- Python 3.8+
-- HTTPX (Async HTTP client) 
+- `
