@@ -1,17 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MicrophoneIcon } from '@heroicons/react/24/solid';
+import { MicrophoneIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 const VoiceRecordingPage: React.FC<{}> = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [audioFile, setAudioFile] = useState<File | null>(null);
   const [audioLevel, setAudioLevel] = useState<number>(0);
+  const [showSampleText, setShowSampleText] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
   const analyserRef = useRef<AnalyserNode | null>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
   const chunksRef = useRef<Blob[]>([]);
   const navigate = useNavigate();
+
+  // Sample text for recording
+  const sampleText = `Please read this text clearly:
+
+"Hello, this is a sample text for voice recording. Please read this text clearly and naturally. This will help us capture the characteristics of your voice. Thank you for participating in our voice cloning project!"`;
 
   const cleanupAudio = () => {
     if (animationFrameRef.current) {
@@ -49,6 +55,12 @@ const VoiceRecordingPage: React.FC<{}> = () => {
 
   const startRecording = async () => {
     try {
+      // Show sample text popup first
+      setShowSampleText(true);
+      
+      // Wait for user to read the text
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      
       // Clean up any existing audio context first
       cleanupAudio();
 
@@ -229,6 +241,41 @@ const VoiceRecordingPage: React.FC<{}> = () => {
           >
             Continue to Document Upload
           </button>
+        </div>
+      )}
+
+      {/* Sample Text Popup */}
+      {showSampleText && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-gray-800/90 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl border border-gray-700/50 relative">
+            <button 
+              onClick={() => setShowSampleText(false)}
+              className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
+            >
+              <XMarkIcon className="w-5 h-5" />
+            </button>
+            
+            <div className="flex flex-col space-y-4">
+              <h3 className="text-lg font-semibold text-white">Read this text:</h3>
+              <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
+                <p className="text-gray-300 text-sm leading-relaxed">{sampleText}</p>
+              </div>
+              <div className="flex justify-center">
+                <div className="flex space-x-1">
+                  {[...Array(3)].map((_, i) => (
+                    <div
+                      key={i}
+                      className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-pulse"
+                      style={{ animationDelay: `${i * 0.15}s` }}
+                    />
+                  ))}
+                </div>
+              </div>
+              <p className="text-center text-blue-300 text-xs">
+                Recording starts in a few seconds...
+              </p>
+            </div>
+          </div>
         </div>
       )}
     </div>
