@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { PlayIcon, PauseIcon, SpeakerWaveIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 
@@ -78,7 +78,7 @@ const DocumentUploadPage: React.FC = () => {
 
     const voicePath = localStorage.getItem('voicePath');
     if (!voicePath) {
-      alert('No voice model found. Please record your voice first');
+      alert('Please record or upload a voice first');
       return;
     }
 
@@ -94,80 +94,122 @@ const DocumentUploadPage: React.FC = () => {
           voice_path: voicePath,
         }),
       });
-      
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to generate speech');
+        throw new Error('Failed to generate speech');
       }
-      
+
       const data = await response.json();
-      console.log('Speech generated successfully:', data);
-      
-      const url = `http://localhost:8000${data.audio_path}`;
-      setAudioUrl(url);
+      const audioPath = data.audio_path;
+      const fullAudioUrl = `http://localhost:8000${audioPath}`;
       
       // Create new audio element
-      const audio = new Audio(url);
+      const audio = new Audio(fullAudioUrl);
       audioRef.current = audio;
-      
+
       // Set up audio event listeners
       audio.onloadedmetadata = () => {
         setDuration(audio.duration);
       };
-      
+
       audio.ontimeupdate = () => {
         setCurrentTime(audio.currentTime);
       };
-      
+
       audio.onended = () => {
         setIsPlaying(false);
         setCurrentTime(0);
       };
 
+      audio.onerror = (e) => {
+        console.error('Audio playback error:', e);
+        setIsPlaying(false);
+        alert('Error playing audio. Please try again.');
+      };
+
+      // Set the audio URL for the player
+      setAudioUrl(fullAudioUrl);
+      setIsLoading(false);
+
+      // Play audio
+      try {
+        await audio.play();
+        setIsPlaying(true);
+      } catch (error) {
+        console.error('Error playing audio:', error);
+        setIsPlaying(false);
+      }
     } catch (error) {
       console.error('Error generating speech:', error);
-      alert(`Error generating speech: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    } finally {
+      alert('Error generating speech. Please try again.');
       setIsLoading(false);
     }
   };
 
-  const togglePlayPause = () => {
-    if (audioRef.current) {
+  const togglePlayPause = async () => {
+    if (!audioRef.current) return;
+
+    try {
       if (isPlaying) {
-        audioRef.current.pause();
+        await audioRef.current.pause();
+        setIsPlaying(false);
       } else {
-        audioRef.current.play();
+        await audioRef.current.play();
+        setIsPlaying(true);
       }
-      setIsPlaying(!isPlaying);
+    } catch (error) {
+      console.error('Error toggling play/pause:', error);
+      setIsPlaying(false);
     }
   };
 
-  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (audioRef.current && progressBarRef.current) {
-      const rect = progressBarRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const percentage = x / rect.width;
-      const newTime = percentage * duration;
-      audioRef.current.currentTime = newTime;
-      setCurrentTime(newTime);
+  const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!audioRef.current) return;
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const percentage = x / rect.width;
+    const time = percentage * audioRef.current.duration;
+    
+    try {
+      audioRef.current.currentTime = time;
+    } catch (error) {
+      console.error('Error seeking audio:', error);
     }
   };
 
-  const handleSpeedChange = (speed: number) => {
-    if (audioRef.current) {
-      audioRef.current.playbackRate = speed;
-      setControls(prev => ({ ...prev, speed }));
+  const handleSpeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    if (!audioRef.current) return;
+    
+    try {
+      audioRef.current.playbackRate = parseFloat(e.target.value);
+      setControls(prev => ({ ...prev, speed: parseFloat(e.target.value) }));
+    } catch (error) {
+      console.error('Error changing playback speed:', error);
     }
   };
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const volume = parseFloat(e.target.value);
-    if (audioRef.current) {
+    if (!audioRef.current) return;
+    
+    try {
+      const volume = parseFloat(e.target.value);
       audioRef.current.volume = volume;
       setControls(prev => ({ ...prev, volume }));
+    } catch (error) {
+      console.error('Error changing volume:', error);
     }
   };
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current = null;
+      }
+    };
+  }, []);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -311,7 +353,7 @@ const DocumentUploadPage: React.FC = () => {
                   <div
                     ref={progressBarRef}
                     className="flex-1 h-2 bg-gray-700 rounded-full cursor-pointer relative group"
-                    onClick={handleProgressBarClick}
+                    onClick={handleProgressClick}
                   >
                     <div
                       className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full relative"
@@ -328,7 +370,7 @@ const DocumentUploadPage: React.FC = () => {
                   <div className="flex items-center space-x-2">
                     <select
                       value={controls.speed}
-                      onChange={(e) => handleSpeedChange(parseFloat(e.target.value))}
+                      onChange={handleSpeedChange}
                       className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-blue-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500/50 transition-colors duration-200"
                     >
                       <option value={0.5}>0.5x</option>

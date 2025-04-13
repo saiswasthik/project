@@ -15,9 +15,13 @@ const VoiceRecordingPage: React.FC<{}> = () => {
   const navigate = useNavigate();
 
   // Sample text for recording
-  const sampleText = `Please read this text clearly:
+  const sampleText = `Hello, this is a sample text for voice recording. 
+  
+Please read this text clearly and naturally. This will help us capture the characteristics of your voice.
 
-"Hello, this is a sample text for voice recording. Please read this text clearly and naturally. This will help us capture the characteristics of your voice. Thank you for participating in our voice cloning project!"`;
+The more natural and consistent your reading, the better the voice cloning will work. Try to maintain a steady pace and volume throughout the recording.
+
+Thank you for participating in our voice cloning project!`;
 
   const cleanupAudio = () => {
     if (animationFrameRef.current) {
@@ -246,8 +250,8 @@ const VoiceRecordingPage: React.FC<{}> = () => {
 
       {/* Sample Text Popup */}
       {showSampleText && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-gray-800/90 rounded-xl p-6 max-w-md w-full mx-4 shadow-2xl border border-gray-700/50 relative">
+        <div className="fixed right-4 top-1/2 transform -translate-y-1/2 z-50">
+          <div className="bg-gray-800/90 rounded-xl p-4 w-80 shadow-2xl border border-gray-700/50 relative">
             <button 
               onClick={() => setShowSampleText(false)}
               className="absolute top-2 right-2 text-gray-400 hover:text-white transition-colors"
@@ -255,10 +259,10 @@ const VoiceRecordingPage: React.FC<{}> = () => {
               <XMarkIcon className="w-5 h-5" />
             </button>
             
-            <div className="flex flex-col space-y-4">
-              <h3 className="text-lg font-semibold text-white">Read this text:</h3>
-              <div className="bg-gray-900/50 rounded-lg p-4 border border-gray-700/50">
-                <p className="text-gray-300 text-sm leading-relaxed">{sampleText}</p>
+            <div className="flex flex-col space-y-3">
+              <h3 className="text-lg font-semibold text-white">Read This Text</h3>
+              <div className="bg-gray-900/50 rounded-lg p-3 border border-gray-700/50">
+                <p className="text-gray-300 text-sm whitespace-pre-line leading-relaxed">{sampleText}</p>
               </div>
               <div className="flex justify-center">
                 <div className="flex space-x-1">
@@ -272,7 +276,7 @@ const VoiceRecordingPage: React.FC<{}> = () => {
                 </div>
               </div>
               <p className="text-center text-blue-300 text-xs">
-                Recording starts in a few seconds...
+                Recording will start automatically...
               </p>
             </div>
           </div>
