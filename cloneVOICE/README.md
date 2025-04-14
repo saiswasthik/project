@@ -1,52 +1,61 @@
 # Voice Cloning and PDF Reader
 
-A full-stack application that clones your voice and uses it to read PDF documents. Built with FastAPI, React, and advanced voice cloning technologies.
+A full-stack application that clones your voice and uses it to read PDF documents. Built with FastAPI, React, and Resemble AI for voice cloning.
 
 ## Features
 
 - 🎤 Voice Recording & Upload
   - Record your voice directly in the browser
-  - Upload existing voice recordings
-  - Support for various audio formats
+  - Upload existing voice recordings (WAV, MP3)
+  - Voice preprocessing and analysis
+  - Support for multiple voice samples
 
 - 📄 PDF Processing
   - Upload and parse PDF documents
   - Extract text with formatting preserved
   - Support for multiple pages
+  - Text preprocessing and cleaning
 
 - 🗣️ Voice Cloning
-  - High-quality voice cloning using YourTTS
-  - Natural-sounding speech synthesis
-  - Multiple voice models support (Coqui-TTS, Bark)
+  - High-quality voice cloning using Resemble AI
   - Voice analysis and preprocessing
+  - Custom voice model training
+  - Natural-sounding speech synthesis
 
 - 🎵 Audio Playback
   - Interactive audio player
   - Playback speed control
   - Volume adjustment
   - Download in MP3/WAV formats
+  - Real-time audio visualization
 
 - 💻 Modern UI
   - React + Tailwind CSS
   - Responsive design
-  - Dark mode
+  - Dark mode support
   - Loading animations
   - Progress indicators
+  - Error handling and notifications
 
 ## Tech Stack
 
 ### Backend
-- FastAPI
+- FastAPI (Python web framework)
 - Coqui TTS / Bark
-- PyTorch
-- Whisper
-- FFmpeg
+- Resemble AI (Voice cloning)
+- PyTorch (Deep learning)
+- Whisper (Speech recognition)
+- FFmpeg (Audio processing)
+- python-dotenv (Environment management)
+- PyPDF2 (PDF processing)
 
 ### Frontend
-- React
-- Tailwind CSS
-- Web Audio API
-- Heroicons
+- React (UI framework)
+- Tailwind CSS (Styling)
+- Web Audio API (Audio processing)
+- Heroicons (Icons)
+- Axios (HTTP client)
+- React Router (Navigation)
 
 ## Setup
 
@@ -55,6 +64,8 @@ A full-stack application that clones your voice and uses it to read PDF document
 - Node.js 14+
 - FFmpeg
 - Git
+- CUDA-capable GPU (recommended for faster processing)
+- Resemble AI API key
 
 ### Backend Setup
 ```bash
@@ -70,8 +81,12 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 cd backend
 pip install -r requirements.txt
 
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration, including RESEMBLE_API_KEY
+
 # Start the backend server
-uvicorn main:app --reload
+uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 ### Frontend Setup
@@ -82,60 +97,102 @@ cd frontend
 # Install dependencies
 npm install
 
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your configuration
+
 # Start the development server
 npm start
 ```
 
 ## Usage
 
-1. **Record or Upload Voice**
-   - Visit the home page
-   - Record a voice sample or upload an audio file
-   - Wait for voice analysis to complete
+1. **Voice Cloning**
+   - Record a voice sample (minimum 30 seconds recommended)
+   - Upload multiple samples for better quality
+   - Wait for voice analysis and model training
+   - Test the cloned voice with sample text
 
-2. **Upload PDF**
-   - Navigate to document upload page
-   - Upload your PDF file
+2. **PDF Processing**
+   - Upload PDF document
    - Review extracted text
+   - Edit text if needed
+   - Select voice parameters
 
-3. **Generate Speech**
+3. **Text-to-Speech**
    - Click "Generate Speech"
-   - Wait for processing
-   - Use the audio player controls
+   - Monitor progress
+   - Use audio player controls
    - Download in preferred format
 
 ## API Endpoints
 
+### Voice Management
 - `POST /api/voice/upload` - Upload voice recording
+- `POST /api/voice/clone` - Train voice model
+- `GET /api/voice/models` - List available models
+- `DELETE /api/voice/models/{model_id}` - Delete voice model
+
+### PDF Processing
 - `POST /api/pdf/upload` - Upload PDF document
-- `POST /api/pdf/read` - Generate speech from text
-- `GET /api/voices/{filename}` - Get generated audio
+- `GET /api/pdf/{id}/text` - Get extracted text
+- `POST /api/pdf/{id}/read` - Generate speech from text
+- `GET /api/pdf/{id}/audio` - Get generated audio
 
 ## Environment Variables
 
-Create a `.env` file in the backend directory:
-
+### Backend (.env)
 ```env
+# Server Configuration
+HOST=0.0.0.0
+PORT=8000
+DEBUG=True
+
+# Voice Cloning
+RESEMBLE_API_KEY=your_api_key_here
 VOICE_MODELS_DIR=models/voice
 AUDIO_OUTPUT_DIR=output/audio
 MAX_UPLOAD_SIZE=10485760  # 10MB
+
+# PDF Processing
+PDF_UPLOAD_DIR=uploads/pdf
+MAX_PDF_SIZE=20971520  # 20MB
+
+# Logging
+LOG_LEVEL=INFO
+LOG_FILE=logs/app.log
 ```
 
-## Contributing
+### Frontend (.env)
+```env
+REACT_APP_API_URL=http://localhost:8000
+REACT_APP_MAX_RECORDING_TIME=300  # seconds
+REACT_APP_MAX_UPLOAD_SIZE=10485760  # 10MB
+```
 
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a Pull Request
+## Development
 
-## License
+### Running Tests
+```bash
+# Backend tests
+cd backend
+pytest
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+# Frontend tests
+cd frontend
+npm test
+```
+
+### Code Style
+- Backend: Follow PEP 8 guidelines
+- Frontend: ESLint and Prettier configuration
+
+
+
 
 ## Acknowledgments
 
+- [Resemble AI](https://www.resemble.ai/)
 - [Coqui TTS](https://github.com/coqui-ai/TTS)
-- [Bark](https://github.com/suno-ai/bark)
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [React](https://reactjs.org/) 
