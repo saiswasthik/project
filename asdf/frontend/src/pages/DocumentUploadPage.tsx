@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { PlayIcon, PauseIcon, SpeakerWaveIcon, ArrowPathIcon, ArrowDownTrayIcon, ChevronDownIcon } from '@heroicons/react/24/solid';
+import { PlayIcon, PauseIcon, SpeakerWaveIcon, ArrowPathIcon } from '@heroicons/react/24/solid';
 
 interface AudioControls {
   speed: number;
@@ -23,33 +23,6 @@ const DocumentUploadPage: React.FC = () => {
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
-
-  const [isDownloading, setIsDownloading] = useState<{ [key: string]: boolean }>({
-    mp3: false,
-    wav: false
-  });
-
-  const [showMenu, setShowMenu] = useState<boolean>(false);
-  const [showSpeedMenu, setShowSpeedMenu] = useState<boolean>(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const speedMenuRef = useRef<HTMLDivElement>(null);
-
-  // Add click outside handler
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setShowMenu(false);
-      }
-      if (speedMenuRef.current && !speedMenuRef.current.contains(event.target as Node)) {
-        setShowSpeedMenu(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -228,73 +201,6 @@ const DocumentUploadPage: React.FC = () => {
     }
   };
 
-  const handleDownload = async (format: string) => {
-    if (!audioUrl || !extractedText) return;
-
-    try {
-      setIsDownloading(prev => ({ ...prev, [format]: true }));
-      
-      const response = await fetch('http://localhost:8000/api/pdf/read', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          text: extractedText,
-          voice_path: localStorage.getItem('voicePath'),
-          format: format
-        }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.detail || 'Failed to download audio');
-      }
-
-      // Get the content type and content length
-      const contentType = response.headers.get('content-type');
-      const contentLength = response.headers.get('content-length');
-
-      if (!contentType || !contentType.includes('audio/')) {
-        throw new Error('Invalid audio file received');
-      }
-
-      if (!contentLength || parseInt(contentLength) === 0) {
-        throw new Error('Empty audio file received');
-      }
-
-      // Get the blob from the response
-      const blob = await response.blob();
-      
-      // Check if the blob is valid
-      if (blob.size === 0) {
-        throw new Error('Downloaded file is empty');
-      }
-
-      // Create a download link
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `generated_speech.${format}`;
-      
-      // Append to body, click, and cleanup
-      document.body.appendChild(a);
-      a.click();
-      
-      // Cleanup
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      
-      // Show success message
-      alert(`Audio file downloaded successfully as ${format.toUpperCase()}`);
-    } catch (error) {
-      console.error('Error downloading audio:', error);
-      alert(`Error downloading audio: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    } finally {
-      setIsDownloading(prev => ({ ...prev, [format]: false }));
-    }
-  };
-
   // Cleanup on unmount
   useEffect(() => {
     return () => {
@@ -430,128 +336,48 @@ const DocumentUploadPage: React.FC = () => {
           <div className="mt-8 bg-gray-800/50 backdrop-blur-md rounded-xl shadow-2xl p-8 border border-gray-700/50 hover:border-cyan-500/50 transition-all duration-300">
             <div className="flex flex-col space-y-4">
               {/* Audio Player UI */}
-              <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-6 flex flex-col space-y-4 border border-gray-700/50">
-                <div className="flex items-center space-x-4">
-                  <button
-                    onClick={togglePlayPause}
-                    className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300"
-                  >
-                    {isPlaying ? (
-                      <PauseIcon className="w-6 h-6 text-white" />
-                    ) : (
-                      <PlayIcon className="w-6 h-6 text-white" />
-                    )}
-                  </button>
+              <div className="bg-gradient-to-r from-gray-900 to-gray-800 rounded-2xl p-6 flex items-center space-x-4 border border-gray-700/50">
+                <button
+                  onClick={togglePlayPause}
+                  className="w-12 h-12 flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg hover:shadow-blue-500/20 hover:scale-105 transition-all duration-300"
+                >
+                  {isPlaying ? (
+                    <PauseIcon className="w-6 h-6 text-white" />
+                  ) : (
+                    <PlayIcon className="w-6 h-6 text-white" />
+                  )}
+                </button>
 
-                  <div className="flex-1 flex items-center space-x-3">
-                    <span className="text-sm text-blue-300 font-medium">{formatTime(currentTime)}</span>
+                <div className="flex-1 flex items-center space-x-3">
+                  <span className="text-sm text-blue-300 font-medium">{formatTime(currentTime)}</span>
+                  <div
+                    ref={progressBarRef}
+                    className="flex-1 h-2 bg-gray-700 rounded-full cursor-pointer relative group"
+                    onClick={handleProgressClick}
+                  >
                     <div
-                      ref={progressBarRef}
-                      className="flex-1 h-2 bg-gray-700 rounded-full cursor-pointer relative group"
-                      onClick={handleProgressClick}
+                      className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full relative"
+                      style={{ width: `${(currentTime / duration) * 100}%` }}
                     >
-                      <div
-                        className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full relative"
-                        style={{ width: `${(currentTime / duration) * 100}%` }}
-                      >
-                        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
-                      </div>
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
                     </div>
-                    <span className="text-sm text-blue-300 font-medium">{formatTime(duration)}</span>
                   </div>
+                  <span className="text-sm text-blue-300 font-medium">{formatTime(duration)}</span>
                 </div>
 
-                {/* Audio Controls */}
-                <div className="flex items-center justify-end space-x-6">
-                  {/* Download Menu */}
-                  <div className="relative" ref={menuRef}>
-                    <button
-                      onClick={() => setShowMenu(!showMenu)}
-                      className="flex items-center space-x-2 bg-gray-700/50 hover:bg-gray-600/50 px-3 py-2 rounded-lg text-white transition-colors duration-200"
+                <div className="flex items-center space-x-6">
+                  {/* Speed Control */}
+                  <div className="flex items-center space-x-2">
+                    <select
+                      value={controls.speed}
+                      onChange={handleSpeedChange}
+                      className="bg-gray-900 border border-gray-700 rounded-lg px-3 py-1.5 text-sm text-blue-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 hover:border-blue-500/50 transition-colors duration-200"
                     >
-                      <ArrowDownTrayIcon className="w-5 h-5" />
-                      <span>Download</span>
-                      <ChevronDownIcon className="w-4 h-4" />
-                    </button>
-                    
-                    {showMenu && (
-                      <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-xl border border-gray-700 z-50">
-                        <div className="py-1">
-                          <button
-                            onClick={() => {
-                              handleDownload('mp3');
-                              setShowMenu(false);
-                            }}
-                            disabled={isDownloading.mp3}
-                            className="w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center space-x-2"
-                          >
-                            {isDownloading.mp3 ? (
-                              <>
-                                <ArrowPathIcon className="w-5 h-5 animate-spin" />
-                                <span>Downloading MP3...</span>
-                              </>
-                            ) : (
-                              <>
-                                <ArrowDownTrayIcon className="w-5 h-5" />
-                                <span>Download as MP3</span>
-                              </>
-                            )}
-                          </button>
-                          <button
-                            onClick={() => {
-                              handleDownload('wav');
-                              setShowMenu(false);
-                            }}
-                            disabled={isDownloading.wav}
-                            className="w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors duration-200 flex items-center space-x-2"
-                          >
-                            {isDownloading.wav ? (
-                              <>
-                                <ArrowPathIcon className="w-5 h-5 animate-spin" />
-                                <span>Downloading WAV...</span>
-                              </>
-                            ) : (
-                              <>
-                                <ArrowDownTrayIcon className="w-5 h-5" />
-                                <span>Download as WAV</span>
-                              </>
-                            )}
-                          </button>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Playback Speed Menu */}
-                  <div className="relative" ref={speedMenuRef}>
-                    <button
-                      onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-                      className="flex items-center space-x-2 bg-gray-700/50 hover:bg-gray-600/50 px-3 py-2 rounded-lg text-white transition-colors duration-200"
-                    >
-                      <span>Speed {controls.speed}x</span>
-                      <ChevronDownIcon className="w-4 h-4" />
-                    </button>
-                    
-                    {showSpeedMenu && (
-                      <div className="absolute right-0 mt-2 w-32 bg-gray-800 rounded-lg shadow-xl border border-gray-700 z-50">
-                        <div className="py-1">
-                          {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((speed) => (
-                            <button
-                              key={speed}
-                              onClick={() => {
-                                handleSpeedChange({ target: { value: speed.toString() } } as React.ChangeEvent<HTMLSelectElement>);
-                                setShowSpeedMenu(false);
-                              }}
-                              className={`w-full text-left px-4 py-2 text-white hover:bg-gray-700 transition-colors duration-200 ${
-                                controls.speed === speed ? 'bg-gray-700' : ''
-                              }`}
-                            >
-                              {speed}x
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    )}
+                      <option value={0.5}>0.5x</option>
+                      <option value={1}>1x</option>
+                      <option value={1.5}>1.5x</option>
+                      <option value={2}>2x</option>
+                    </select>
                   </div>
 
                   {/* Volume Control */}

@@ -5,18 +5,13 @@ from pathlib import Path
 from typing import List
 import logging
 from ..services.utils import save_upload_file, ensure_directories, get_file_size
-from ..services.tts import tts_service, VoiceCloningService
+from ..services.tts import tts_service
 
 # Configure logging
 logger = logging.getLogger(__name__)
 
 # Create router
 router = APIRouter()
-voice_service = VoiceCloningService()
-
-# Directory to store uploaded voices
-VOICE_UPLOAD_DIR = Path("voices")
-VOICE_UPLOAD_DIR.mkdir(exist_ok=True)
 
 @router.post("/upload")
 async def upload_voice(
@@ -96,37 +91,47 @@ async def list_voices() -> JSONResponse:
         )
 
 @router.post("/clone")
-async def clone_voice(file: UploadFile = File(...)):
+async def clone_voice_endpoint(
+    file: UploadFile = File(...),
+    language: str = Form("en")  # Add language parameter with default value "en"
+):
+    """
+    Clone a voice from an uploaded audio file
+    """
     try:
+        # Ensure required directories exist
+        upload_dir = os.getenv("VOICE_UPLOAD_DIR", "uploads/voice")
+        os.makedirs(upload_dir, exist_ok=True)
+        
         # Save the uploaded file
-        file_path = VOICE_UPLOAD_DIR / file.filename
+        file_path = os.path.join(upload_dir, file.filename)
         with open(file_path, "wb") as buffer:
             content = await file.read()
             buffer.write(content)
-
-        # Sample text for voice cloning
-        sample_text = """
-        Hello, this is a sample text for voice cloning. 
-        Please read this text clearly and naturally. 
-        The more natural and consistent your reading, 
-        the better the voice cloning will work.
-        """
-
-        # Clone the voice
-        cloned_voice_path = voice_service.clone_voice(str(file_path), sample_text)
         
-        # Return the path to the cloned voice
-        return {"voice_path": os.path.basename(cloned_voice_path)}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@router.post("/read")
-async def read_text(text: str, voice_path: str):
-    try:
-        # Generate speech using the cloned voice
-        speech_path = voice_service.generate_speech(text, str(VOICE_UPLOAD_DIR / voice_path))
+        # Clone the voice with explicit language parameter
+        voice_path = await tts_service.clone_voice(
+            audio_path=file_path,
+            language=language  # Explicitly pass the language parameter
+        )
         
-        # Return the path to the generated speech
-        return {"audio_path": os.path.basename(speech_path)}
+        if not voice_path:
+            raise HTTPException(
+                status_code=500,
+                detail="Failed to clone voice"
+            )
+        
+        return JSONResponse(
+            content={
+                "message": "Voice cloned successfully",
+                "voice_path": voice_path
+            },
+            status_code=200
+        )
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e)) 
+        logger.error(f"Error cloning voice: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        ) 
