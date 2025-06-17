@@ -46,7 +46,7 @@ const Hero = () => {
       </div>
       <div className="flex gap-6 justify-center mb-8 text-2xl">
         <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="GitHub"><FaGithub /></a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="LinkedIn"><FaLinkedin /></a>
+        <a href="https://www.linkedin.com/in/msaiswasthik/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="LinkedIn"><FaLinkedin /></a>
         <a href="mailto:your.email@example.com" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="Email"><FaEnvelope /></a>
       </div>
       <div className="animate-bounce mt-8">
