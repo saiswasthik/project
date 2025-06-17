@@ -45,7 +45,8 @@
     "@radix-ui/react-navigation-menu": "^1.0.5",
     "@radix-ui/react-separator": "^1.0.4",
     "@radix-ui/react-radio-group": "^1.0.4",
-    "@radix-ui/react-context-menu": "^1.0.4",
+    "@radix-ui/react-context-menu": "^0.1.7",
+
     "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-scroll-area": "^1.0.4",
     "react-resizable-panels": "^1.0.0",
@@ -62,6 +63,7 @@
     "sonner": "^1.0.0",
     "react-day-picker": "^8.10.0",
     "@radix-ui/react-aspect-ratio": "^1.0.7",
+    
     "path": "^0.12.7"
   },
   "devDependencies": {
