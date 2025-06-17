@@ -26,7 +26,7 @@ const Navbar = () => {
                 smooth={true}
                 duration={500}
                 offset={-70}
-                className="cursor-pointer hover:text-purple-400 transition-colors"
+                className="cursor-pointer hover:text-purple-400 hover:underline underline-offset-4 transition-colors duration-200"
                 activeClass="text-purple-400"
                 spy={true}
               >

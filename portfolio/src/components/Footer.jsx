@@ -13,9 +13,9 @@ const Footer = () => {
           © 2025 Your Name. Made with <span className="text-red-400">♥</span> and lots of coffee.
         </div>
         <div className="flex gap-4 text-2xl">
-          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400" aria-label="GitHub"><FaGithub /></a>
-          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400" aria-label="LinkedIn"><FaLinkedin /></a>
-          <a href="mailto:your.email@example.com" className="hover:text-purple-400" aria-label="Email"><FaEnvelope /></a>
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="GitHub"><FaGithub /></a>
+          <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="LinkedIn"><FaLinkedin /></a>
+          <a href="mailto:your.email@example.com" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="Email"><FaEnvelope /></a>
         </div>
       </div>
     </footer>

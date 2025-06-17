@@ -6,7 +6,7 @@ const Hero = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pb-16 text-center relative z-10">
       <img
-        src="https://randomuser.me/api/portraits/men/32.jpg"
+        src="https://randomuser.me/api/portraits/men/35.jpg"
         alt="Avatar"
         className="w-32 h-32 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
       />
@@ -23,14 +23,14 @@ const Hero = () => {
           smooth={true}
           duration={500}
           offset={-70}
-          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full font-semibold shadow hover:scale-105 transition-transform cursor-pointer"
+          className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-6 py-3 rounded-full font-semibold shadow hover:scale-105 hover:from-purple-500 hover:to-blue-500 transition-transform duration-200 cursor-pointer"
         >
           View My Work
         </Link>
         <a
           href="/cv.pdf"
           download
-          className="bg-[#181829] border border-gray-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition-colors"
+          className="bg-[#181829] border border-gray-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 hover:scale-105 transition-all duration-200"
         >
           Download CV
         </a>
@@ -39,15 +39,15 @@ const Hero = () => {
           smooth={true}
           duration={500}
           offset={-70}
-          className="bg-[#181829] border border-gray-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 transition-colors cursor-pointer"
+          className="bg-[#181829] border border-gray-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 hover:scale-105 transition-all duration-200 cursor-pointer"
         >
           Get In Touch
         </Link>
       </div>
       <div className="flex gap-6 justify-center mb-8 text-2xl">
-        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400" aria-label="GitHub"><FaGithub /></a>
-        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400" aria-label="LinkedIn"><FaLinkedin /></a>
-        <a href="mailto:your.email@example.com" className="hover:text-purple-400" aria-label="Email"><FaEnvelope /></a>
+        <a href="https://github.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="GitHub"><FaGithub /></a>
+        <a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="LinkedIn"><FaLinkedin /></a>
+        <a href="mailto:your.email@example.com" className="hover:text-purple-400 hover:scale-125 transition-transform duration-200" aria-label="Email"><FaEnvelope /></a>
       </div>
       <div className="animate-bounce mt-8">
         <Link to="about" smooth={true} duration={500} offset={-70} className="text-3xl text-purple-400 cursor-pointer">↓</Link>

@@ -46,7 +46,7 @@ const About = () => {
         </div>
         <div className="flex-1 flex justify-center">
           <img
-            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=300&q=80"
+            src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=300&q=22"
             alt="About"
             className="rounded-2xl shadow-lg w-96 h-64 object-cover"
           />

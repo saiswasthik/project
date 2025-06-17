@@ -121,7 +121,7 @@ const Projects = () => {
         {filtered.map((project) => (
           <div
             key={project.title}
-            className={`bg-[#181829] rounded-2xl shadow-lg overflow-hidden flex flex-col border-2 ${
+            className={`bg-[#181829] rounded-2xl shadow-lg overflow-hidden flex flex-col border-2 transition-transform duration-200 hover:scale-105 hover:shadow-2xl ${
               project.featured ? "border-purple-400" : "border-transparent"
             }`}
           >
@@ -153,7 +153,7 @@ const Projects = () => {
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow hover:scale-105 transition-transform"
+                  className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow hover:scale-110 hover:from-purple-500 hover:to-blue-500 transition-transform duration-200"
                 >
                   Live Demo
                 </a>
@@ -161,7 +161,7 @@ const Projects = () => {
                   href={project.code}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-[#181829] border border-gray-600 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow hover:bg-gray-800 transition-colors"
+                  className="bg-[#181829] border border-gray-600 text-white px-4 py-2 rounded-lg font-semibold text-sm shadow hover:bg-gray-800 hover:scale-110 transition-all duration-200"
                 >
                   Code
                 </a>
