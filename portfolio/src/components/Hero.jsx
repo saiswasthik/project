@@ -6,16 +6,16 @@ const Hero = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pb-16 text-center relative z-10">
       <img
-        src="saiswasthik_image.jpeg"
+        src="Msaiswasthik_image.jpeg"
         alt="Avatar"
-        className="w-50 h-60 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
+        className="w-60 h-60 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
       />
       <h1 className="text-5xl md:text-6xl font-extrabold mb-4">M sai swasthik</h1>
       <h2 className="text-2xl md:text-3xl font-medium mb-2 text-purple-300">
         AI+ Python backend Developer
       </h2>
       <p className="max-w-xl mx-auto text-lg text-gray-300 mb-8">
-        I craft digital experiences that blend innovation with functionality, turning ideas into reality through code.
+      Passionate about turning ideas into powerful digital solutions through innovative backend development.
       </p>
       <div className="flex flex-col md:flex-row gap-4 mb-8 justify-center">
         <Link
