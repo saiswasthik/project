@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const categories = ["All", "Web Apps", "Mobile", "API", "AI/ML"];
+// const categories = ["All", "Web Apps", "Mobile", "API", "AI/ML"];
 const projects = [
   {
     title: "E-Commerce Platform",
@@ -94,14 +94,14 @@ const Projects = () => {
         A collection of projects showcasing different technologies and solutions
       </p>
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
-        <input
+        {/* <input
           type="text"
           placeholder="Search projects or technologies..."
           className="w-full md:w-1/3 px-4 py-2 rounded-lg bg-[#23234a] text-white placeholder-gray-400 focus:outline-none"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-        />
-        <div className="flex gap-2 flex-wrap justify-center md:justify-end">
+        /> */}
+        {/* <div className="flex gap-2 flex-wrap justify-center md:justify-end">
           {categories.map((cat) => (
             <button
               key={cat}
@@ -115,7 +115,7 @@ const Projects = () => {
               {cat}
             </button>
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {filtered.map((project) => (

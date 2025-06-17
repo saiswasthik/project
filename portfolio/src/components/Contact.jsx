@@ -14,21 +14,21 @@ const Contact = () => {
             <span className="text-3xl text-purple-400">📞</span>
             <div>
               <div className="text-gray-400 text-sm">Phone</div>
-              <div className="text-lg font-semibold text-blue-300">+1 (555) 123-4567</div>
+              <div className="text-lg font-semibold text-blue-300"><a href="tel:+919542757209">+91 9542757209</a></div>
             </div>
           </div>
           <div className="bg-[#181829] rounded-xl p-6 flex items-center gap-4 shadow">
             <span className="text-3xl text-purple-400">✉️</span>
             <div>
               <div className="text-gray-400 text-sm">Email</div>
-              <div className="text-lg font-semibold text-blue-300">your.email@example.com</div>
+              <div className="text-lg font-semibold text-blue-300"><a href="mailto:saiswasthikyadav8@gmail.com">saiswasthikyadav8@gmail.com</a></div>
             </div>
           </div>
           <div className="bg-[#181829] rounded-xl p-6 flex items-center gap-4 shadow">
             <span className="text-3xl text-purple-400">📍</span>
             <div>
               <div className="text-gray-400 text-sm">Location</div>
-              <div className="text-lg font-semibold text-blue-300">San Francisco, CA</div>
+              <div className="text-lg font-semibold text-blue-300"><a href="https://www.google.com/maps/place/Hyderabad,+Telangana/@17.385044,78.486671,12z/data=!3m1!4b1!4m6!3m5!1s0x3bcb99daa5268a91:0x2b2a395667ee4e0!8m2!3d17.385044!4d78.486671!16s%2Fg%2F11c4022sqw?entry=ttu&g_ep=EgoyMDI1MDIxMi4wIKXMDSoASAFQAw%3D%3D">Hyderabad/Telangana</a></div>
             </div>
           </div>
         </div>

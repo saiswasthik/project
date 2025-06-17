@@ -6,13 +6,13 @@ const Hero = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen pb-16 text-center relative z-10">
       <img
-        src="https://randomuser.me/api/portraits/men/35.jpg"
+        src="saiswasthik_image.jpeg"
         alt="Avatar"
-        className="w-32 h-32 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
+        className="w-50 h-60 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
       />
-      <h1 className="text-5xl md:text-6xl font-extrabold mb-4">Your Name</h1>
+      <h1 className="text-5xl md:text-6xl font-extrabold mb-4">M sai swasthik</h1>
       <h2 className="text-2xl md:text-3xl font-medium mb-2 text-purple-300">
-        Full Stack Developer & Creative Problem Solver
+        AI+ Python backend Developer
       </h2>
       <p className="max-w-xl mx-auto text-lg text-gray-300 mb-8">
         I craft digital experiences that blend innovation with functionality, turning ideas into reality through code.
@@ -28,7 +28,7 @@ const Hero = () => {
           View My Work
         </Link>
         <a
-          href="/cv.pdf"
+          href="/Mende_Saiswasthik.pdf"
           download
           className="bg-[#181829] border border-gray-600 text-white px-6 py-3 rounded-full font-semibold shadow hover:bg-gray-800 hover:scale-105 transition-all duration-200"
         >
