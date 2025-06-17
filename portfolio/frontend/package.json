@@ -41,7 +41,6 @@
     "@radix-ui/react-navigation-menu": "^1.0.5",
     "@radix-ui/react-separator": "^1.0.4",
     "@radix-ui/react-radio-group": "^1.0.4",
-    
     "@radix-ui/react-menubar": "^1.0.4",
     "@radix-ui/react-scroll-area": "^1.0.4",
     "react-resizable-panels": "^1.0.0",
