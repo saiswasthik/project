@@ -1,12 +1,12 @@
 import React from "react";
 
 const skills = [
-  { name: "JavaScript/TypeScript", percent: 95, color: "bg-gradient-to-r from-yellow-400 to-orange-500" },
-  { name: "React/Next.js", percent: 90, color: "bg-gradient-to-r from-blue-400 to-cyan-400" },
-  { name: "Node.js/Express", percent: 85, color: "bg-gradient-to-r from-green-400 to-emerald-400" },
-  { name: "Python/Django", percent: 80, color: "bg-gradient-to-r from-purple-400 to-indigo-400" },
-  { name: "Mobile Development", percent: 75, color: "bg-gradient-to-r from-pink-400 to-red-400" },
-  { name: "Cloud & DevOps", percent: 85, color: "bg-gradient-to-r from-blue-400 to-indigo-400" },
+  { name: "Python", percent: 80, color: "bg-gradient-to-r from-yellow-400 to-orange-500" },
+  { name: "Generative Ai", percent: 70, color: "bg-gradient-to-r from-blue-400 to-cyan-400" },
+  { name: "Azure", percent: 75, color: "bg-gradient-to-r from-green-400 to-emerald-400" },
+  { name: "MYSQL/NOSQL", percent: 75, color: "bg-gradient-to-r from-purple-400 to-indigo-400" },
+  { name: "FastAPI", percent: 75, color: "bg-gradient-to-r from-pink-400 to-red-400" },
+  { name: "REST APIs", percent: 70, color: "bg-gradient-to-r from-blue-400 to-indigo-400" },
 ];
 
 const Skills = () => {
