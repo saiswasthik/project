@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with default config
 const api = axios.create({
-  baseURL: 'http://localhost:8000/api', // FastAPI default port with /api prefix
+  baseURL: 'https://project-qmvm.onrender.com/api', // FastAPI default port with /api prefix
   headers: {
     'Content-Type': 'application/json',
   },
