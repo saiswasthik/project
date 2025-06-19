@@ -3,7 +3,7 @@ services:
     name: youtube-summarizer-backend
     env: python
     plan: free
-    buildCommand: cd backend && pip install -r requirements.txt
+    buildCommand: cd backend && chmod +x build.sh && ./build.sh
     startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: PYTHON_VERSION

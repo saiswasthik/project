@@ -55,14 +55,23 @@ class Video(BaseModel):
     comments: int = 0
     subscriber_count: int = 0
 
+    class Config:
+        extra = "allow"
+
 class SearchResponse(BaseModel):
     videos: List[Video]
     message: Optional[str] = None
+
+    class Config:
+        extra = "allow"
 
 class SummaryRequest(BaseModel):
     video_ids: List[str]
     min_words: Optional[int] = 500
     max_words: Optional[int] = 600
+
+    class Config:
+        extra = "allow"
 
 class VideoSummary(BaseModel):
     video_id: str
@@ -73,9 +82,15 @@ class VideoSummary(BaseModel):
     takeaways: List[str] = []
     actionable_insights: List[str] = []
 
+    class Config:
+        extra = "allow"
+
 class SummaryResponse(BaseModel):
     summaries: List[VideoSummary]
     message: Optional[str] = None
+
+    class Config:
+        extra = "allow"
 
 # Utility Functions
 def parse_duration(duration: str) -> int:
