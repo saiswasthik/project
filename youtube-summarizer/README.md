@@ -22,7 +22,7 @@ A web application that allows users to search for YouTube videos, filter them by
 - FastAPI (Python)
 - YouTube Data API for video search and metadata
 - YouTube Transcript API for video captions
-- Groq API for AI-powered summarization
+- Google Gemini API for AI-powered summarization
 
 ## Setup and Installation
 
@@ -30,7 +30,7 @@ A web application that allows users to search for YouTube videos, filter them by
 - Node.js and npm
 - Python 3.8+
 - YouTube API key
-- Groq API key
+- Google Gemini API key
 
 ### Backend Setup
 1. Navigate to the backend directory:
@@ -55,7 +55,7 @@ A web application that allows users to search for YouTube videos, filter them by
 5. Create a `.env` file with your API keys:
    ```
    YOUTUBE_API_KEY=your_youtube_api_key
-   GROQ_API_KEY=your_groq_api_key
+   GEMINI_API_KEY=your_gemini_api_key
    ```
 
 6. Start the backend server:

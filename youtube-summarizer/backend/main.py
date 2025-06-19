@@ -10,17 +10,21 @@ import requests
 from youtubesearchpython import VideosSearch
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 from googleapiclient.discovery import build
+import google.generativeai as genai
 import time
 
 # Load environment variables
 load_dotenv()
 
 # API Keys
-GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
 
-if not GROQ_API_KEY or not YOUTUBE_API_KEY:
+if not GEMINI_API_KEY or not YOUTUBE_API_KEY:
     raise ValueError("Missing API keys in .env file.")
+
+# Configure Gemini
+genai.configure(api_key=GEMINI_API_KEY)
 
 # FastAPI App
 app = FastAPI()
@@ -74,9 +78,6 @@ class SummaryResponse(BaseModel):
     summaries: List[VideoSummary]
     message: Optional[str] = None
 
-# Constants
-GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions"
-
 # Utility Functions
 def parse_duration(duration: str) -> int:
     match = re.match(r'PT(\d+H)?(\d+M)?(\d+S)?', duration)
@@ -92,10 +93,10 @@ def get_video_transcript(video_id: str) -> str:
         transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
         transcript_text = ' '.join([entry['text'] for entry in transcript_list])
         
-        # Truncate transcript if it's too long (Groq has a token limit)
-        if len(transcript_text) > 12000:
-            print(f"Transcript too long ({len(transcript_text)} chars), truncating to 12000 chars")
-            transcript_text = transcript_text[:12000]
+        # Truncate transcript if it's too long (Gemini has a token limit)
+        if len(transcript_text) > 30000:
+            print(f"Transcript too long ({len(transcript_text)} chars), truncating to 30000 chars")
+            transcript_text = transcript_text[:30000]
             print(f"Final transcript length: {len(transcript_text)} chars")
             
         return transcript_text
@@ -103,7 +104,7 @@ def get_video_transcript(video_id: str) -> str:
         print(f"Error getting transcript: {str(e)}")
         raise HTTPException(status_code=404, detail="Could not retrieve video transcript")
 
-def generate_summary_with_groq(transcript: str, min_words: Optional[int] = None, max_words: Optional[int] = None) -> dict:
+def generate_summary_with_gemini(transcript: str, min_words: Optional[int] = None, max_words: Optional[int] = None) -> dict:
     def create_prompt(target_words: int = None) -> str:
         base_prompt = f"""
 Please analyze this YouTube video transcript and provide a comprehensive, topic-focused summary. Focus on the main subject matter and key information.
@@ -197,27 +198,20 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
         return summary_data
 
     def generate_with_prompt(prompt: str) -> dict:
-        headers = {
-            "Authorization": f"Bearer {GROQ_API_KEY}",
-            "Content-Type": "application/json"
-        }
-        payload = {
-            "model": "llama-3.3-70b-versatile",
-            "messages": [{"role": "user", "content": prompt}],
-            "temperature": 0.7,
-            "max_tokens": 2048
-        }
-
+        # Initialize Gemini model
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        
         max_retries = 3
         base_delay = 2  # Base delay in seconds
         max_delay = 30  # Maximum delay in seconds
 
         for attempt in range(max_retries):
             try:
-                response = requests.post(GROQ_API_URL, headers=headers, json=payload)
-
-                if response.status_code == 200:
-                    content = response.json()["choices"][0]["message"]["content"].strip()
+                # Generate content with Gemini
+                response = model.generate_content(prompt)
+                
+                if response and response.text:
+                    content = response.text.strip()
                     print(f"Raw response content: {content[:200]}...")  # Log first 200 chars for debugging
                     
                     # Clean up the response content
@@ -289,35 +283,10 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
                     summary_data["actionable_insights"] = [insight.strip() for insight in summary_data["actionable_insights"] if insight.strip()]
                     
                     return summary_data
+                else:
+                    raise ValueError("Empty response from Gemini")
                 
-                elif response.status_code == 429:  # Rate limit error
-                    error_data = response.json()
-                    if "error" in error_data and "message" in error_data["error"]:
-                        error_msg = error_data["error"]["message"]
-                        print(f"Rate limit error (attempt {attempt + 1}/{max_retries}): {error_msg}")
-                        
-                        # Extract wait time from error message if available
-                        wait_time = None
-                        if "try again in" in error_msg:
-                            try:
-                                wait_time = float(re.search(r"try again in (\d+\.?\d*)s", error_msg).group(1))
-                            except:
-                                wait_time = None
-                        
-                        if wait_time is None:
-                            # Calculate exponential backoff delay
-                            delay = min(base_delay * (2 ** attempt), max_delay)
-                        else:
-                            delay = wait_time
-                        
-                        print(f"Waiting {delay} seconds before retry...")
-                        time.sleep(delay)
-                        continue
-                    
-                # For other errors, raise an exception
-                response.raise_for_status()
-                
-            except requests.exceptions.RequestException as e:
+            except Exception as e:
                 if attempt == max_retries - 1:  # Last attempt
                     print(f"Final attempt failed: {str(e)}")
                     raise ValueError(f"Failed to generate summary after {max_retries} attempts: {str(e)}")
@@ -432,7 +401,7 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
         return summary_data
 
     except Exception as e:
-        print(f"Error in generate_summary_with_groq: {str(e)}")
+        print(f"Error in generate_summary_with_gemini: {str(e)}")
         raise ValueError(f"Failed to generate summary: {str(e)}")
 
 # Routes
@@ -644,7 +613,7 @@ async def summarize_videos(request: SummaryRequest):
             
             # Generate summary
             try:
-                summary_data = generate_summary_with_groq(transcript, min_words, max_words)
+                summary_data = generate_summary_with_gemini(transcript, min_words, max_words)
                 print(f"Successfully generated summary data for video: {video_id}")
             except Exception as e:
                 print(f"Error generating summary: {str(e)}")
