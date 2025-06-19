@@ -1,9 +1,0 @@
-fastapi==0.104.1
-uvicorn==0.24.0
-python-multipart==0.0.6
-PyPDF2==3.0.1
-python-dotenv==1.0.0
-# Using transformers for token counting instead of tiktoken
-transformers==4.35.0
-tokenizers==0.14.0
-pydantic==2.4.2 
