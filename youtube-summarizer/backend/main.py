@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
 import requests
+from youtubesearchpython import VideosSearch
 from youtube_transcript_api import YouTubeTranscriptApi, TranscriptsDisabled, NoTranscriptFound
 from googleapiclient.discovery import build
 import google.generativeai as genai
@@ -55,23 +56,14 @@ class Video(BaseModel):
     comments: int = 0
     subscriber_count: int = 0
 
-    class Config:
-        extra = "allow"
-
 class SearchResponse(BaseModel):
     videos: List[Video]
     message: Optional[str] = None
-
-    class Config:
-        extra = "allow"
 
 class SummaryRequest(BaseModel):
     video_ids: List[str]
     min_words: Optional[int] = 500
     max_words: Optional[int] = 600
-
-    class Config:
-        extra = "allow"
 
 class VideoSummary(BaseModel):
     video_id: str
@@ -82,15 +74,9 @@ class VideoSummary(BaseModel):
     takeaways: List[str] = []
     actionable_insights: List[str] = []
 
-    class Config:
-        extra = "allow"
-
 class SummaryResponse(BaseModel):
     summaries: List[VideoSummary]
     message: Optional[str] = None
-
-    class Config:
-        extra = "allow"
 
 # Utility Functions
 def parse_duration(duration: str) -> int:
@@ -318,13 +304,12 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
     def generate_with_prompt(prompt: str) -> dict:
         # Initialize Gemini model
         try:
-            # Use gemini-pro model which is available in older versions
-            model = genai.GenerativeModel('gemini-2.0-flash')
+            model = genai.GenerativeModel('gemini-1.5-flash')
             print("Gemini model initialized successfully")
         except Exception as e:
             print(f"Error initializing Gemini model: {str(e)}")
             raise ValueError(f"Failed to initialize Gemini model: {str(e)}")
-        
+
         max_retries = 3
         base_delay = 2  # Base delay in seconds
         max_delay = 30  # Maximum delay in seconds
@@ -338,7 +323,7 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
                 
                 print(f"Gemini response received: {type(response)}")
                 print(f"Response has text: {hasattr(response, 'text')}")
-                
+
                 if response and hasattr(response, 'text') and response.text:
                     content = response.text.strip()
                     print(f"Raw response content: {content[:200]}...")  # Log first 200 chars for debugging
@@ -542,7 +527,7 @@ async def test_gemini():
     """Test endpoint to verify Gemini API is working"""
     try:
         # Test Gemini API
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         response = model.generate_content("Hello, please respond with 'Gemini API is working!'")
         
         if response and hasattr(response, 'text') and response.text:

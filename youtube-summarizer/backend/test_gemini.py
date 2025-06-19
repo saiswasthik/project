@@ -28,7 +28,7 @@ def test_gemini_api():
         print("✅ Gemini configured successfully")
         
         # Initialize model
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-1.5-flash')
         print("✅ Gemini model initialized successfully")
         
         # Test with a simple prompt
