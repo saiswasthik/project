@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000';
+const API_BASE_URL = 'https://youtube-summarizer-ai-6sst.onrender.com';
 
 export interface Video {
   title: string;
