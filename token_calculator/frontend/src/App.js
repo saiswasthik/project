@@ -60,9 +60,8 @@ function App() {
       formData.append('files', file);
     });
 
-    
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-folder',{
+      const response = await fetch('http://localhost:8000/api/calculate-folder', {
         method: 'POST',
         body: formData,
       });
