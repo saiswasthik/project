@@ -15,7 +15,7 @@ pydub==0.25.1
 numpy==1.24.3
 
 # Voice Cloning (Resemble AI)
-resemble-python==1.0.0
+# resemble-python==1.0.0
 
 # Utilities
 python-jose==3.3.0
