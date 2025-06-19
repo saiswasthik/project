@@ -108,7 +108,7 @@ def generate_summary_with_gemini(transcript: str, min_words: Optional[int] = Non
     def create_prompt(target_words: int = None) -> str:
         base_prompt = f"""
 Please analyze this YouTube video transcript and provide a comprehensive, topic-focused summary. Focus on the main subject matter and key information.
-
+ 
 Requirements:
 1. A detailed summary that captures the essential points and main takeaways
 2. 5 key points that highlight the most important aspects
