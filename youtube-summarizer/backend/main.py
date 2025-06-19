@@ -90,8 +90,84 @@ def parse_duration(duration: str) -> int:
 
 def get_video_transcript(video_id: str) -> str:
     try:
-        transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
-        transcript_text = ' '.join([entry['text'] for entry in transcript_list])
+        print(f"Attempting to get transcript for video: {video_id}")
+        
+        # Try multiple approaches to get the transcript
+        transcript_list = None
+        error_messages = []
+        
+        # Method 1: Try with English language
+        try:
+            transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'])
+            print("Successfully retrieved transcript with English language")
+        except Exception as e:
+            error_msg = f"Method 1 (English) failed: {str(e)}"
+            error_messages.append(error_msg)
+            print(error_msg)
+        
+        # Method 2: Try with auto-generated transcripts
+        if not transcript_list:
+            try:
+                transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en'], preserve_formatting=True)
+                print("Successfully retrieved transcript with auto-generated option")
+            except Exception as e:
+                error_msg = f"Method 2 (Auto-generated) failed: {str(e)}"
+                error_messages.append(error_msg)
+                print(error_msg)
+        
+        # Method 3: Try without language specification
+        if not transcript_list:
+            try:
+                transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+                print("Successfully retrieved transcript without language specification")
+            except Exception as e:
+                error_msg = f"Method 3 (No language) failed: {str(e)}"
+                error_messages.append(error_msg)
+                print(error_msg)
+        
+        # Method 4: Try with different language codes
+        if not transcript_list:
+            try:
+                transcript_list = YouTubeTranscriptApi.get_transcript(video_id, languages=['en-US', 'en-GB', 'en'])
+                print("Successfully retrieved transcript with multiple language codes")
+            except Exception as e:
+                error_msg = f"Method 4 (Multiple languages) failed: {str(e)}"
+                error_messages.append(error_msg)
+                print(error_msg)
+        
+        # If all methods failed
+        if not transcript_list:
+            print("All transcript retrieval methods failed")
+            print("Error messages:", error_messages)
+            
+            # Check if it's a specific error type
+            for error_msg in error_messages:
+                if "TranscriptsDisabled" in error_msg:
+                    raise HTTPException(status_code=404, detail="Transcripts are disabled for this video")
+                elif "NoTranscriptFound" in error_msg:
+                    raise HTTPException(status_code=404, detail="No transcript found for this video")
+                elif "VideoUnavailable" in error_msg:
+                    raise HTTPException(status_code=404, detail="Video is unavailable or private")
+                elif "no element found" in error_msg.lower():
+                    raise HTTPException(status_code=404, detail="Transcript parsing error - video may not have captions")
+            
+            raise HTTPException(status_code=404, detail=f"Could not retrieve video transcript. Errors: {'; '.join(error_messages)}")
+        
+        # Extract text from transcript entries
+        if not isinstance(transcript_list, list):
+            raise HTTPException(status_code=404, detail="Invalid transcript format received")
+        
+        transcript_text = ""
+        for entry in transcript_list:
+            if isinstance(entry, dict) and 'text' in entry:
+                transcript_text += entry['text'] + " "
+        
+        transcript_text = transcript_text.strip()
+        
+        if not transcript_text:
+            raise HTTPException(status_code=404, detail="Transcript is empty or contains no text")
+        
+        print(f"Successfully retrieved transcript with {len(transcript_text)} characters")
         
         # Truncate transcript if it's too long (Gemini has a token limit)
         if len(transcript_text) > 30000:
@@ -100,15 +176,42 @@ def get_video_transcript(video_id: str) -> str:
             print(f"Final transcript length: {len(transcript_text)} chars")
             
         return transcript_text
+        
+    except HTTPException:
+        # Re-raise HTTP exceptions as they are
+        raise
     except Exception as e:
-        print(f"Error getting transcript: {str(e)}")
-        raise HTTPException(status_code=404, detail="Could not retrieve video transcript")
+        print(f"Unexpected error getting transcript: {str(e)}")
+        print(f"Error type: {type(e).__name__}")
+        raise HTTPException(status_code=404, detail=f"Could not retrieve video transcript: {str(e)}")
 
 def generate_summary_with_gemini(transcript: str, min_words: Optional[int] = None, max_words: Optional[int] = None) -> dict:
     def create_prompt(target_words: int = None) -> str:
-        base_prompt = f"""
+        # Check if this is a fallback case (title + description only)
+        is_fallback = "Title:" in transcript and "Description:" in transcript and len(transcript) < 5000
+        
+        if is_fallback:
+            base_prompt = f"""
+Please analyze this YouTube video information and provide a comprehensive summary based on the available content. Focus on the main subject matter and key information.
+
+Requirements:
+1. A detailed summary that captures the essential points and main takeaways
+2. 5 key points that highlight the most important aspects
+3. 3-5 actionable items or takeaways
+4. 3-5 final takeaways (conclusions and recommendations)
+5. 3-5 actionable insights (if applicable)
+
+Guidelines:
+- Focus on the main topic and relevant information
+- Include specific details, examples, and explanations
+- Ensure the summary is coherent and well-structured
+- Avoid irrelevant information or tangents
+- Note: This summary is based on video title and description only, as transcript was not available
+"""
+        else:
+            base_prompt = f"""
 Please analyze this YouTube video transcript and provide a comprehensive, topic-focused summary. Focus on the main subject matter and key information.
- 
+
 Requirements:
 1. A detailed summary that captures the essential points and main takeaways
 2. 5 key points that highlight the most important aspects
@@ -122,13 +225,14 @@ Guidelines:
 - Ensure the summary is coherent and well-structured
 - Avoid irrelevant information or tangents
 """
+        
         if target_words:
             base_prompt += f"\nIMPORTANT: The summary MUST be approximately {target_words} words long. "
             base_prompt += "Expand on the details and examples to reach this length while maintaining quality and relevance."
 
         base_prompt += f"""
 
-Transcript: {transcript}
+Content: {transcript}
 
 IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
 {{
@@ -199,7 +303,12 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
 
     def generate_with_prompt(prompt: str) -> dict:
         # Initialize Gemini model
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        try:
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            print("Gemini model initialized successfully")
+        except Exception as e:
+            print(f"Error initializing Gemini model: {str(e)}")
+            raise ValueError(f"Failed to initialize Gemini model: {str(e)}")
         
         max_retries = 3
         base_delay = 2  # Base delay in seconds
@@ -207,10 +316,15 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
 
         for attempt in range(max_retries):
             try:
+                print(f"Attempting Gemini API call (attempt {attempt + 1}/{max_retries})")
+                
                 # Generate content with Gemini
                 response = model.generate_content(prompt)
                 
-                if response and response.text:
+                print(f"Gemini response received: {type(response)}")
+                print(f"Response has text: {hasattr(response, 'text')}")
+                
+                if response and hasattr(response, 'text') and response.text:
                     content = response.text.strip()
                     print(f"Raw response content: {content[:200]}...")  # Log first 200 chars for debugging
                     
@@ -282,11 +396,14 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
                     summary_data["takeaways"] = [takeaway.strip() for takeaway in summary_data["takeaways"] if takeaway.strip()]
                     summary_data["actionable_insights"] = [insight.strip() for insight in summary_data["actionable_insights"] if insight.strip()]
                     
+                    print("Successfully parsed and validated summary data")
                     return summary_data
                 else:
+                    print(f"Empty or invalid response from Gemini: {response}")
                     raise ValueError("Empty response from Gemini")
                 
             except Exception as e:
+                print(f"Error in attempt {attempt + 1}: {str(e)}")
                 if attempt == max_retries - 1:  # Last attempt
                     print(f"Final attempt failed: {str(e)}")
                     raise ValueError(f"Failed to generate summary after {max_retries} attempts: {str(e)}")
@@ -405,6 +522,39 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
         raise ValueError(f"Failed to generate summary: {str(e)}")
 
 # Routes
+@app.get("/test-gemini")
+async def test_gemini():
+    """Test endpoint to verify Gemini API is working"""
+    try:
+        # Test Gemini API
+        model = genai.GenerativeModel('gemini-1.5-flash')
+        response = model.generate_content("Hello, please respond with 'Gemini API is working!'")
+        
+        if response and hasattr(response, 'text') and response.text:
+            return {"status": "success", "message": "Gemini API is working!", "response": response.text}
+        else:
+            return {"status": "error", "message": "Empty response from Gemini API"}
+            
+    except Exception as e:
+        return {"status": "error", "message": f"Gemini API test failed: {str(e)}"}
+
+@app.get("/test-transcript/{video_id}")
+async def test_transcript(video_id: str):
+    """Test endpoint to check if a video has transcripts available"""
+    try:
+        # Try to get transcript
+        transcript = get_video_transcript(video_id)
+        return {
+            "status": "success", 
+            "message": "Transcript available", 
+            "transcript_length": len(transcript),
+            "preview": transcript[:200] + "..." if len(transcript) > 200 else transcript
+        }
+    except HTTPException as e:
+        return {"status": "error", "message": e.detail}
+    except Exception as e:
+        return {"status": "error", "message": f"Unexpected error: {str(e)}"}
+
 @app.get("/search-videos", response_model=SearchResponse)
 async def search_videos(
     query: str = Query(..., description="Search term for YouTube videos"),
@@ -585,57 +735,92 @@ async def summarize_videos(request: SummaryRequest):
         min_words = request.min_words
         max_words = request.max_words
         
-        print(f"Generating summary for video: {video_id} with word count range: {min_words}-{max_words}")
+        print(f"=== Starting summary generation for video: {video_id} ===")
+        print(f"Word count range: {min_words}-{max_words}")
         
         try:
             # Get video details
+            print("Getting video details...")
             video_response = youtube.videos().list(
                 part="snippet",
                 id=video_id
             ).execute()
             
             if not video_response.get('items'):
+                print("Video not found in YouTube API")
                 return SummaryResponse(summaries=[], message="Video not found")
             
             video_title = video_response['items'][0]['snippet']['title']
+            video_description = video_response['items'][0]['snippet'].get('description', '')
             print(f"Found video: {video_title}")
+            print(f"Video description length: {len(video_description)} characters")
             
             # Get transcript
+            transcript = None
             try:
+                print("Attempting to get transcript...")
                 transcript = get_video_transcript(video_id)
                 print(f"Successfully retrieved transcript for video: {video_id}")
+                print(f"Transcript length: {len(transcript)} characters")
             except HTTPException as e:
-                print(f"Error getting transcript: {str(e)}")
-                return SummaryResponse(summaries=[], message=str(e.detail))
+                print(f"HTTP Exception getting transcript: {str(e)}")
+                # Try fallback with video title and description
+                print("Attempting fallback with video title and description...")
+                fallback_content = f"Title: {video_title}\n\nDescription: {video_description}"
+                if len(fallback_content) > 100:  # Only use fallback if we have meaningful content
+                    transcript = fallback_content
+                    print(f"Using fallback content with {len(transcript)} characters")
+                else:
+                    return SummaryResponse(summaries=[], message=str(e.detail))
             except Exception as e:
                 print(f"Unexpected error getting transcript: {str(e)}")
-                return SummaryResponse(summaries=[], message="Could not retrieve video transcript")
+                print(f"Error type: {type(e).__name__}")
+                # Try fallback with video title and description
+                print("Attempting fallback with video title and description...")
+                fallback_content = f"Title: {video_title}\n\nDescription: {video_description}"
+                if len(fallback_content) > 100:  # Only use fallback if we have meaningful content
+                    transcript = fallback_content
+                    print(f"Using fallback content with {len(transcript)} characters")
+                else:
+                    return SummaryResponse(summaries=[], message=f"Could not retrieve video transcript: {str(e)}")
             
             # Generate summary
             try:
+                print("Starting Gemini summary generation...")
                 summary_data = generate_summary_with_gemini(transcript, min_words, max_words)
                 print(f"Successfully generated summary data for video: {video_id}")
+                print(f"Summary length: {len(summary_data.get('summary', ''))} characters")
+                print(f"Key points count: {len(summary_data.get('key_points', []))}")
             except Exception as e:
                 print(f"Error generating summary: {str(e)}")
+                print(f"Error type: {type(e).__name__}")
                 return SummaryResponse(summaries=[], message=f"Failed to generate summary: {str(e)}")
             
-            summary = VideoSummary(
-                video_id=video_id,
-                title=video_title,
-                summary=summary_data["summary"],
-                key_points=summary_data["key_points"],
-                action_items=summary_data["action_items"],
-                takeaways=summary_data["takeaways"],
-                actionable_insights=summary_data["actionable_insights"]
-            )
-            
-            print(f"Successfully created summary object for video: {video_id}")
-            return SummaryResponse(summaries=[summary])
+            # Create summary object
+            try:
+                summary = VideoSummary(
+                    video_id=video_id,
+                    title=video_title,
+                    summary=summary_data["summary"],
+                    key_points=summary_data["key_points"],
+                    action_items=summary_data["action_items"],
+                    takeaways=summary_data["takeaways"],
+                    actionable_insights=summary_data["actionable_insights"]
+                )
+                
+                print(f"Successfully created summary object for video: {video_id}")
+                print("=== Summary generation completed successfully ===")
+                return SummaryResponse(summaries=[summary])
+            except Exception as e:
+                print(f"Error creating summary object: {str(e)}")
+                return SummaryResponse(summaries=[], message=f"Error creating summary object: {str(e)}")
             
         except Exception as e:
             print(f"Error processing video {video_id}: {str(e)}")
+            print(f"Error type: {type(e).__name__}")
             return SummaryResponse(summaries=[], message=f"Error processing video: {str(e)}")
             
     except Exception as e:
         print(f"Top level error in summarize_videos: {str(e)}")
+        print(f"Error type: {type(e).__name__}")
         raise HTTPException(status_code=500, detail=str(e))
