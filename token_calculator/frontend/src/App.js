@@ -19,7 +19,7 @@ function App() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-single-pdf', {
+      const response = await fetch('http://localhost:8000/api/calculate-single-pdf', {
         method: 'POST',
         body: formData,
       });
