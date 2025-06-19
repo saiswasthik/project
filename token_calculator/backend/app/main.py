@@ -13,6 +13,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for deployment testing."""
+    return {"status": "healthy", "message": "PDF Token Calculator is running"}
+
 # Include routers
 app.include_router(pdf_routes.router, prefix="/api", tags=["pdf"])
 
