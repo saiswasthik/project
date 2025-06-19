@@ -19,10 +19,11 @@ function App() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-single-pdf', {
+      const response = await fetch('https://llm-token-calculator.onrender.com', {
         method: 'POST',
         body: formData,
       });
+      // for local host "http://localhost:8000/api/calculate-single-pdf"
 
       if (!response.ok) {
         throw new Error('Failed to process PDF');
@@ -61,10 +62,11 @@ function App() {
     });
 
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-folder', {
+      const response = await fetch('https://llm-token-calculator.onrender.com', {
         method: 'POST',
         body: formData,
       });
+      // for local host "http://localhost:8000/api/calculate-folder"
 
       if (!response.ok) {
         throw new Error('Failed to process PDFs');
