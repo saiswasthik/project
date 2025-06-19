@@ -35,7 +35,7 @@ Install packages individually in Render dashboard:
 
 1. Set build command to:
    ```bash
-   cd backend && pip install fastapi==0.88.0 uvicorn==0.20.0 python-dotenv==0.21.1 requests==2.28.2 youtube-transcript-api==0.6.1 google-api-python-client==2.86.0 google-generativeai==0.2.0 pydantic==1.10.4
+   cd backend && pip install fastapi==0.78.0 uvicorn==0.17.6 python-dotenv==0.20.0 requests==2.28.1 youtube-transcript-api==0.6.1 google-api-python-client==2.54.0 google-generativeai==0.1.0 pydantic==1.9.1
    ```
 
 ### Solution 4: Use Docker (Alternative)
@@ -49,14 +49,14 @@ If the above solutions don't work:
 
 These specific versions are known to work on Render without Rust compilation:
 
-- `fastapi==0.88.0`
-- `uvicorn==0.20.0`
-- `python-dotenv==0.21.1`
-- `requests==2.28.2`
+- `fastapi==0.78.0`
+- `uvicorn==0.17.6`
+- `python-dotenv==0.20.0`
+- `requests==2.28.1`
 - `youtube-transcript-api==0.6.1`
-- `google-api-python-client==2.86.0`
-- `google-generativeai==0.2.0`
-- `pydantic==1.10.4`
+- `google-api-python-client==2.54.0`
+- `google-generativeai==0.1.0`
+- `pydantic==1.9.1`
 
 ## Environment Variables
 
@@ -76,6 +76,7 @@ Once deployed, test these endpoints:
 1. **Build Timeout**: Use the minimal requirements
 2. **Memory Issues**: Upgrade to paid plan if needed
 3. **Port Issues**: Make sure app listens on `0.0.0.0` and uses `$PORT`
+4. **FastAPI/Pydantic Compatibility**: Use the versions listed above
 
 ## Alternative Deployment Platforms
 
