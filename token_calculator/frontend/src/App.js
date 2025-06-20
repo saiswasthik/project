@@ -19,7 +19,7 @@ function App() {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-single-pdf', {
+      const response = await fetch('https://llm-token-calculator-phi.vercel.app/api/calculate-single-pdf', {
         method: 'POST',
         body: formData,
       });
@@ -61,7 +61,7 @@ function App() {
     });
 
     try {
-      const response = await fetch('https://llm-token-calculator.onrender.com/api/calculate-folder', {
+      const response = await fetch('https://llm-token-calculator-phi.vercel.app/api/calculate-folder', {
         method: 'POST',
         body: formData,
       });

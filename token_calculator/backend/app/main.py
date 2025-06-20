@@ -8,7 +8,7 @@ app = FastAPI(title="PDF Token Calculator")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[ "http://localhost:3000",
-            "https://llm-token-calculator.onrender.com"],  # React app URL for local host "http://localhost:3000",
+            "https://llm-token-calculator-phi.vercel.app"],  # React app URL for local host "http://localhost:3000",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"], 
