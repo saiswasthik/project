@@ -14,7 +14,7 @@ PyPDF2==3.0.1
 
 # Audio Processing
 pydub==0.25.1
-numpy==1.24.3
+numpy==1.22.0
 
 # Voice Cloning (Resemble AI)
 # resemble-python==1.0.0
