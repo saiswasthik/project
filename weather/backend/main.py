@@ -21,7 +21,7 @@ app = FastAPI(title="Weather API", description="Weather forecast API with AI-gen
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # In production, specify your frontend URL
+    allow_origins=["https://ai-weather-prediction.vercel.app"],  # In local host"http://localhost:3000",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

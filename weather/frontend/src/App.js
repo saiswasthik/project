@@ -15,7 +15,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const response = await fetch(`http://127.0.0.1:8000/weather/${encodeURIComponent(searchCity.trim())}`);
+      const response = await fetch(`https://ai-weather-prediction.onrender.com/weather/${encodeURIComponent(searchCity.trim())}`);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: 'An unknown API error occurred.' }));
         throw new Error(errorData.error || 'City not found or API error');
