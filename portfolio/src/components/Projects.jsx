@@ -3,77 +3,74 @@ import React, { useState } from "react";
 // const categories = ["All", "Web Apps", "Mobile", "API", "AI/ML"];
 const projects = [
   {
-    title: "E-Commerce Platform",
+    title: "AI-Stock-Market Research ",
     category: "Web Apps",
     description:
-      "A full-featured e-commerce platform built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard.",
-    tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
+      "An AI-driven stock analysis platform built with python, React, FastAPI, and Gemini LLM. Features include stock screening, fundamental insights, sentiment analysis, and investment recommendations..",
+    tags: ["Python", "React", "FastAPI", "Gemini LLM"],
     image:
       "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=300&q=80",
-    featured: true,
-    demo: "https://example.com/demo1",
+    featured: false,
+    demo: "https://project-hvgn.vercel.app/",
     code: "https://github.com/",
   },
   {
-    title: "Task Management Mobile App",
-    category: "Mobile",
-    description:
-      "A collaborative task management application with real-time updates, team collaboration features, and project tracking capabilities.",
-    tags: ["React Native", "Firebase", "TypeScript", "Redux"],
+    title: "AI-Youtube-Summerizer",
+    category: "Web Apps",
+    description:"A YouTube summarizer built with Python, FastAPI, React, and Gemini LLM. It fetches videos via the YouTube API and generates concise summaries within a selected word limit.",
+    tags: ["Python", "FastAPI", "React", "Gemini LLM"],
     image:
       "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=facearea&w=400&h=300&q=80",
     featured: false,
-    demo: "https://example.com/demo2",
+    demo: "https://ai-youtube-summerizer.vercel.app/",
     code: "https://github.com/",
   },
   {
-    title: "AI-Powered Analytics Dashboard",
+    title: "LLM-Token-Calculator",
     category: "AI/ML",
-    description:
-      "An intelligent analytics platform using machine learning for predictive insights and automated reporting.",
-    tags: ["Python", "TensorFlow", "React", "D3.js"],
+    description:"An LLM tokenizer built with Python and React. Upload a PDF to calculate token count and estimate processing time based on LLM token limits—helpful for identifying large documents.",
+    tags: ["Python", "React"],
     image:
       "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=400&h=300&q=80",
-    featured: true,
-    demo: "https://example.com/demo3",
+    featured: false,
+    demo: "https://llm-token-calculator-phi.vercel.app/",
     code: "https://github.com/",
   },
   {
-    title: "RESTful API Service",
-    category: "API",
+    title: "AI-weather-prediction",
+    category: "Web Apps",
     description:
-      "A robust microservices architecture with comprehensive API documentation, rate limiting, and monitoring.",
-    tags: ["Node.js", "Express", "MongoDB", "Docker"],
+      "An AI-powered weather app built with Python and React. Uses Gemini and a weather API to provide today's weather and intelligent forecasts.",
+    tags: ["Python", "FastAPI", "React", "Gemini LLM"],
     image:
       "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=400&h=300&q=80",
     featured: false,
-    demo: "https://example.com/demo4",
+    demo: "https://ai-weather-prediction.vercel.app/",
     code: "https://github.com/",
   },
   {
-    title: "Real-time Chat Application",
+    title: "AI-Voice-Clone",
     category: "Web Apps",
-    description:
-      "A modern chat application with real-time messaging, file sharing, and video calling capabilities.",
-    tags: ["React", "Socket.io", "WebRTC", "Redis"],
+    description:"A voice cloning app using Python and React. Upload a voice sample and a PDF — the extracted text is read aloud in the cloned voice.",
+    tags: ["Python", "React", "TTS", "PDF Extraction", "Voice Cloning"],
     image:
       "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=400&h=300&q=80",
     featured: false,
-    demo: "https://example.com/demo5",
+    demo: "https://ai-voice-clone-nine.vercel.app/",
     code: "https://github.com/",
   },
-  {
-    title: "Blockchain Voting System",
-    category: "Web Apps",
-    description:
-      "A secure voting platform built on blockchain technology ensuring transparency and immutability.",
-    tags: ["Solidity", "Web3.js", "React", "Ethereum"],
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=facearea&w=400&h=300&q=80",
-    featured: true,
-    demo: "https://example.com/demo6",
-    code: "https://github.com/",
-  },
+  // {
+  //   title: "Blockchain Voting System",
+  //   category: "Web Apps",
+  //   description:
+  //     "A secure voting platform built on blockchain technology ensuring transparency and immutability.",
+  //   tags: ["Solidity", "Web3.js", "React", "Ethereum"],
+  //   image:
+  //     "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=facearea&w=400&h=300&q=80",
+  //   featured: false,
+  //   demo: "https://example.com/demo6",
+  //   code: "https://github.com/",
+  // },
 ];
 
 const Projects = () => {
