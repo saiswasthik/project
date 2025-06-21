@@ -8,8 +8,7 @@ const projects = [
     description:
       "An AI-driven stock analysis platform built with python, React, FastAPI, and Gemini LLM. Features include stock screening, fundamental insights, sentiment analysis, and investment recommendations..",
     tags: ["Python", "React", "FastAPI", "Gemini LLM"],
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=facearea&w=400&h=300&q=80",
+    image:"https://www.damcogroup.com/wp-content/uploads/2023/10/stock-market-prediction-using-ai.jpg",
     featured: false,
     demo: "https://project-hvgn.vercel.app/",
     code: "https://github.com/",
@@ -19,8 +18,7 @@ const projects = [
     category: "Web Apps",
     description:"A YouTube summarizer built with Python, FastAPI, React, and Gemini LLM. It fetches videos via the YouTube API and generates concise summaries within a selected word limit.",
     tags: ["Python", "FastAPI", "React", "Gemini LLM"],
-    image:
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=facearea&w=400&h=300&q=80",
+    image:"youtube summerizer.png",
     featured: false,
     demo: "https://ai-youtube-summerizer.vercel.app/",
     code: "https://github.com/",
@@ -30,8 +28,7 @@ const projects = [
     category: "AI/ML",
     description:"An LLM tokenizer built with Python and React. Upload a PDF to calculate token count and estimate processing time based on LLM token limits—helpful for identifying large documents.",
     tags: ["Python", "React"],
-    image:
-      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=facearea&w=400&h=300&q=80",
+    image:"llm.png",
     featured: false,
     demo: "https://llm-token-calculator-phi.vercel.app/",
     code: "https://github.com/",
@@ -42,8 +39,7 @@ const projects = [
     description:
       "An AI-powered weather app built with Python and React. Uses Gemini and a weather API to provide today's weather and intelligent forecasts.",
     tags: ["Python", "FastAPI", "React", "Gemini LLM"],
-    image:
-      "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=facearea&w=400&h=300&q=80",
+    image:"https://coingeek.com/wp-content/uploads/2023/11/Set-of-3D-glassmorphism-weather-forecast-app-template-Interface-design-kit-jpg.webp",
     featured: false,
     demo: "https://ai-weather-prediction.vercel.app/",
     code: "https://github.com/",
@@ -53,8 +49,7 @@ const projects = [
     category: "Web Apps",
     description:"A voice cloning app using Python and React. Upload a voice sample and a PDF — the extracted text is read aloud in the cloned voice.",
     tags: ["Python", "React", "TTS", "PDF Extraction", "Voice Cloning"],
-    image:
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=facearea&w=400&h=300&q=80",
+    image:"https://cbx57v6vu4bo.wpcdn.shift8cdn.com/wp-content/uploads/2025/02/Hybrid-Vishing-Attacks.jpg",
     featured: false,
     demo: "https://ai-voice-clone-nine.vercel.app/",
     code: "https://github.com/",
