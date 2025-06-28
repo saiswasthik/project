@@ -158,7 +158,7 @@ function App() {
 
   const fetchOverallSummary = async (topicToSummarize) => {
     try {
-      const response = await fetch('http://localhost:8000/generate-summary', {
+      const response = await fetch('https://ai-coversation.onrender.com/generate-summary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic: topicToSummarize }),
@@ -207,7 +207,8 @@ function App() {
     setError('');
     
     try {
-      const response = await fetch('http://localhost:8000/generate-dialog', {
+      const response = await fetch('https://ai-coversation.onrender.com/generate-dialog', {
+        // http://localhost:8000/generate-dialog // For local testing
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic }),
