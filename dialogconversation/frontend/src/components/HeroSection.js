@@ -73,15 +73,15 @@ const HeroSection = ({ topic, setTopic, onGenerate }) => {
       <div className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-purple-600 to-blue-600 mb-4">AI Learning Companion</div>
       <div className="text-xl text-gray-600 mb-8">Transform any topic into engaging conversations with AI-powered learning experiences</div>
       <div className="flex justify-center space-x-12 mb-8">
-        <span className="flex items-center space-x-3 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer px-4 py-2 rounded-lg bg-white/50">
+        <span className="flex items-center space-x-3 ">
           <span className="w-3 h-3 bg-blue-500 rounded-full inline-block"></span> 
           <span>Interactive Dialogues</span>
         </span>
-        <span className="flex items-center space-x-3 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer px-4 py-2 rounded-lg bg-white/50">
+        <span className="flex items-center space-x-3">
           <span className="w-3 h-3 bg-purple-500 rounded-full inline-block"></span> 
           <span>Voice Input</span>
         </span>
-        <span className="flex items-center space-x-3 hover:scale-105 hover:shadow-lg transition-all duration-200 cursor-pointer px-4 py-2 rounded-lg bg-white/50">
+        <span className="flex items-center space-x-3 ">
           <span className="w-3 h-3 bg-green-500 rounded-full inline-block"></span> 
           <span>Instant Generation</span>
         </span>
