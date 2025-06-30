@@ -42,7 +42,7 @@ const LibrarySidebar = ({ history, onSelectTopic, loading, onDebugReload, userCo
     </div>
     
     {/* Scrollable Topics Section */}
-    <div className="flex-1 overflow-y-auto mb-2">
+    <div className="flex-1 overflow-y-auto mb-2 min-h-40">
       <div className="space-y-3">
         {loading ? (
           <div className="text-center py-8">
