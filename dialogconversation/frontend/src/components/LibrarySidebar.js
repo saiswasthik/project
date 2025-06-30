@@ -26,18 +26,18 @@ const LibrarySidebar = ({ history, onSelectTopic, loading, onDebugReload, userCo
         >
           Reload Data
         </button>
-        <button 
+        {/* <button 
           onClick={() => window.testFirebaseConnection && window.testFirebaseConnection()}
           className="text-xs bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 transition-colors"
         >
           Test Firebase
-        </button>
-        <button 
+        </button> */}
+        {/* <button 
           onClick={() => window.handleTestProgressive && window.handleTestProgressive()}
           className="text-xs bg-green-500 text-white px-2 py-1 rounded hover:bg-green-600 transition-colors"
         >
           Test Progressive
-        </button>
+        </button> */}
       </div>
     </div>
     
@@ -45,24 +45,24 @@ const LibrarySidebar = ({ history, onSelectTopic, loading, onDebugReload, userCo
     <div className="flex-1 overflow-y-auto mb-2">
       <div className="space-y-3">
         {loading ? (
-      <div className="text-center py-8">Loading...</div>
-    ) : Array.isArray(history) && history.length > 0 ? (
-      history.map((topic, idx) => (
-        <div
-          key={idx}
-          className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg cursor-pointer hover:bg-blue-100 hover:border-blue-600 hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
-          onClick={() => onSelectTopic(topic)}
-        >
-          <div className="font-medium text-gray-800">{topic}</div>
-          <div className="text-xs text-gray-500 mt-1">Click to view conversation</div>
-          <div className="text-xs text-blue-600 mt-1">✓ Saved to your account</div>
-        </div>
-      ))
-    ) : (
-      <div className="text-gray-400 text-center py-8">No conversations yet.</div>
-    )}
-
-          {/* <div className="text-gray-400 text-center py-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-200 border border-gray-200">
+          <div className="text-center py-8">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+            <div className="text-gray-500">Loading your conversations...</div>
+          </div>
+        ) : history && history.length > 0 ? (
+          history.map((topic, idx) => (
+            <div
+              key={idx}
+              className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg cursor-pointer hover:bg-blue-100 hover:border-blue-600 hover:shadow-xl transition-all duration-200 transform hover:scale-[1.02]"
+              onClick={() => onSelectTopic(topic)}
+            >
+              <div className="font-medium text-gray-800">{topic}</div>
+              <div className="text-xs text-gray-500 mt-1">Click to view conversation</div>
+              <div className="text-xs text-blue-600 mt-1">✓ Saved to your account</div>
+            </div>
+          ))
+        ) : (
+          <div className="text-gray-400 text-center py-8 bg-gray-50 rounded-lg hover:shadow-lg transition-shadow duration-200 border border-gray-200">
             <div className="text-2xl mb-2">📚</div>
             <div className="text-sm">No conversations yet.</div>
             <div className="text-xs mt-1">Generate your first conversation to see it here.</div>
@@ -70,7 +70,7 @@ const LibrarySidebar = ({ history, onSelectTopic, loading, onDebugReload, userCo
               Your conversations will be saved and available when you log back in.
             </div>
           </div>
-        )} */}
+        )}
       </div>
     </div>
     
