@@ -120,13 +120,13 @@ async def upload_and_process_pdf(pdf_file: UploadFile = File(...)):
         if isinstance(audio_data, dict):
             print(f"Audio result is dict with keys: {list(audio_data.keys())}")
             if audio_data.get("status") == "success" and audio_data.get("path"):
-                audio_url = f"https://conversation-m77i.onrender.com/temp_audio/{os.path.basename(audio_data['path'])}"
+                audio_url = f"http://localhost:8000/temp_audio/{os.path.basename(audio_data['path'])}"
                 print(f"Audio URL constructed: {audio_url}")
             else:
                 print(f"Audio result status: {audio_data.get('status')}, path: {audio_data.get('path')}")
                 audio_url = None
         elif isinstance(audio_data, str) and os.path.exists(audio_data):
-            audio_url = f"https://conversation-m77i.onrender.com/temp_audio/{os.path.basename(audio_data)}"
+            audio_url = f"http://localhost:8000/temp_audio/{os.path.basename(audio_data)}"
             print(f"Audio URL from string: {audio_url}")
         else:
             print(f"Audio result is not dict or existing file: {type(audio_data)}")
@@ -561,7 +561,7 @@ async def process_url_endpoint(url: str = Body(..., embed=True)):
                 
                 # Handle the audio result
                 if isinstance(audio_data, dict) and audio_data.get("status") == "success":
-                    audio_url = f"https://conversation-m77i.onrender.com/temp_audio/{os.path.basename(audio_data['path'])}"
+                    audio_url = f"http://localhost:8000/temp_audio/{os.path.basename(audio_data['path'])}"
                     print(f"Audio URL: {audio_url}")
                 else:
                     audio_url = None
