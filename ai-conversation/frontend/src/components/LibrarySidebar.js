@@ -82,10 +82,10 @@ const LibrarySidebar = ({ history, onSelectTopic, loading, onDebugReload, userCo
       </div>
       <ul className="text-sm list-disc pl-5 space-y-2 text-gray-700">
         <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Click any topic to view its interactive conversation</li>
-        <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Use play controls to follow along with the dialogue</li>
+        {/* <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Use play controls to follow along with the dialogue</li> */}
         <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Generate multiple topics to build your knowledge base</li>
-        <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Your conversations are saved and synced across devices</li>
-        <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Log out and back in to see your data persistence</li>
+        {/* <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Your conversations are saved and synced across devices</li> */}
+        {/* <li className="hover:text-purple-700 hover:shadow-sm transition-all duration-200 px-2 py-1 rounded">Log out and back in to see your data persistence</li> */}
       </ul>
     </div>
   </div>
