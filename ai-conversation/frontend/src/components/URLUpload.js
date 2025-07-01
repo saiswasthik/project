@@ -25,7 +25,7 @@ const URLUpload = ({ onURLProcessed }) => {
     try {
       console.log('Processing URL:', url);
       
-      const response = await fetch('http://localhost:8000/process-url', {
+      const response = await fetch('https://conversation-m77i.onrender.com/process-url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -109,7 +109,7 @@ const URLUpload = ({ onURLProcessed }) => {
       const testURL = "https://en.wikipedia.org/wiki/Artificial_intelligence";
       console.log('Testing with real URL:', testURL);
       
-      const response = await fetch('http://localhost:8000/process-url', {
+      const response = await fetch('https://conversation-m77i.onrender.com/process-url', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

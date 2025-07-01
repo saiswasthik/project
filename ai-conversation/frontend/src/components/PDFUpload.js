@@ -69,7 +69,7 @@ const PDFUpload = ({ onPDFProcessed, loading, setLoading, setError }) => {
       }, 200);
 
       console.log('Sending request to backend...');
-      const response = await fetch('http://localhost:8000/upload-pdf', {
+      const response = await fetch('https://conversation-m77i.onrender.com/upload-pdf', {
         method: 'POST',
         body: formData,
       });
