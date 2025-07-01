@@ -5,6 +5,7 @@ import json
 from services.gemini import generate_summary
 
 router = APIRouter()
+RENDER_BASE_URL= "https://conversation-m77i.onrender.com"
 
 def calculate_line_timings(script_json):
     """
@@ -127,11 +128,11 @@ def generate_dialog_endpoint(topic: str = Body(..., embed=True)):
         audio_url = None
         if isinstance(audio_result, dict):
             if audio_result.get("status") == "success" and audio_result.get("path"):
-                audio_url = f"https://conversation-m77i.onrender.com/temp_audio/{os.path.basename(audio_result['path'])}"
+                audio_url = f"{RENDER_BASE_URL}/temp_audio/{os.path.basename(audio_result['path'])}"
             else:
                 audio_url = None
         elif isinstance(audio_result, str) and os.path.exists(audio_result):
-            audio_url = f"https://conversation-m77i.onrender.com/temp_audio/{os.path.basename(audio_result)}"
+            audio_url = f"{RENDER_BASE_URL}/temp_audio/{os.path.basename(audio_result)}"
         else:
             audio_url = audio_result
 
