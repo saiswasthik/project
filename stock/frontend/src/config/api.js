@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://127.0.0.1:8000/api';
+const API_BASE_URL = 'https://stock-market-live-data.onrender.com/api';
 
 export const fetchFundamentalData = async (symbol) => {
   const response = await fetch(`${API_BASE_URL}/fundamental/${encodeURIComponent(symbol)}`);
