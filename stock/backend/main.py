@@ -17,7 +17,7 @@ app = FastAPI(title="Stock Market Research API", version="1.0.0")
 # Configure CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://stockmarketlivedata.vercel.app"],  # Frontend URLs
+    allow_origins=["https://stockmarketlivedata.vercel.app/"],  # Frontend URLs
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods
     allow_headers=["*"],  # Allows all headers
