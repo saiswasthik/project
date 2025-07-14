@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 from typing import Dict, Any
 import logging
-from services.enhanced_data_service import clean_data_service
+from services.enhanced_data_service import CleanDataService
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -19,6 +19,7 @@ async def get_fundamental_data(symbol: str) -> Dict[str, Any]:
         logger.info(f"Fetching fundamental data for {symbol}")
         
         # Get real data from clean service
+        clean_data_service = CleanDataService()
         data = clean_data_service.get_stock_data(symbol)
         
         if data is None:
@@ -46,7 +47,8 @@ async def get_stock_quote(symbol: str):
         logger.info(f"Fetching stock quote for symbol: {symbol}")
         
         # Use the enhanced data service for real-time quotes from multiple sources
-        quote_data = enhanced_data_service.get_stock_quote(symbol)
+        clean_data_service = CleanDataService()
+        quote_data = clean_data_service.get_stock_data(symbol)  # Using get_stock_data as fallback
         
         logger.info(f"Successfully fetched quote for {symbol} from {quote_data.get('source', 'Unknown')}")
         return quote_data
@@ -64,7 +66,14 @@ async def get_historical_data(symbol: str, interval: str = "1D", from_date: str 
         logger.info(f"Fetching historical data for symbol: {symbol}")
         
         # Use the enhanced data service for historical data
-        historical_data = enhanced_data_service.get_historical_data(symbol, interval, from_date, to_date)
+        clean_data_service = CleanDataService()
+        # For now, return basic historical data structure
+        historical_data = {
+            "symbol": symbol,
+            "interval": interval,
+            "message": "Historical data endpoint under development",
+            "data": []
+        }
         
         logger.info(f"Successfully fetched historical data for {symbol}")
         return historical_data
@@ -101,7 +110,20 @@ async def get_company_info(symbol: str):
         logger.info(f"Fetching company info for symbol: {symbol}")
         
         # Use the enhanced data service for company information
-        company_info = enhanced_data_service.get_company_info(symbol)
+        clean_data_service = CleanDataService()
+        stock_data = clean_data_service.get_stock_data(symbol)
+        if stock_data:
+            company_info = {
+                "symbol": symbol,
+                "name": stock_data.get("company_name", "N/A"),
+                "sector": stock_data.get("sector", "N/A"),
+                "industry": stock_data.get("industry", "N/A"),
+                "description": stock_data.get("long_business_summary", "N/A"),
+                "website": stock_data.get("website", "N/A"),
+                "employees": stock_data.get("full_time_employees", "N/A")
+            }
+        else:
+            company_info = {"error": f"No data found for {symbol}"}
         
         logger.info(f"Successfully fetched company info for {symbol}")
         return company_info
