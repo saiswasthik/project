@@ -1,4 +1,8 @@
-const API_BASE_URL = 'https://stock-market-live-data.onrender.com/api';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
+  (import.meta.env.PROD 
+    ? 'https://stock-market-live-data.onrender.com/api'
+    : 'http://127.0.0.1:8000/api'
+  );
 
 export const fetchFundamentalData = async (symbol) => {
   const response = await fetch(`${API_BASE_URL}/fundamental/${encodeURIComponent(symbol)}`);
