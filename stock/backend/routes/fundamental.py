@@ -30,7 +30,13 @@ async def get_fundamental_data(symbol: str) -> Dict[str, Any]:
                 "RELIANCE": ["RELIANCE.NS", "RIL.NS", "RELIANCE.BO"],
                 "TCS": ["TCS.NS", "TATACONSULTANCY.NS", "TCS.BO"],
                 "INFY": ["INFY.NS", "INFOSYS.NS", "INFY.BO"],
-                "SBIN": ["SBIN.NS", "STATEBANK.NS", "SBIN.BO"]
+                "SBIN": ["SBIN.NS", "STATEBANK.NS", "SBIN.BO"],
+                "OIL": ["ONGC.NS", "IOC.NS", "BPCL.NS", "HPCL.NS", "GAIL.NS"],
+                "ONGC": ["ONGC.NS", "ONGC.BO"],
+                "IOC": ["IOC.NS", "INDIANOIL.NS", "IOC.BO"],
+                "BPCL": ["BPCL.NS", "BPCL.BO"],
+                "HPCL": ["HPCL.NS", "HPCL.BO"],
+                "GAIL": ["GAIL.NS", "GAIL.BO"]
             }
             
             symbol_upper = symbol.upper()
@@ -110,7 +116,8 @@ async def get_available_symbols():
                 "ITC.NS", "SBIN.NS", "BHARTIARTL.NS", "KOTAKBANK.NS", "AXISBANK.NS", 
                 "ASIANPAINT.NS", "MARUTI.NS", "HCLTECH.NS", "SUNPHARMA.NS", "WIPRO.NS", 
                 "ULTRACEMCO.NS", "TITAN.NS", "BAJFINANCE.NS", "NESTLEIND.NS",
-                "BANKBARODA.NS", "HDFCBANK.NS", "KOTAKBANK.NS", "AXISBANK.NS"
+                "BANKBARODA.NS", "HDFCBANK.NS", "KOTAKBANK.NS", "AXISBANK.NS",
+                "ONGC.NS", "IOC.NS", "BPCL.NS", "HPCL.NS", "GAIL.NS"
             ],
             "note": "Use NSE symbol format. For banks, try variations like BANKBARODA, BANKOFBARODA, or BARODA"
         }

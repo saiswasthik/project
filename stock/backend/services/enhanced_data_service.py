@@ -82,6 +82,16 @@ class CleanDataService:
                 symbol_variations.extend(["RELIANCE.NS", "RELIANCE.BO", "RIL.NS", "RIL.BO"])
             elif symbol.upper() in ["TCS", "TATACONSULTANCY"]:
                 symbol_variations.extend(["TCS.NS", "TCS.BO", "TATACONSULTANCY.NS", "TATACONSULTANCY.BO"])
+            elif symbol.upper() in ["OIL", "ONGC"]:
+                symbol_variations.extend(["ONGC.NS", "ONGC.BO", "OIL.NS", "OIL.BO"])
+            elif symbol.upper() in ["IOC", "INDIANOIL"]:
+                symbol_variations.extend(["IOC.NS", "IOC.BO", "INDIANOIL.NS", "INDIANOIL.BO"])
+            elif symbol.upper() in ["BPCL", "BHARATPETRO"]:
+                symbol_variations.extend(["BPCL.NS", "BPCL.BO", "BHARATPETRO.NS", "BHARATPETRO.BO"])
+            elif symbol.upper() in ["HPCL", "HINDPETRO"]:
+                symbol_variations.extend(["HPCL.NS", "HPCL.BO", "HINDPETRO.NS", "HINDPETRO.BO"])
+            elif symbol.upper() in ["GAIL"]:
+                symbol_variations.extend(["GAIL.NS", "GAIL.BO"])
             
             for symbol_var in symbol_variations:
                 try:
