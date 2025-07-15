@@ -41,7 +41,13 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
         setWatchlist(userWatchlist);
         return;
       } catch (firestoreError) {
-        console.log('Firestore failed, trying localStorage:', firestoreError);
+        // Handle Firebase permission errors gracefully
+        if (firestoreError.message === 'firebase-permission-denied') {
+          console.log('Firebase permissions not set up - using localStorage');
+          showFirebaseSetupMessage();
+        } else {
+          console.log('Firestore failed, trying localStorage:', firestoreError);
+        }
       }
       
       // Fallback to localStorage
@@ -82,6 +88,15 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
     const isWatched = watchlist.some(stock => stock.symbol === symbol);
     console.log('Checking if', symbol, 'is in watchlist:', isWatched);
     return isWatched;
+  };
+
+  // Helper function to show Firebase setup message
+  const showFirebaseSetupMessage = () => {
+    // Only show once per session
+    if (!localStorage.getItem('firebase_setup_message_shown')) {
+      console.log('💡 Firebase Setup Tip: To enable cloud watchlist sync, set up Firebase Authentication and Firestore security rules.');
+      localStorage.setItem('firebase_setup_message_shown', 'true');
+    }
   };
 
   const addToWatchlist = async () => {
@@ -136,7 +151,12 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
         console.log('Add to Firestore watchlist result:', result);
         firestoreSuccess = true;
       } catch (firestoreError) {
-        console.log('Firestore failed, using localStorage:', firestoreError);
+        // Handle Firebase permission errors gracefully
+        if (firestoreError.message === 'firebase-permission-denied') {
+          console.log('Firebase permissions not set up - using localStorage');
+        } else {
+          console.log('Firestore failed, using localStorage:', firestoreError);
+        }
       }
       
       // Fallback to localStorage if Firestore fails
@@ -169,7 +189,12 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
         await removeFromFirestoreWatchlist(user.uid, symbol);
         console.log('Removed from Firestore watchlist');
       } catch (firestoreError) {
-        console.log('Firestore failed, using localStorage:', firestoreError);
+        // Handle Firebase permission errors gracefully
+        if (firestoreError.message === 'firebase-permission-denied') {
+          console.log('Firebase permissions not set up - using localStorage');
+        } else {
+          console.log('Firestore failed, using localStorage:', firestoreError);
+        }
         
         // Fallback to localStorage
         const localWatchlist = JSON.parse(localStorage.getItem(`watchlist_${user.uid}`) || '[]');

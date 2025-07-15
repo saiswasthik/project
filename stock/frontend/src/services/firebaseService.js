@@ -108,6 +108,11 @@ export const addToWatchlist = async (uid, stockData) => {
       return false;
     }
   } catch (error) {
+    // Handle permission errors gracefully
+    if (error.code === 'permission-denied') {
+      console.log('Firebase permission denied - using localStorage fallback');
+      throw new Error('firebase-permission-denied');
+    }
     console.error('Error adding to watchlist:', error);
     console.error('Error details:', error.code, error.message);
     throw error;
@@ -135,6 +140,11 @@ export const removeFromWatchlist = async (uid, symbol) => {
       return false;
     }
   } catch (error) {
+    // Handle permission errors gracefully
+    if (error.code === 'permission-denied') {
+      console.log('Firebase permission denied - using localStorage fallback');
+      throw new Error('firebase-permission-denied');
+    }
     console.error('Error removing from watchlist:', error);
     console.error('Error details:', error.code, error.message);
     throw error;
@@ -159,6 +169,11 @@ export const getUserWatchlist = async (uid) => {
     console.log('Watchlist loaded:', watchlist);
     return watchlist;
   } catch (error) {
+    // Handle permission errors gracefully for new users
+    if (error.code === 'permission-denied') {
+      console.log('Firebase permission denied - user may need to sign in or watchlist not set up yet');
+      return []; // Return empty watchlist instead of throwing error
+    }
     console.error('Error getting user watchlist:', error);
     console.error('Error details:', error.code, error.message);
     throw error;
