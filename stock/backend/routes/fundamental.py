@@ -154,3 +154,79 @@ async def get_company_info(symbol: str):
     except Exception as e:
         logger.error(f"Error fetching company info for {symbol}: {str(e)}")
         raise HTTPException(status_code=500, detail=f"Error fetching company info for {symbol}: {str(e)}") 
+
+@router.get("/suggest-symbol/{query}")
+async def suggest_symbol(query: str):
+    """Suggest correct stock symbols for a search query"""
+    try:
+        query_upper = query.upper()
+        
+        # Symbol suggestions mapping
+        suggestions = {
+            "OIL": [
+                {"symbol": "ONGC.NS", "name": "Oil and Natural Gas Corporation", "description": "Largest oil and gas exploration company"},
+                {"symbol": "IOC.NS", "name": "Indian Oil Corporation", "description": "Largest oil marketing company"},
+                {"symbol": "BPCL.NS", "name": "Bharat Petroleum", "description": "Major oil marketing company"},
+                {"symbol": "HPCL.NS", "name": "Hindustan Petroleum", "description": "Oil marketing and refining company"},
+                {"symbol": "GAIL.NS", "name": "Gas Authority of India", "description": "Natural gas transmission company"}
+            ],
+            "BANK": [
+                {"symbol": "HDFCBANK.NS", "name": "HDFC Bank", "description": "Private sector bank"},
+                {"symbol": "ICICIBANK.NS", "name": "ICICI Bank", "description": "Private sector bank"},
+                {"symbol": "SBIN.NS", "name": "State Bank of India", "description": "Public sector bank"},
+                {"symbol": "KOTAKBANK.NS", "name": "Kotak Mahindra Bank", "description": "Private sector bank"},
+                {"symbol": "AXISBANK.NS", "name": "Axis Bank", "description": "Private sector bank"}
+            ],
+            "TECH": [
+                {"symbol": "TCS.NS", "name": "Tata Consultancy Services", "description": "IT services company"},
+                {"symbol": "INFY.NS", "name": "Infosys", "description": "IT services company"},
+                {"symbol": "WIPRO.NS", "name": "Wipro", "description": "IT services company"},
+                {"symbol": "HCLTECH.NS", "name": "HCL Technologies", "description": "IT services company"},
+                {"symbol": "TECHM.NS", "name": "Tech Mahindra", "description": "IT services company"}
+            ],
+            "PHARMA": [
+                {"symbol": "SUNPHARMA.NS", "name": "Sun Pharmaceutical", "description": "Pharmaceutical company"},
+                {"symbol": "DRREDDY.NS", "name": "Dr. Reddy's Laboratories", "description": "Pharmaceutical company"},
+                {"symbol": "CIPLA.NS", "name": "Cipla", "description": "Pharmaceutical company"},
+                {"symbol": "DIVISLAB.NS", "name": "Divi's Laboratories", "description": "Pharmaceutical company"},
+                {"symbol": "BIOCON.NS", "name": "Biocon", "description": "Biotechnology company"}
+            ]
+        }
+        
+        # Check for exact matches
+        if query_upper in suggestions:
+            return {
+                "query": query,
+                "suggestions": suggestions[query_upper],
+                "message": f"Found {len(suggestions[query_upper])} suggestions for '{query}'"
+            }
+        
+        # Check for partial matches
+        partial_matches = []
+        for category, symbols in suggestions.items():
+            if query_upper in category or category in query_upper:
+                partial_matches.extend(symbols)
+        
+        if partial_matches:
+            return {
+                "query": query,
+                "suggestions": partial_matches[:5],  # Limit to 5 suggestions
+                "message": f"Found {len(partial_matches)} partial matches for '{query}'"
+            }
+        
+        # Return common symbols if no matches
+        return {
+            "query": query,
+            "suggestions": [
+                {"symbol": "RELIANCE.NS", "name": "Reliance Industries", "description": "Conglomerate"},
+                {"symbol": "TCS.NS", "name": "Tata Consultancy Services", "description": "IT services"},
+                {"symbol": "HDFCBANK.NS", "name": "HDFC Bank", "description": "Banking"},
+                {"symbol": "INFY.NS", "name": "Infosys", "description": "IT services"},
+                {"symbol": "ITC.NS", "name": "ITC Limited", "description": "FMCG"}
+            ],
+            "message": f"No specific matches for '{query}'. Here are some popular stocks:"
+        }
+        
+    except Exception as e:
+        logger.error(f"Error suggesting symbols for {query}: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Error suggesting symbols: {str(e)}") 

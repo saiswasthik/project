@@ -65,4 +65,15 @@ export const fetchTopStocksData = async () => {
   }
   
   return response.json();
+};
+
+export const fetchSymbolSuggestions = async (query) => {
+  const response = await fetch(`${API_BASE_URL}/fundamental/suggest-symbol/${encodeURIComponent(query)}`);
+  
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+  }
+  
+  return response.json();
 }; 
