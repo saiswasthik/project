@@ -42,6 +42,19 @@ class CleanDataService:
                 return combined_data
             else:
                 logger.error(f"❌ No data found for {symbol} from any source")
+                
+                # Try with .NS suffix as fallback
+                if not symbol.endswith('.NS'):
+                    logger.info(f"🔄 Trying fallback with .NS suffix for {symbol}")
+                    fallback_symbol = f"{symbol}.NS"
+                    yahoo_data = self._get_yahoo_data(fallback_symbol)
+                    screener_data = self._get_screener_data(fallback_symbol)
+                    combined_data = self._merge_data_sources(yahoo_data, screener_data, fallback_symbol)
+                    
+                    if combined_data:
+                        logger.info(f"✅ Successfully retrieved data for {fallback_symbol}")
+                        return combined_data
+                
                 return None
                 
         except Exception as e:
@@ -51,11 +64,24 @@ class CleanDataService:
     def _get_yahoo_data(self, symbol: str) -> Optional[Dict[str, Any]]:
         """Get data from Yahoo Finance"""
         try:
+            # Common Indian stock symbol variations
             symbol_variations = [
                 f"{symbol}.NS",  # NSE format
                 symbol,
                 f"{symbol}.BO",  # BSE format
+                f"{symbol}.NSE",  # Alternative NSE format
+                f"{symbol}.BSE",  # Alternative BSE format
             ]
+            
+            # Add common variations for specific stocks
+            if symbol.upper() in ["ICICIBANK", "ICICI"]:
+                symbol_variations.extend(["ICICIBANK.NS", "ICICIBANK.BO", "ICICI.NS", "ICICI.BO"])
+            elif symbol.upper() in ["HDFCBANK", "HDFC"]:
+                symbol_variations.extend(["HDFCBANK.NS", "HDFCBANK.BO", "HDFC.NS", "HDFC.BO"])
+            elif symbol.upper() in ["RELIANCE", "RIL"]:
+                symbol_variations.extend(["RELIANCE.NS", "RELIANCE.BO", "RIL.NS", "RIL.BO"])
+            elif symbol.upper() in ["TCS", "TATACONSULTANCY"]:
+                symbol_variations.extend(["TCS.NS", "TCS.BO", "TATACONSULTANCY.NS", "TATACONSULTANCY.BO"])
             
             for symbol_var in symbol_variations:
                 try:

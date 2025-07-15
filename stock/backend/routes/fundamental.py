@@ -23,9 +23,25 @@ async def get_fundamental_data(symbol: str) -> Dict[str, Any]:
         data = clean_data_service.get_stock_data(symbol)
         
         if data is None:
+            # Provide helpful suggestions for common symbols
+            suggestions = {
+                "ICICIBANK": ["ICICIBANK.NS", "ICICI.NS", "ICICIBANK.BO"],
+                "HDFCBANK": ["HDFCBANK.NS", "HDFC.NS", "HDFCBANK.BO"],
+                "RELIANCE": ["RELIANCE.NS", "RIL.NS", "RELIANCE.BO"],
+                "TCS": ["TCS.NS", "TATACONSULTANCY.NS", "TCS.BO"],
+                "INFY": ["INFY.NS", "INFOSYS.NS", "INFY.BO"],
+                "SBIN": ["SBIN.NS", "STATEBANK.NS", "SBIN.BO"]
+            }
+            
+            symbol_upper = symbol.upper()
+            if symbol_upper in suggestions:
+                suggestion_msg = f"Try these variations: {', '.join(suggestions[symbol_upper])}"
+            else:
+                suggestion_msg = "Try adding .NS (NSE) or .BO (BSE) suffix to the symbol"
+            
             raise HTTPException(
                 status_code=404, 
-                detail=f"No real data available for {symbol}. Please check the symbol or try again later."
+                detail=f"No data found for {symbol}. {suggestion_msg}. Common symbols: RELIANCE, TCS, HDFCBANK, INFY, SBIN"
             )
         
         logger.info(f"✅ Successfully retrieved real data for {symbol}")
@@ -90,11 +106,11 @@ async def get_available_symbols():
         return {
             "message": "Any valid Indian stock symbol can be used",
             "examples": [
-                "RELIANCE", "TCS", "HDFC", "INFY", "ICICIBANK", "HINDUNILVR", 
-                "ITC", "SBIN", "BHARTIARTL", "KOTAKBANK", "AXISBANK", 
-                "ASIANPAINT", "MARUTI", "HCLTECH", "SUNPHARMA", "WIPRO", 
-                "ULTRACEMCO", "TITAN", "BAJFINANCE", "NESTLEIND",
-                "BANKBARODA", "HDFCBANK", "KOTAKBANK", "AXISBANK"
+                "RELIANCE.NS", "TCS.NS", "HDFCBANK.NS", "INFY.NS", "ICICIBANK.NS", "HINDUNILVR.NS", 
+                "ITC.NS", "SBIN.NS", "BHARTIARTL.NS", "KOTAKBANK.NS", "AXISBANK.NS", 
+                "ASIANPAINT.NS", "MARUTI.NS", "HCLTECH.NS", "SUNPHARMA.NS", "WIPRO.NS", 
+                "ULTRACEMCO.NS", "TITAN.NS", "BAJFINANCE.NS", "NESTLEIND.NS",
+                "BANKBARODA.NS", "HDFCBANK.NS", "KOTAKBANK.NS", "AXISBANK.NS"
             ],
             "note": "Use NSE symbol format. For banks, try variations like BANKBARODA, BANKOFBARODA, or BARODA"
         }
