@@ -52,8 +52,16 @@ const FundamentalAnalysis = ({ symbol }) => {
   if (error) {
     return (
       <div className="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-8 text-center shadow-lg">
-        <div className="text-red-600 text-xl font-bold mb-3">⚠️ Data Unavailable</div>
-        <div className="text-red-500 mb-6 text-lg">{error}</div>
+        <div className="text-red-600 text-xl font-bold mb-3">⚠️ Symbol Not Found</div>
+        <div className="text-red-500 mb-4 text-lg">{error}</div>
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+          <div className="text-blue-800 font-medium mb-2">💡 Try These Instead:</div>
+          <div className="text-blue-700 text-sm">
+            <p>• Use the search suggestions above (e.g., type "OIL" to see oil companies)</p>
+            <p>• Try popular symbols: RELIANCE.NS, TCS.NS, HDFCBANK.NS, INFY.NS</p>
+            <p>• Add .NS suffix for NSE stocks or .BO for BSE stocks</p>
+          </div>
+        </div>
         <button 
           onClick={fetchData}
           className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"

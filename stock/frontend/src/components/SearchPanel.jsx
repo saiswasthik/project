@@ -23,7 +23,9 @@ const SearchPanel = ({ onSearch }) => {
       if (searchTerm.trim().length >= 2) {
         setLoading(true);
         try {
+          console.log('Fetching suggestions for:', searchTerm.trim());
           const data = await fetchSymbolSuggestions(searchTerm.trim());
+          console.log('Suggestions received:', data);
           setSuggestions(data.suggestions || []);
           setShowSuggestions(true);
         } catch (error) {
@@ -51,6 +53,7 @@ const SearchPanel = ({ onSearch }) => {
   };
 
   const handleSuggestionClick = (symbol) => {
+    console.log('Suggestion clicked:', symbol);
     setSearchTerm(symbol);
     onSearch(symbol);
     setShowSuggestions(false);
