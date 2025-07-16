@@ -1,8 +1,12 @@
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 
   (import.meta.env.PROD 
-    ? 'https://stock.internal.nicefield-a95bbc97.southcentralus.azurecontainerapps.io/api'
+    ? 'https://stock.nicefield-a95bbc97.southcentralus.azurecontainerapps.io/api'
     : 'http://127.0.0.1:8000/api'
   );
+
+console.log('🌐 API_BASE_URL:', API_BASE_URL);
+console.log('🌐 Environment:', import.meta.env.MODE);
+console.log('🌐 VITE_API_BASE_URL:', import.meta.env.VITE_API_BASE_URL);
 
 export const fetchFundamentalData = async (symbol) => {
   const response = await fetch(`${API_BASE_URL}/fundamental/${encodeURIComponent(symbol)}`);
@@ -68,12 +72,21 @@ export const fetchTopStocksData = async () => {
 };
 
 export const fetchSymbolSuggestions = async (query) => {
-  const response = await fetch(`${API_BASE_URL}/fundamental/suggest-symbol/${encodeURIComponent(query)}`);
+  const url = `${API_BASE_URL}/fundamental/suggest-symbol/${encodeURIComponent(query)}`;
+  console.log('🔍 Fetching symbol suggestions from:', url);
+  
+  const response = await fetch(url);
+  
+  console.log('📡 Response status:', response.status);
+  console.log('📡 Response ok:', response.ok);
   
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
+    console.error('❌ Suggestions API error:', errorData);
     throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
   }
   
-  return response.json();
+  const data = await response.json();
+  console.log('✅ Suggestions API success:', data);
+  return data;
 }; 

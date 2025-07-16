@@ -103,6 +103,20 @@ const SearchPanel = ({ onSearch }) => {
               <p>• Use <strong>symbols</strong> with .NS suffix (e.g., "RELIANCE.NS")</p>
             </div>
           </div>
+          <button
+            onClick={async () => {
+              console.log('🧪 Testing suggestions API...');
+              try {
+                const result = await fetchSymbolSuggestions('OIL');
+                console.log('✅ Test successful:', result);
+              } catch (error) {
+                console.error('❌ Test failed:', error);
+              }
+            }}
+            className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+          >
+            Test API
+          </button>
         </div>
       </div>
 
