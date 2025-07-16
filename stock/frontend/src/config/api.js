@@ -2,7 +2,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ||
   (import.meta.env.PROD 
     ? 'https://stock.nicefield-a95bbc97.southcentralus.azurecontainerapps.io/api'
     : 'http://127.0.0.1:8000/api'
-  );
+  ); 
 
 console.log('🌐 API_BASE_URL:', API_BASE_URL);
 console.log('🌐 Environment:', import.meta.env.MODE);
