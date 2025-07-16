@@ -20,7 +20,11 @@ const SearchPanel = ({ onSearch }) => {
   // Fetch symbol suggestions when search term changes
   useEffect(() => {
     const fetchSuggestions = async () => {
+      console.log('🔍 SearchPanel: searchTerm changed to:', searchTerm);
+      console.log('🔍 SearchPanel: searchTerm length:', searchTerm.trim().length);
+      
       if (searchTerm.trim().length >= 2) {
+        console.log('🔍 SearchPanel: Fetching suggestions for:', searchTerm.trim());
         setLoading(true);
         try {
           console.log('🔍 Fetching suggestions for:', searchTerm.trim());
@@ -32,12 +36,14 @@ const SearchPanel = ({ onSearch }) => {
           console.error('❌ Error fetching suggestions:', error);
           // Show fallback suggestions for common terms
           const fallbackSuggestions = getFallbackSuggestions(searchTerm.trim());
+          console.log('🔄 Using fallback suggestions:', fallbackSuggestions);
           setSuggestions(fallbackSuggestions);
           setShowSuggestions(true);
         } finally {
           setLoading(false);
         }
       } else {
+        console.log('🔍 SearchPanel: searchTerm too short, clearing suggestions');
         setSuggestions([]);
         setShowSuggestions(false);
       }
@@ -76,7 +82,9 @@ const SearchPanel = ({ onSearch }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log('🚀 SearchPanel: Form submitted with searchTerm:', searchTerm);
     if (searchTerm.trim()) {
+      console.log('🚀 SearchPanel: Calling onSearch with:', searchTerm.trim().toUpperCase());
       onSearch(searchTerm.trim().toUpperCase());
       setShowSuggestions(false);
     }
@@ -84,6 +92,7 @@ const SearchPanel = ({ onSearch }) => {
 
   const handleSuggestionClick = (symbol) => {
     console.log('🎯 User clicked suggestion:', symbol);
+    console.log('🎯 Calling onSearch with symbol:', symbol);
     onSearch(symbol);
     setSearchTerm(symbol);
     setShowSuggestions(false);
@@ -117,6 +126,15 @@ const SearchPanel = ({ onSearch }) => {
           >
             Test API
           </button>
+          <button
+            onClick={() => {
+              console.log('🧪 Testing suggestions UI...');
+              setSearchTerm('OIL');
+            }}
+            className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700 transition-colors ml-2"
+          >
+            Test UI
+          </button>
         </div>
       </div>
 
@@ -138,6 +156,15 @@ const SearchPanel = ({ onSearch }) => {
           >
             Search
           </button>
+          
+          {/* Visual indicator when suggestions are available */}
+          {suggestions.length > 0 && (
+            <div className="absolute right-16 top-1/2 transform -translate-y-1/2">
+              <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full animate-pulse">
+                {suggestions.length} suggestions
+              </div>
+            </div>
+          )}
         </div>
         
         {/* Suggestions Dropdown */}

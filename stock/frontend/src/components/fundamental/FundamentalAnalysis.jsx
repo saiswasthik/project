@@ -60,9 +60,15 @@ const FundamentalAnalysis = ({ symbol }) => {
           <div className="text-blue-800 font-bold mb-3 text-lg">💡 How to Search Stocks:</div>
           <div className="text-blue-700 text-sm space-y-2">
             <p>• <strong>Use the search box above</strong> - Type "OIL" to see oil companies, "BANK" for banks</p>
-            <p>• <strong>Try popular symbols:</strong> RELIANCE.NS, TCS.NS, HDFCBANK.NS, INFY.NS</p>
+            <p>• <strong>Try categories</strong> like "OIL", "BANK", "TECH" for suggestions</p>
+            <p>• <strong>Use popular symbols</strong> like RELIANCE.NS, TCS.NS, HDFCBANK.NS</p>
             <p>• <strong>Add .NS suffix</strong> for NSE stocks or .BO for BSE stocks</p>
-            <p>• <strong>Categories:</strong> Try "TECH", "PHARMA", "BANK", "OIL" for suggestions</p>
+          </div>
+          <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="text-yellow-800 font-semibold mb-1">🎯 Important:</div>
+            <div className="text-yellow-700 text-sm">
+              Don't search directly for "OIL" - use the search box above and type "OIL" to see suggestions, then click on a specific stock like "ONGC.NS"
+            </div>
           </div>
         </div>
 

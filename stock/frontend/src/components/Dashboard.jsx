@@ -75,6 +75,7 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
   }, [selectedStock]);
 
   const handleSearch = (symbol) => {
+    console.log('🔍 Dashboard: handleSearch called with symbol:', symbol);
     setStockSymbol(symbol);
     setResolvedSymbol(''); // Reset resolved symbol when new search starts
     setShowAnalysis(true);
