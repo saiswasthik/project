@@ -54,23 +54,52 @@ const FundamentalAnalysis = ({ symbol }) => {
       <div className="bg-gradient-to-br from-red-50 to-red-100 border border-red-200 rounded-xl p-8 text-center shadow-lg">
         <div className="text-red-600 text-xl font-bold mb-3">⚠️ Symbol Not Found</div>
         <div className="text-red-500 mb-4 text-lg">{error}</div>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <div className="text-blue-800 font-medium mb-2">💡 Try These Instead:</div>
-          <div className="text-blue-700 text-sm">
-            <p>• Use the search suggestions above (e.g., type "OIL" to see oil companies)</p>
-            <p>• Try popular symbols: RELIANCE.NS, TCS.NS, HDFCBANK.NS, INFY.NS</p>
-            <p>• Add .NS suffix for NSE stocks or .BO for BSE stocks</p>
+        
+        {/* Enhanced Help Section */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+          <div className="text-blue-800 font-bold mb-3 text-lg">💡 How to Search Stocks:</div>
+          <div className="text-blue-700 text-sm space-y-2">
+            <p>• <strong>Use the search box above</strong> - Type "OIL" to see oil companies, "BANK" for banks</p>
+            <p>• <strong>Try popular symbols:</strong> RELIANCE.NS, TCS.NS, HDFCBANK.NS, INFY.NS</p>
+            <p>• <strong>Add .NS suffix</strong> for NSE stocks or .BO for BSE stocks</p>
+            <p>• <strong>Categories:</strong> Try "TECH", "PHARMA", "BANK", "OIL" for suggestions</p>
           </div>
         </div>
-        <button 
-          onClick={fetchData}
-          className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
-        >
-          🔄 Try Again
-        </button>
-       </div>
-     );
-   }
+
+        {/* Quick Action Buttons */}
+        <div className="flex flex-wrap gap-3 justify-center mb-6">
+          <button 
+            onClick={() => window.location.href = '/#search'}
+            className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-6 py-3 rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          >
+            🔍 Use Search Suggestions
+          </button>
+          <button 
+            onClick={fetchData}
+            className="bg-gradient-to-r from-red-600 to-red-700 text-white px-6 py-3 rounded-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          >
+            🔄 Try Again
+          </button>
+        </div>
+
+        {/* Popular Stocks Grid */}
+        <div className="bg-white/50 rounded-lg p-4">
+          <div className="text-gray-700 font-semibold mb-3">📈 Popular Stocks to Try:</div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
+            {['RELIANCE.NS', 'TCS.NS', 'HDFCBANK.NS', 'INFY.NS', 'ITC.NS', 'SBIN.NS', 'ONGC.NS', 'IOC.NS'].map((stock) => (
+              <button
+                key={stock}
+                onClick={() => window.location.href = `/?search=${stock}`}
+                className="bg-blue-100 hover:bg-blue-200 text-blue-800 px-3 py-2 rounded transition-colors duration-200"
+              >
+                {stock}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!data) {
      return (

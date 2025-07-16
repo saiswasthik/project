@@ -86,7 +86,8 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
 
   const isInWatchlist = (symbol) => {
     const isWatched = watchlist.some(stock => stock.symbol === symbol);
-    console.log('Checking if', symbol, 'is in watchlist:', isWatched);
+    console.log('🔍 Watchlist check for UI only:', symbol, 'is in watchlist:', isWatched);
+    console.log('📊 Note: This check is ONLY for UI button state - stock data fetch is independent');
     return isWatched;
   };
 
@@ -212,6 +213,30 @@ const Dashboard = ({ selectedStock, showSettings, onCloseSettings, user, userPro
 
   const renderMainContent = () => {
     if (!showAnalysis) return null;
+
+    // Show welcome message when no stock is selected
+    if (!stockSymbol) {
+      return (
+        <div className="flex items-center justify-center min-h-[400px]">
+          <div className="text-center max-w-2xl">
+            <div className="text-6xl mb-6">📈</div>
+            <h2 className="text-3xl font-bold text-white mb-4">Welcome to Stock Market Research</h2>
+            <div className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 mb-6">
+              <div className="text-white/90 text-lg mb-4">💡 How to get started:</div>
+              <div className="text-white/80 space-y-2 text-left">
+                <p>• <strong>Search for stocks</strong> using the search box above</p>
+                <p>• <strong>Try categories</strong> like "OIL", "BANK", "TECH" for suggestions</p>
+                <p>• <strong>Use popular symbols</strong> like RELIANCE.NS, TCS.NS, HDFCBANK.NS</p>
+                <p>• <strong>Add .NS suffix</strong> for NSE stocks or .BO for BSE stocks</p>
+              </div>
+            </div>
+            <div className="text-white/70">
+              Start by searching for a stock symbol above to view detailed analysis
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     switch (activeSection) {
       case 'fundamental':
