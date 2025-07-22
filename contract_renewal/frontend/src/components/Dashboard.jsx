@@ -152,25 +152,25 @@ const Dashboard = ({ contracts }) => {
     {
       title: 'Total Contracts',
       value: getTotalContractsCount(),
-      icon: <TrendingUp className="w-5 h-5" />, 
+      icon: <TrendingUp className="w-5 h-5" />,
       color: 'text-blue-600',
     },
     {
       title: 'Expiring Soon',
       value: getExpiringSoonCount(),
-      icon: <AlertTriangle className="w-5 h-5" />, 
+      icon: <AlertTriangle className="w-5 h-5" />,
       color: 'text-yellow-600',
     },
     {
       title: 'Renewed This Month',
       value: getRenewedThisMonth(),
-      icon: <RotateCcw className="w-5 h-5" />, 
+      icon: <RotateCcw className="w-5 h-5" />,
       color: 'text-green-600',
     },
     {
       title: 'Contract Value',
       value: getTotalContractValue(),
-      icon: <DollarSign className="w-5 h-5" />, 
+      icon: <DollarSign className="w-5 h-5" />,
       color: 'text-purple-600',
     },
   ];
