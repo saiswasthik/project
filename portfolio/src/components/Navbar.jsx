@@ -14,11 +14,11 @@ const navLinks = [
 const Navbar = () => {
   return (
     <nav className="fixed w-full z-20 top-0 left-0 bg-[#181829]/90 backdrop-blur border-b border-[#23234a]">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-3">
-        <span className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent select-none cursor-pointer">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
+        <span className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent select-none cursor-pointer">
           M sai swasthik
         </span>
-        <ul className="flex space-x-8 text-lg font-medium">
+        <ul className="flex space-x-4 sm:space-x-6 md:space-x-8 text-sm sm:text-base md:text-lg font-medium">
           {navLinks.map((link) => (
             <li key={link.to}>
               <Link

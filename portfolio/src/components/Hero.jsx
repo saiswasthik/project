@@ -4,11 +4,11 @@ import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 
 const Hero = () => {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen pb-16 text-center relative z-10">
+    <div className="flex flex-col items-center justify-center min-h-screen pt-20 md:pt-24 pb-16 text-center relative z-10">
       <img
         src="Msaiswasthik_image.jpeg"
         alt="Avatar"
-        className="w-60 h-60 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
+        className="w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 rounded-full border-4 border-purple-400 shadow-lg mb-6 object-cover"
       />
       <h1 className="text-5xl md:text-6xl font-extrabold mb-4">M sai swasthik</h1>
       <h2 className="text-2xl md:text-3xl font-medium mb-2 text-purple-300">
