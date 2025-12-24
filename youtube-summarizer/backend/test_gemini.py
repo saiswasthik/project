@@ -30,7 +30,7 @@ def test_gemini_api():
         # Initialize model
         model = genai.GenerativeModel('gemini-2.0-flash')
         print("✅ Gemini model initialized successfully")
-        
+    
         
         # Test with a simple prompt
         test_prompt = "Hello! Please respond with 'Gemini API is working correctly!'"
