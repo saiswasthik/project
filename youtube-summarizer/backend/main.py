@@ -304,7 +304,7 @@ IMPORTANT: Respond ONLY with a valid JSON object in this exact format:
     def generate_with_prompt(prompt: str) -> dict:
         # Initialize Gemini model
         try:
-            model = genai.GenerativeModel('gemini-1.5-flash')
+            model = genai.GenerativeModel('gemini-2.0-flash')
             print("Gemini model initialized successfully")
         except Exception as e:
             print(f"Error initializing Gemini model: {str(e)}")
@@ -527,7 +527,7 @@ async def test_gemini():
     """Test endpoint to verify Gemini API is working"""
     try:
         # Test Gemini API
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        model = genai.GenerativeModel('gemini-2.0-flash')
         response = model.generate_content("Hello, please respond with 'Gemini API is working!'")
         
         if response and hasattr(response, 'text') and response.text:
