@@ -1,5 +1,5 @@
-from schemas.resturants_schema import Resturant_Validation
-from models.resturants_model import Resturant
+from ..schemas.resturants_schema import Resturant_Validation
+from ..models.resturants_model import Resturant
 from fastapi import HTTPException
 import bcrypt
 

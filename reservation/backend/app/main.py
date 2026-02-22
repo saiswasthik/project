@@ -1,10 +1,10 @@
 from fastapi import APIRouter,FastAPI
-from api.endpoints.table_endpoints import router as table_router
-from api.endpoints.reservation_endpoints import router as  reservation_router
-from api.endpoints.setting_endpoints import router as Setting_router
-from api.endpoints.resturants_endpoints import router as resturant_router
-from db.base import Base
-from db.session import engine
+from .api.endpoints.table_endpoints import router as table_router
+from .api.endpoints.reservation_endpoints import router as  reservation_router
+from .api.endpoints.setting_endpoints import router as Setting_router
+from .api.endpoints.resturants_endpoints import router as resturant_router
+from .db.base import Base
+from .db.session import engine
 from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)

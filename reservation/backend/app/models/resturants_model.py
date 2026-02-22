@@ -1,4 +1,4 @@
-from db.base import Base
+from ..db.base import Base
 from sqlalchemy import Column,Integer,String
 
 class Resturant(Base):

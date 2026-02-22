@@ -1,8 +1,8 @@
 from fastapi import APIRouter,Depends
-from schemas.resturants_schema import Resturant_Validation
-from services.resturants_service import ResturantService
+from ...schemas.resturants_schema import Resturant_Validation
+from ...services.resturants_service import ResturantService
 from sqlalchemy.orm import Session
-from db.session import get_db
+from ...db.session import get_db
 
 router=APIRouter()
 

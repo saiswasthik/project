@@ -1,9 +1,9 @@
 
 from fastapi import APIRouter,Depends
-from schemas.setting_schema import Settings_Validation
+from ...schemas.setting_schema import Settings_Validation
 from sqlalchemy.orm import Session
-from db.session import get_db
-from services.setting_service import SettingService
+from ...db.session import get_db
+from ...services.setting_service import SettingService
 
 router=APIRouter()
 

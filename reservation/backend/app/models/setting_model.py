@@ -1,5 +1,5 @@
 from sqlalchemy import Integer,Column,String,Date,ForeignKey
-from db.base import Base
+from ..db.base import Base
 
 class Settings(Base):
     __tablename__="settings"

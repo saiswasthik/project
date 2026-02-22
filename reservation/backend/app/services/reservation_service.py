@@ -1,8 +1,8 @@
-from schemas.reservation_schema import Reservation_Validation
-from models.reservation_model import ReservationTable
-from models.resturants_model import Resturant
-from models.setting_model import Settings
-from models.table_model import PartyTable
+from ..schemas.reservation_schema import Reservation_Validation
+from ..models.reservation_model import ReservationTable
+from ..models.resturants_model import Resturant
+from ..models.setting_model import Settings
+from ..models.table_model import PartyTable
 from fastapi import HTTPException
 from datetime import datetime,timedelta
 

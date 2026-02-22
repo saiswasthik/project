@@ -1,8 +1,8 @@
 from fastapi import APIRouter,Depends
 from sqlalchemy.orm import Session
-from db.session import get_db
-from schemas.table_schema import Table_Validation
-from services.table_service import TableService
+from ...db.session import get_db
+from ...schemas.table_schema import Table_Validation
+from ...services.table_service import TableService
 
 router=APIRouter()
 

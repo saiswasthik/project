@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
-from db.session import get_db
-from schemas.reservation_schema import Reservation_Validation
-from services.reservation_service import ReservationService
+from ...db.session import get_db
+from ...schemas.reservation_schema import Reservation_Validation
+from ...services.reservation_service import ReservationService
 from datetime import date
 
 router = APIRouter()

@@ -1,5 +1,5 @@
-from schemas.setting_schema import Settings_Validation
-from models.setting_model import Settings
+from ..schemas.setting_schema import Settings_Validation
+from ..models.setting_model import Settings
 
 class SettingService:
     
