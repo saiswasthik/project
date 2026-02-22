@@ -1,0 +1,265 @@
+.tables-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-bottom: 2rem;
+}
+
+/* Header & Stats */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.stat-card {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.stat-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.2;
+}
+
+.stat-label {
+    font-size: 0.8125rem;
+    color: #9ca3af;
+}
+
+/* Table Card */
+.table-list-container {
+    padding: 0;
+    overflow: hidden;
+}
+
+.table-header-v5 {
+    padding: 2rem 2.5rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.header-text-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.header-text-group h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.count-badge-v5 {
+    background-color: #f3f4f6;
+    color: #6b7280;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.625rem;
+    border-radius: 6px;
+}
+
+/* Table Listing */
+.table-label-cell {
+    font-weight: 700;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.label-bar {
+    color: #e5e7eb;
+    font-weight: 300;
+}
+
+.capacity-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #6b7280;
+    font-size: 0.875rem;
+}
+
+.action-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-icon-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.action-icon-btn:hover {
+    background-color: #f3f4f6;
+    color: #4b5563;
+}
+
+.action-icon-btn.delete:hover {
+    background-color: #fef2f2;
+    color: #dc2626;
+}
+
+/* Toggle Switch Styles (Global for this page) */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e5e7eb;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #111827;
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+/* Modal Form V5 */
+.add-table-form-v5 {
+    padding: 1rem 0;
+}
+
+.input-group-v5 {
+    margin-bottom: 1.5rem;
+}
+
+.input-group-v5 label {
+    display: block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: #4b5563;
+    margin-bottom: 0.625rem;
+}
+
+.form-row-v5 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+.input-with-icon-v5 {
+    position: relative;
+}
+
+.field-icon-v5 {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+}
+
+.input-field-v5 {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.75rem;
+    background-color: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: #111827;
+    transition: all 0.2s;
+}
+
+.input-field-v5:focus {
+    outline: none;
+    border-color: #f97316;
+    background-color: white;
+}
+
+.status-toggle-row-v5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    background-color: #f9fafb;
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.toggle-info-v5 {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem;
+}
+
+.toggle-label-v5 {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.toggle-desc-v5 {
+    font-size: 0.75rem;
+    color: #9ca3af;
+}
+
+/* Reset / Custom Utility */
+.text-right {
+    text-align: right;
+}
+
+.end-aligned {
+    justify-content: flex-end;
+}
