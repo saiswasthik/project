@@ -33,7 +33,7 @@ const LoginPage = () => {
         if (success) {
             showToast(`Welcome back to ${formData.restaurantName}!`, 'success');
         } else {
-            showToast('Invalid credentials. Password is admin123', 'error');
+            showToast('Invalid credentials Password', 'error');
         }
 
         setIsSubmitting(false);
