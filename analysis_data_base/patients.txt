@@ -1,0 +1,41 @@
+PatientID,Name,Age,Gender,BloodGroup,Contact,Address
+P001,John Doe,35,Male,O+,9876543210,Hyderabad
+P002,Jane Smith,29,Female,A+,9876501234,Bangalore
+P003,Mike Ross,INVALID,Male,B+,9876512345,Mumbai
+P004,Rachel Zane,31,Female,O-,,Delhi
+P005,Harvey Specter,45,Male,AB+,9876523456,New York
+P006,Louis Litt,40,Male,B-,9876534567,New York
+P007,Donna Paulsen,38,Female,A+,9876545678,
+P008,John Doe,35,Male,O+,9876543210,Hyderabad   # duplicate
+P009,,50,Female,O+,9876556789,Chennai   # missing name
+
+VisitID,PatientID,Date,Doctor,Department,Reason
+V101,P001,2024-01-01,Dr. Sharma,Cardiology,Chest Pain
+V102,P002,01/02/2024,Dr. Mehta,Gynecology,Regular Checkup
+V103,P003,2024/01/03,Dr. Khan,Orthopedics,Back Pain
+V104,P004,2024-01-04,Dr. Sharma,Cardiology,
+V105,P005,2024-13-05,Dr. Mehta,General,Fever   # invalid date
+V106,P006,2024-01-06,,Dermatology,Skin Allergy
+V107,P999,2024-01-07,Dr. Khan,Orthopedics,Injury   # invalid PatientID
+V108,P001,2024-01-01,Dr. Sharma,Cardiology,Chest Pain   # duplicate
+
+
+ReportID,VisitID,TestName,Result,Unit,NormalRange
+R201,V101,Blood Pressure,140/90,mmHg,120/80
+R202,V101,Cholesterol,220,mg/dL,<200
+R203,V102,Hemoglobin,12,g/dL,12-16
+R204,V103,Vitamin D,INVALID,ng/mL,20-50
+R205,V104,Sugar,180,mg/dL,70-140
+R206,V105,Sugar,180,mg/dL,70-140   # duplicate visit issue
+R207,V999,Calcium,9.5,mg/dL,8.5-10.5   # invalid VisitID
+R208,V106,Allergy Test,,NA,Negative   # missing result
+
+PrescriptionID,VisitID,Medicine,Dosage,Duration,Doctor
+PR301,V101,Aspirin,75mg,10 days,Dr. Sharma
+PR302,V102,Iron Tablets,100mg,15 days,Dr. Mehta
+PR303,V103,Painkiller,50mg,5 days,Dr. Khan
+PR304,V104,Beta Blocker,INVALID,10 days,Dr. Sharma
+PR305,V105,Paracetamol,500mg,,Dr. Mehta
+PR306,V106,Antihistamine,10mg,7 days,
+PR307,V107,Antibiotic,500mg,5 days,Dr. Khan   # invalid VisitID
+PR308,V101,Aspirin,75mg,10 days,Dr. Sharma   # duplicate

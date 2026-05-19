@@ -1,0 +1,45 @@
+ShopID,ShopName,Category,Floor,MonthlyRent,OpenDate,Owner,Contact,Status
+101,Zara,Fashion,1,120000,2020-01-15,Rahul Sharma,9876543210,Open
+102,NIKE,Fashion,1,150000,15/02/2020,Anita Verma,9876501234,Open
+103,Starbucks,Food & Beverage,Ground,90000,2020/03/01,,9876512345,Open
+104,McDonalds,Food,Ground,110000,2020-03-10,Rajesh Kumar,INVALID,Open
+105,Apple Store,Electronics,2,200000,2020-04-05,Sneha Reddy,9876523456,Closed
+106,Croma,Electronics,2,180000,2020-04-20,Sneha Reddy,9876523456,Open
+107,Pantaloons,Fashion,1,,2020-05-01,Amit Singh,9876534567,Open
+108,Dominos,Food,Ground,80000,2020-05-15,Amit Singh,9876534567,Open
+108,Dominos,Food,Ground,80000,2020-05-15,Amit Singh,9876534567,Open   # duplicate
+
+109,KFC,Food,Ground,85000,2020-06-01,Neha Kapoor,9876545678,Open
+110,KFC,Food,Ground,85000,2020-06-01,Neha Kapoor,9876545678,Open   # duplicate
+
+111,Levis,Fashion,1,95000,2020-06-20,Ravi Mehta,9876556789,Open
+112,Levi's,Fashion,1,95000,2020-06-20,Ravi Mehta,9876556789,Open   # inconsistent name
+
+113,HP World,Electronics,2,130000,2020-07-10,,9876567890,Open
+114,Dell Store,Electronics,Second,125000,2020-07-15,Arjun Das,9876578901,Open   # floor inconsistency
+
+115,Food Court,Food & Beverage,G,300000,2020-08-01,Management,,Open
+116,FoodCourt,Food & Beverage,G,300000,2020-08-01,Management,,Open   # duplicate variant
+
+117,Trends,Fashion,1,100000,2020-08-20,Pooja Nair,9876589012,Open
+118,Max Fashion,Fashion,1,105000,2020-09-01,Pooja Nair,9876589012,Closed
+
+119,INOX,Entertainment,3,250000,2020-09-15,,9876590123,Open
+120,Game Zone,Entertainment,3,200000,2020-10-01,Rohit Gupta,9876601234,Open
+
+121,Subway,Food,Ground,75000,2020-10-10,Rohit Gupta,9876601234,Open
+122,Sub way,Food,Ground,75000,2020-10-10,Rohit Gupta,9876601234,Open   # typo duplicate
+
+123,H&M,Fashion,1,140000,2020-11-01,Anita Verma,9876501234,Open
+124,H and M,Fashion,1,140000,2020-11-01,Anita Verma,9876501234,Open   # inconsistent naming
+
+125,Random Shop,Unknown,,50000,INVALID,Unknown,abc123,Open
+126,,Fashion,1,90000,2020-12-01,Rahul Sharma,9876543210,Open   # missing shop name
+
+127,Zara,Fashion,1,120000,2020-01-15,Rahul Sharma,9876543210,Open   # duplicate of 101
+
+128,Decathlon,Sports,Ground,160000,2021-01-05,Arjun Das,9876578901,Open
+129,decathlon,Sports,Ground,160000,2021-01-05,Arjun Das,9876578901,Open   # case inconsistency
+
+130,PVR Cinemas,Entertainment,3,270000,2021-02-01,,9876612345,Open
+131,PVR Cinema,Entertainment,3,270000,2021-02-01,,9876612345,Open   # naming inconsistency

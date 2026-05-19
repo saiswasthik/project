@@ -1,0 +1,39 @@
+{
+  "personal": {
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "johndoe@example.com",
+    "phone": "+1 (555) 123-4567",
+    "city": "San Francisco",
+    "state": "CA",
+    "zip": "94107",
+    "country": "USA"
+  },
+  "profiles": {
+    "linkedin": "https://www.linkedin.com/in/johndoe",
+    "github": "https://github.com/johndoe",
+    "portfolio": "https://johndoe.dev"
+  },
+  "employment": {
+    "current_employer": "Tech Corp",
+    "current_title": "Software Engineer",
+    "experience_years": 4,
+    "skills": ["Python", "JavaScript", "Playwright", "LLM Integration", "React"],
+    "summary": "Full-stack developer with 4 years of experience building scalable applications and automation tools."
+  },
+  "education": {
+    "university": "State University",
+    "degree": "Bachelor of Science in Computer Science",
+    "graduation_year": "2020"
+  },
+  "application": {
+    "notice_period": "2 weeks",
+    "salary_expectation": "120,000",
+    "visa_sponsorship": "No",
+    "authorized_to_work": "Yes"
+  },
+  "files": {
+    "resume_path": "./resume.txt",
+    "cover_letter_path": "./cover_letter.pdf"
+  }
+}

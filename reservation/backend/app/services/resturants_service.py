@@ -1,5 +1,5 @@
-from ..schemas.resturants_schema import Resturant_Validation
-from ..models.resturants_model import Resturant
+from schemas.resturants_schema import Resturant_Validation
+from models.resturants_model import Resturant
 from fastapi import HTTPException
 import bcrypt
 
@@ -50,10 +50,8 @@ class ResturantService:
         return resturant
     
     def authenticate(self, data):
-        # email = data.get("email", "").strip().lower()
         password = data.get("password", "").strip()
 
-        # 1️⃣ Get restaurant by unique field
         resturant = self.db.query(Resturant).filter(
             Resturant.email == data.get("email")
         ).first()
@@ -61,9 +59,7 @@ class ResturantService:
         if not resturant:
             raise HTTPException(status_code=401, detail="Invalid credentials")
 
-        # 2️⃣ Check password using bcrypt
         stored_password = resturant.password
-        # Handle legacy "b'String'" storage if it exists
         if stored_password.startswith("b'") and stored_password.endswith("'"):
             stored_password = stored_password[2:-1]
 
@@ -74,11 +70,9 @@ class ResturantService:
             ):
                 raise HTTPException(status_code=401, detail="Invalid credentials")
         except ValueError:
-            # Fallback for plain text or corrupted hashes
             if stored_password != password:
                 raise HTTPException(status_code=401, detail="Invalid credentials")
 
-        # 3️⃣ Return sanitized data for frontend sync
         return {
             "id": resturant.id,
             "name": resturant.name,

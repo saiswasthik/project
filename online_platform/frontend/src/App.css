@@ -1,0 +1,34 @@
+/* Base App styles */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 
+  Compensation for fixed Navbar 
+  Public pages use MainLayout which includes Navbar (80px)
+*/
+.with-navbar main {
+  padding-top: 90px;
+}
+
+/* Ensure smooth transitions between pages */
+.page-transition-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 1024px) {
+  .with-navbar main {
+    padding-top: 70px;
+    /* Scrolled/Mobile height */
+  }
+}

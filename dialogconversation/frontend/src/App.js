@@ -15,6 +15,8 @@ import LibrarySidebar from './components/LibrarySidebar';
 import ConversationView from './components/ConversationView';
 import SummarySidebar from './components/SummarySidebar';
 import Login from './components/Login';
+import PDFUpload from './components/PDFUpload';
+import URLUpload from './components/URLUpload';
 import { doc, getDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebase';
 
@@ -36,6 +38,7 @@ function App() {
   const [showProgressive, setShowProgressive] = useState(false);
   const [currentLineIndex, setCurrentLineIndex] = useState(-1);
   const [lineTimings, setLineTimings] = useState([]); // Store timing for each line
+  const [inputMode, setInputMode] = useState('text'); // 'text', 'pdf', or 'url'
   const audioRef = useRef(null);
 
   // Load user data when user changes
@@ -158,7 +161,7 @@ function App() {
 
   const fetchOverallSummary = async (topicToSummarize) => {
     try {
-      const response = await fetch('https://ai-coversation.onrender.com/generate-summary', {
+      const response = await fetch('http://localhost:8000/generate-summary', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic: topicToSummarize }),
@@ -207,8 +210,7 @@ function App() {
     setError('');
     
     try {
-      const response = await fetch('https://ai-coversation.onrender.com/generate-dialog', {
-        // http://localhost:8000/generate-dialog // For local testing
+      const response = await fetch('http://localhost:8000/generate-dialog', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ topic }),
@@ -293,6 +295,247 @@ function App() {
     }
   };
 
+  const onPDFProcessed = async (pdfData) => {
+    console.log('=== onPDFProcessed CALLED ===');
+    console.log('PDF Data received:', pdfData);
+    
+    if (!user) {
+      console.error('No user found, cannot process PDF data');
+      return;
+    }
+    
+    try {
+      console.log('=== PROCESSING PDF DATA ===');
+      console.log('PDF Topic:', pdfData.topic);
+      console.log('Script length:', pdfData.script ? (Array.isArray(pdfData.script) ? pdfData.script.length : 'N/A') : 'None');
+      console.log('Summary length:', pdfData.summary ? pdfData.summary.length : 0);
+      console.log('Audio URL:', pdfData.audio ? 'Present' : 'None');
+      
+      // Process the script
+      const processedScript = processScript(pdfData.script);
+      console.log('Processed script length:', processedScript.length);
+      const summaryText = pdfData.summary || '';
+      
+      // Set the topic from PDF
+      setTopic(pdfData.topic);
+      setScript(processedScript);
+      setSummary(summaryText);
+      setOverallSummary(summaryText); // Use the PDF summary as overall summary
+      
+      console.log('State updated with PDF data');
+      
+      // Set line timings if provided
+      if (pdfData.line_timings && Array.isArray(pdfData.line_timings)) {
+        console.log('Received line timings from PDF processing:', pdfData.line_timings);
+        setLineTimings(pdfData.line_timings);
+      } else {
+        console.log('No line timings provided for PDF');
+        setLineTimings([]);
+      }
+
+      // Handle audio
+      let audioUrlToSave = null;
+      if (pdfData.audio) {
+        console.log('Audio URL received from backend:', pdfData.audio);
+        if (pdfData.audio.startsWith('http')) {
+          audioUrlToSave = pdfData.audio;
+          setAudioUrl(pdfData.audio);
+          console.log('Set audio URL to:', pdfData.audio);
+        } else {
+          audioUrlToSave = `data:audio/wav;base64,${pdfData.audio}`;
+          setAudioUrl(`data:audio/wav;base64,${pdfData.audio}`);
+          console.log('Set base64 audio URL');
+        }
+      } else {
+        console.log('No audio URL received from backend');
+        setAudioUrl(null);
+      }
+
+      console.log('Final audio URL to save:', audioUrlToSave);
+      console.log('Audio URL state set to:', pdfData.audio);
+
+      // Save conversation to user's data
+      try {
+        console.log('=== SAVING PDF CONVERSATION ===');
+        console.log('Saving for user:', user.uid);
+        console.log('Topic:', pdfData.topic);
+        console.log('Script length:', processedScript.length);
+        console.log('Summary:', summaryText);
+        console.log('Audio URL:', audioUrlToSave ? 'Present' : 'None');
+        
+        await saveConversation(user.uid, pdfData.topic, processedScript, summaryText, audioUrlToSave);
+        console.log('✓ PDF conversation saved successfully to Firebase');
+        
+        // Reload user data to get updated history
+        console.log('Reloading user data after PDF save...');
+        await loadUserData(user.uid, user.email);
+        console.log('✓ User data reloaded after PDF save');
+        
+      } catch (firebaseError) {
+        console.error('❌ FIREBASE ERROR SAVING PDF CONVERSATION:', firebaseError);
+        console.error('Firebase error details:', {
+          message: firebaseError.message,
+          code: firebaseError.code,
+          stack: firebaseError.stack
+        });
+        setError(`Failed to save PDF conversation: ${firebaseError.message}`);
+        return;
+      }
+      
+      // Save the PDF summary separately
+      if (user && summaryText) {
+        try {
+          await updateUserSummary(user.uid, pdfData.topic, summaryText);
+          
+          // Update local summaries state
+          setUserSummaries(prevSummaries => {
+            const existingIndex = prevSummaries.findIndex(s => s.topic === pdfData.topic);
+            const newSummary = { topic: pdfData.topic, summary: summaryText, updatedAt: new Date() };
+            
+            if (existingIndex >= 0) {
+              const updatedSummaries = [...prevSummaries];
+              updatedSummaries[existingIndex] = newSummary;
+              return updatedSummaries;
+            } else {
+              return [...prevSummaries, newSummary];
+            }
+          });
+          
+        } catch (firebaseError) {
+          console.error('Firebase error saving PDF summary:', firebaseError);
+          setError(`Failed to save PDF summary: ${firebaseError.message}`);
+        }
+      }
+      
+      console.log('✓ PDF processing completed successfully');
+      
+    } catch (error) {
+      console.error('Error processing PDF data:', error);
+      setError(`Failed to process PDF: ${error.message}`);
+    }
+  };
+
+  const onURLProcessed = async (urlData) => {
+    console.log('=== onURLProcessed CALLED ===');
+    console.log('URL Data received:', urlData);
+    
+    if (!user) {
+      console.error('No user found, cannot process URL data');
+      return;
+    }
+    
+    try {
+      console.log('=== PROCESSING URL DATA ===');
+      console.log('URL Topic:', urlData.topic);
+      console.log('Script length:', urlData.script ? (Array.isArray(urlData.script) ? urlData.script.length : 'N/A') : 'None');
+      console.log('Summary length:', urlData.summary ? urlData.summary.length : 0);
+      console.log('Audio URL:', urlData.audio ? 'Present' : 'None');
+      console.log('URL:', urlData.metadata?.url);
+      
+      // Process the script
+      const processedScript = processScript(urlData.script);
+      console.log('Processed script length:', processedScript.length);
+      const summaryText = urlData.summary || '';
+      
+      // Set the topic from URL
+      setTopic(urlData.topic);
+      setScript(processedScript);
+      setSummary(summaryText);
+      setOverallSummary(summaryText); // Use the URL summary as overall summary
+      
+      console.log('State updated with URL data');
+      
+      // Set line timings if provided
+      if (urlData.line_timings && Array.isArray(urlData.line_timings)) {
+        console.log('Received line timings from URL processing:', urlData.line_timings);
+        setLineTimings(urlData.line_timings);
+      } else {
+        console.log('No line timings provided for URL');
+        setLineTimings([]);
+      }
+
+      // Handle audio
+      let audioUrlToSave = null;
+      if (urlData.audio) {
+        console.log('Audio URL received from backend:', urlData.audio);
+        if (urlData.audio.startsWith('http')) {
+          audioUrlToSave = urlData.audio;
+          setAudioUrl(urlData.audio);
+          console.log('Set audio URL to:', urlData.audio);
+        } else {
+          audioUrlToSave = `data:audio/wav;base64,${urlData.audio}`;
+          setAudioUrl(`data:audio/wav;base64,${urlData.audio}`);
+          console.log('Set base64 audio URL');
+        }
+      } else {
+        console.log('No audio URL received from backend');
+        setAudioUrl(null);
+      }
+
+      console.log('Final audio URL to save:', audioUrlToSave);
+      console.log('Audio URL state set to:', urlData.audio);
+
+      // Save conversation to user's data
+      try {
+        console.log('=== SAVING URL CONVERSATION ===');
+        console.log('Saving for user:', user.uid);
+        console.log('Topic:', urlData.topic);
+        console.log('Script length:', processedScript.length);
+        console.log('Summary:', summaryText);
+        console.log('Audio URL:', audioUrlToSave ? 'Present' : 'None');
+        
+        await saveConversation(user.uid, urlData.topic, processedScript, summaryText, audioUrlToSave);
+        console.log('✓ URL conversation saved successfully to Firebase');
+        
+        // Reload user data to get updated history
+        console.log('Reloading user data after URL save...');
+        await loadUserData(user.uid, user.email);
+        console.log('✓ User data reloaded after URL save');
+        
+      } catch (firebaseError) {
+        console.error('❌ FIREBASE ERROR SAVING URL CONVERSATION:', firebaseError);
+        console.error('Firebase error details:', {
+          message: firebaseError.message,
+          code: firebaseError.code,
+          stack: firebaseError.stack
+        });
+        setError(`Failed to save URL conversation: ${firebaseError.message}`);
+        return;
+      }
+      
+      // Save the URL summary separately
+      if (user && summaryText) {
+        try {
+          await updateUserSummary(user.uid, urlData.topic, summaryText);
+          
+          // Update local summaries state
+          setUserSummaries(prevSummaries => {
+            const existingIndex = prevSummaries.findIndex(s => s.topic === urlData.topic);
+            const newSummary = { topic: urlData.topic, summary: summaryText, updatedAt: new Date() };
+            
+            if (existingIndex >= 0) {
+              const updatedSummaries = [...prevSummaries];
+              updatedSummaries[existingIndex] = newSummary;
+              return updatedSummaries;
+            } else {
+              return [...prevSummaries, newSummary];
+            }
+          });
+          
+        } catch (firebaseError) {
+          console.error('Firebase error saving URL summary:', firebaseError);
+          setError(`Failed to save URL summary: ${firebaseError.message}`);
+        }
+      }
+      
+      console.log('✓ URL processing completed successfully');
+      
+    } catch (error) {
+      console.error('Error processing URL data:', error);
+      setError(`Failed to process URL: ${error.message}`);
+    }
+  };
+
   const onSelectTopic = async (selectedTopic) => {
     if (!user) return;
     
@@ -339,7 +582,13 @@ function App() {
   };
 
   const onPlay = () => {
+    console.log('=== PLAY BUTTON CLICKED ===');
+    console.log('Audio URL:', audioUrl);
+    console.log('Script length:', script.length);
+    console.log('Is playing:', isPlaying);
+    
     if (audioUrl) {
+      console.log('Audio URL exists, attempting to play...');
       if (audioRef.current) {
         audioRef.current.pause();
         audioRef.current.currentTime = 0;
@@ -351,13 +600,24 @@ function App() {
         setCurrentLineIndex(0); // Reset to first line when starting
       }
       audio.onended = () => {
+        console.log('Audio ended');
         setIsPlaying(false);
         if (showProgressive) {
           setCurrentLineIndex(script.length - 1); // Show all lines when finished
         }
       };
-      audio.onerror = () => setIsPlaying(false);
-      audio.play();
+      audio.onerror = (error) => {
+        console.error('Audio error:', error);
+        setIsPlaying(false);
+      };
+      audio.play().then(() => {
+        console.log('Audio started playing successfully');
+      }).catch((error) => {
+        console.error('Failed to play audio:', error);
+        setIsPlaying(false);
+      });
+    } else {
+      console.log('No audio URL available, cannot play');
     }
   };
 
@@ -589,7 +849,18 @@ function App() {
         </div>
       )}
       
-      <HeroSection topic={topic} setTopic={setTopic} onGenerate={onGenerate} />
+      <HeroSection 
+        topic={topic} 
+        setTopic={setTopic} 
+        onGenerate={onGenerate}
+        inputMode={inputMode}
+        setInputMode={setInputMode}
+        onPDFProcessed={onPDFProcessed}
+        onURLProcessed={onURLProcessed}
+        loading={loading}
+        setLoading={setLoading}
+        setError={setError}
+      />
       <div className="flex flex-col flex-1 max-w-7xl mx-auto w-full px-6 pb-8">
         <div className="flex flex-1 mb-8">
           <LibrarySidebar 

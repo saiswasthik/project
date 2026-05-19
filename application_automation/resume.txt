@@ -1,0 +1,2 @@
+This is my resume content for job applications.
+Experience in Python, LLMs, and Automation.

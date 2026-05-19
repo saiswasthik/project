@@ -1,0 +1,33 @@
+.vendor-login-page {
+    min-height: calc(100vh - 80px);
+    display: flex;
+    align-items: center;
+}
+
+.login-card {
+    padding: 3rem;
+    box-shadow: var(--shadow-xl);
+}
+
+.login-icon-wrapper {
+    width: 64px;
+    height: 64px;
+    background: var(--primary);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 16px var(--primary-light);
+}
+
+.form-group label {
+    color: var(--text-primary);
+}
+
+.custom-select-wrapper select {
+    background: var(--bg-main);
+}
+
+.login-footer p {
+    line-height: 1.6;
+}

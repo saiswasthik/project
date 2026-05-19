@@ -1,0 +1,58 @@
+ShopID,ShopName,Category,Floor,MonthlyRent,Status
+S101,Zara,Fashion,1,120000,Open
+S102,NIKE,Fashion,1,150000,Open
+S103,Starbucks,Food & Beverage,Ground,90000,Open
+S104,McDonalds,Food,Ground,110000,Open
+S105,Apple Store,Electronics,2,200000,Closed
+S106,Croma,Electronics,Second,180000,Open
+S107,Pantaloons,Fashion,1,,Open
+S108,Dominos,Food,G,80000,Open
+S108,Dominos,Food,G,80000,Open   # duplicate
+S109,KFC,Food,Ground,85000,Open
+S110,KFC,Food,Ground,85000,Open   # duplicate
+S111,Levis,Fashion,1,95000,Open
+S112,Levi's,Fashion,1,95000,Open   # inconsistent name
+S113,,Electronics,2,130000,Open   # missing name
+S114,Dell Store,Electronics,2,125000,INVALID   # bad status
+
+ProductID,ShopID,ProductName,Category,Price
+P201,S101,T-Shirt,Fashion,1500
+P202,S101,Jeans,Fashion,3000
+P203,S102,Shoes,Fashion,5000
+P204,S103,Coffee,Food,200
+P205,S104,Burger,Food,150
+P206,S104,Burger,Food,150   # duplicate
+P207,S105,iPhone,Electronics,80000
+P208,S106,Laptop,Electronics,60000
+P209,S106,Laptop,Electronics,INVALID   # bad price
+P210,S107,Shirt,Fashion,
+P211,S999,Unknown Item,Unknown,100   # invalid ShopID
+P212,S108,Pizza,Food,400
+P213,S109,Chicken Bucket,Food,700
+P214,S110,Chicken Bucket,Food,700   # duplicate shop mapping issue
+
+OrderID,Date,ShopID,ProductID,Quantity,TotalAmount,PaymentMethod
+O301,2024-01-01,S101,P201,2,3000,Card
+O302,01/02/2024,S101,P202,1,3000,Cash
+O303,2024/01/03,S102,P203,1,5000,UPI
+O304,2024-01-04,S103,P204,3,600,Cash
+O305,2024-01-05,S104,P205,2,300,Card
+O306,2024-01-05,S104,P205,2,300,Card   # duplicate
+
+O307,2024-01-06,S105,P207,1,80000,Card
+O308,2024-01-07,S106,P208,1,60000,UPI
+O309,2024-01-08,S106,P209,1,60000,UPI   # invalid product price
+O310,2024-01-09,S107,P210,2,3000,Cash   # missing product price
+
+O311,2024-13-10,S108,P212,3,1200,Cash   # invalid date
+O312,2024-01-11,S108,P212,,1200,Cash   # missing quantity
+
+O313,2024-01-12,S999,P211,1,100,Cash   # invalid shop link
+O314,2024-01-13,S109,P213,1,700,Card
+O315,2024-01-14,S110,P214,1,700,Card
+
+O316,2024-01-15,S111,P201,1,1500,Card   # wrong shop-product relation
+O317,2024-01-16,S112,P202,2,6000,UPI
+
+O318,2024-01-17,S113,P208,1,60000,Card   # missing shop name
+O319,2024-01-18,S114,P208,1,60000,Card   # invalid shop status

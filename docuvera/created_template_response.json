@@ -1,0 +1,67 @@
+{
+  "id": "6ea24037-172e-45ef-914a-82491a2a2689",
+  "componentType": "Project",
+  "isProtected": false,
+  "locale": "en-US",
+  "revision": 1,
+  "derivedFrom": {},
+  "annotations": [],
+  "containedComponents": [
+    {
+      "id": "923de9bb-6f96-4777-9711-97929b66e00e",
+      "componentId": "44736c3d-4e4d-45bf-b5bc-8db34b33cbf4",
+      "componentType": "DocTable",
+      "instanceId": "923de9bb-6f96-4777-9711-97929b66e00e",
+      "instanceHistory": []
+    },
+    {
+      "id": "c38da6c7-ab20-46e2-81bf-64162232324e",
+      "componentId": "166c55cc-9216-4d68-ae84-a32d94350686",
+      "componentType": "Topic",
+      "instanceId": "c38da6c7-ab20-46e2-81bf-64162232324e",
+      "instanceHistory": []
+    },
+    {
+      "id": "6f723372-4ccf-4090-913f-311febda804f",
+      "componentId": "d05f3b08-243e-436c-a496-06430ac46df8",
+      "componentType": "Equation",
+      "instanceId": "6f723372-4ccf-4090-913f-311febda804f",
+      "instanceHistory": []
+    }
+  ],
+  "propertyMappings": {},
+  "auditDetails": {
+    "createdOn": "2026-05-18T06:48:54.757Z",
+    "createdByUserId": "73d16a90-032e-4eff-a2a6-73fe960693c2",
+    "modifiedOn": "2026-05-18T06:48:54.757Z",
+    "modifiedByUserId": "73d16a90-032e-4eff-a2a6-73fe960693c2"
+  },
+  "workspaceId": "00000000-0000-0000-0000-000000000000",
+  "isActive": true,
+  "owningUsers": [],
+  "confidentialViewers": [],
+  "isConfidential": false,
+  "content": {
+    "title": "automation template",
+    "isTemplate": true,
+    "sections": [
+      {
+        "id": "59ddfdd3-742c-49eb-b6e8-6ae0bdd59a79",
+        "title": "<p dir=\"ltr\">data_table</p>",
+        "content": [
+          "923de9bb-6f96-4777-9711-97929b66e00e",
+          "c38da6c7-ab20-46e2-81bf-64162232324e",
+          "6f723372-4ccf-4090-913f-311febda804f"
+        ],
+        "subsections": []
+      }
+    ],
+    "metadataSettings": [],
+    "stylesheets": {},
+    "metadataSettingsOrder": []
+  },
+  "variantDefinitionTemplates": [],
+  "variants": {
+    "definitions": {}
+  }
+}

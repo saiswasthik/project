@@ -1,0 +1,14 @@
+streamlit
+pandas
+openpyxl
+PyPDF2
+python-docx
+google-genai
+python-dotenv
+groq
+tabulate
+matplotlib
+fastapi
+uvicorn
+requests
+pydantic

@@ -55,7 +55,44 @@ const SummarySidebar = ({ summary, topic }) => {
         console.log('Non-ASCII characters detected, using fallback method');
         
         // For non-ASCII text, create a simple text file instead
-        const blob = new Blob([summary], { type: 'text/plain;charset=utf-8' });
+        const parseHTMLToText = (htmlContent) => {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = htmlContent;
+          
+          let formattedText = '';
+          
+          Array.from(tempDiv.childNodes).forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const tagName = node.tagName.toLowerCase();
+              
+              if (tagName === 'h3') {
+                formattedText += '\n\n' + node.textContent.trim() + '\n';
+                formattedText += '─'.repeat(node.textContent.trim().length) + '\n';
+              } else if (tagName === 'ul') {
+                Array.from(node.children).forEach(li => {
+                  if (li.tagName.toLowerCase() === 'li') {
+                    formattedText += '• ' + li.textContent.trim() + '\n';
+                  }
+                });
+                formattedText += '\n';
+              } else if (tagName === 'p') {
+                formattedText += node.textContent.trim() + '\n\n';
+              } else {
+                formattedText += node.textContent.trim() + '\n';
+              }
+            } else if (node.nodeType === Node.TEXT_NODE) {
+              const text = node.textContent.trim();
+              if (text) {
+                formattedText += text + '\n';
+              }
+            }
+          });
+          
+          return formattedText.trim();
+        };
+        
+        const formattedSummary = parseHTMLToText(summary);
+        const blob = new Blob([formattedSummary], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -75,17 +112,61 @@ const SummarySidebar = ({ summary, topic }) => {
       // For ASCII text, proceed with PDF generation
       console.log('ASCII text detected, generating PDF');
       
-      // Simply use the summary text as-is from the UI
-      // This ensures the PDF contains exactly what the user sees on screen
-      const summaryText = summary;
+      // Parse HTML content and convert to plain text with proper formatting
+      const parseHTMLToText = (htmlContent) => {
+        // Create a temporary div to parse HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlContent;
+        
+        let formattedText = '';
+        
+        // Process each child node
+        Array.from(tempDiv.childNodes).forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            const tagName = node.tagName.toLowerCase();
+            
+            if (tagName === 'h3') {
+              // Add heading with spacing
+              formattedText += '\n\n' + node.textContent.trim() + '\n';
+              // Add underline for heading
+              formattedText += '─'.repeat(node.textContent.trim().length) + '\n';
+            } else if (tagName === 'ul') {
+              // Process list items
+              Array.from(node.children).forEach(li => {
+                if (li.tagName.toLowerCase() === 'li') {
+                  formattedText += '• ' + li.textContent.trim() + '\n';
+                }
+              });
+              formattedText += '\n';
+            } else if (tagName === 'p') {
+              formattedText += node.textContent.trim() + '\n\n';
+            } else {
+              // For other elements, just get the text content
+              formattedText += node.textContent.trim() + '\n';
+            }
+          } else if (node.nodeType === Node.TEXT_NODE) {
+            // Handle plain text nodes
+            const text = node.textContent.trim();
+            if (text) {
+              formattedText += text + '\n';
+            }
+          }
+        });
+        
+        return formattedText.trim();
+      };
+      
+      // Convert HTML summary to formatted text
+      const formattedSummary = parseHTMLToText(summary);
+      console.log('Formatted summary for PDF:', formattedSummary);
       
       // Split summary into lines that fit the page width
-      const lines = doc.splitTextToSize(summaryText, maxWidth);
+      const lines = doc.splitTextToSize(formattedSummary, maxWidth);
       
       let yPosition = 70;
       const lineHeight = 7;
       
-      // Add content with proper line breaks
+      // Add content with proper line breaks and formatting
       lines.forEach((line, index) => {
         // Check if we need a new page
         if (yPosition > doc.internal.pageSize.getHeight() - 30) {
@@ -93,7 +174,30 @@ const SummarySidebar = ({ summary, topic }) => {
           yPosition = 30;
         }
         
-        doc.text(line, margin, yPosition);
+        // Check if this is a heading (starts with underline characters)
+        if (line.startsWith('─')) {
+          // Skip the underline line
+          return;
+        }
+        
+        // Check if this is a heading (has underline characters after it)
+        const nextLine = lines[index + 1];
+        if (nextLine && nextLine.startsWith('─')) {
+          // This is a heading - format it differently
+          doc.setFontSize(14);
+          doc.setFont('helvetica', 'bold');
+          doc.text(line, margin, yPosition);
+          yPosition += 10; // Extra space after heading
+          doc.setFontSize(12);
+          doc.setFont('helvetica', 'normal');
+        } else if (line.startsWith('• ')) {
+          // This is a bullet point - add some indentation
+          doc.text(line, margin + 5, yPosition);
+        } else {
+          // Regular text
+          doc.text(line, margin, yPosition);
+        }
+        
         yPosition += lineHeight;
       });
       
@@ -122,7 +226,44 @@ const SummarySidebar = ({ summary, topic }) => {
       // Fallback: create a text file if PDF generation fails
       try {
         console.log('PDF generation failed, trying text file fallback...');
-        const blob = new Blob([summary], { type: 'text/plain;charset=utf-8' });
+        const parseHTMLToText = (htmlContent) => {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = htmlContent;
+          
+          let formattedText = '';
+          
+          Array.from(tempDiv.childNodes).forEach(node => {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+              const tagName = node.tagName.toLowerCase();
+              
+              if (tagName === 'h3') {
+                formattedText += '\n\n' + node.textContent.trim() + '\n';
+                formattedText += '─'.repeat(node.textContent.trim().length) + '\n';
+              } else if (tagName === 'ul') {
+                Array.from(node.children).forEach(li => {
+                  if (li.tagName.toLowerCase() === 'li') {
+                    formattedText += '• ' + li.textContent.trim() + '\n';
+                  }
+                });
+                formattedText += '\n';
+              } else if (tagName === 'p') {
+                formattedText += node.textContent.trim() + '\n\n';
+              } else {
+                formattedText += node.textContent.trim() + '\n';
+              }
+            } else if (node.nodeType === Node.TEXT_NODE) {
+              const text = node.textContent.trim();
+              if (text) {
+                formattedText += text + '\n';
+              }
+            }
+          });
+          
+          return formattedText.trim();
+        };
+        
+        const formattedSummary = parseHTMLToText(summary);
+        const blob = new Blob([formattedSummary], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -182,7 +323,16 @@ const SummarySidebar = ({ summary, topic }) => {
             <span>Conversation Summary</span>
           </div>
           <div className="text-gray-700 text-sm leading-relaxed">
-            {summary || 'No summary available. Generate a conversation to see the summary here.'}
+            {summary ? (
+              <div 
+                className="summary-content"
+                dangerouslySetInnerHTML={{ 
+                  __html: summary
+                }}
+              />
+            ) : (
+              'No summary available. Generate a conversation to see the summary here.'
+            )}
           </div>
         </div>
         

@@ -1,8 +1,8 @@
-from ..schemas.table_schema import Table_Validation
+from schemas.table_schema import Table_Validation
 from sqlalchemy.orm import Session
-from ..models.resturants_model import Resturant
-from ..db.session import get_db
-from ..models.table_model import PartyTable
+from models.resturants_model import Resturant
+from db.session import get_db
+from models.table_model import PartyTable
 
 
 class TableService:
@@ -18,7 +18,6 @@ class TableService:
         return tables
     
     def table_creation(self,table_data:Table_Validation,resturant_id):
-        # restaurant = self.db.query(Resturant).filter(Resturant.id == resturant_id).first()
         table=PartyTable(
             resturant_id=resturant_id,
             table_name=table_data.table_name,

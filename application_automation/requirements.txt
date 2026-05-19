@@ -1,0 +1,7 @@
+playwright
+google-generativeai
+groq
+python-dotenv
+beautifulsoup4
+pytest
+pytest-playwright

@@ -1,0 +1,192 @@
+.checkout-forms {
+    flex: 1;
+}
+
+.order-summary-sidebar {
+    width: 450px;
+    position: sticky;
+    top: 120px;
+}
+
+.checkout-section h3 {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.step-num-small {
+    width: 28px;
+    height: 28px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+}
+
+.address-card,
+.payment-card {
+    padding: 2rem;
+    cursor: pointer;
+    border: 2px solid var(--bg-main);
+    transition: var(--transition);
+}
+
+.address-card.selected,
+.payment-card.selected {
+    border-color: var(--primary);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow-md);
+}
+
+.address-tag {
+    background: var(--bg-main);
+    padding: 0.35rem 0.75rem;
+    font-size: 0.7rem;
+    font-weight: 800;
+    border-radius: var(--radius-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.radio-circle {
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    position: relative;
+    transition: var(--transition);
+}
+
+.selected .radio-circle {
+    border-color: var(--primary);
+}
+
+.selected .radio-circle::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--primary);
+    border-radius: 50%;
+}
+
+.card-brand {
+    background: var(--bg-main);
+    width: 50px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.btn-back {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.btn-back:hover {
+    background: var(--bg-main);
+}
+
+.success-icon-bg {
+    width: 160px;
+    height: 160px;
+    background: var(--primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 20px 40px -10px rgba(99, 102, 241, 0.4);
+}
+
+.order-receipt-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    position: relative;
+}
+
+.order-receipt-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--primary);
+}
+
+/* Spinner */
+.spinner-small {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid white;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Success Animation */
+.success-animation {
+    animation: scaleIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.summary-items-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.summary-items-list::-webkit-scrollbar-thumb {
+    background: var(--bg-main);
+    border-radius: 10px;
+}
+
+@media (max-width: 1200px) {
+    .order-summary-sidebar {
+        width: 380px;
+    }
+}
+
+@media (max-width: 1024px) {
+    .checkout-grid {
+        flex-direction: column;
+    }
+
+    .order-summary-sidebar {
+        width: 100%;
+        position: static;
+    }
+}

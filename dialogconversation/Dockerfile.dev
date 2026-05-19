@@ -1,0 +1,52 @@
+# Development Dockerfile for ConversationAI
+FROM node:18-alpine
+
+# Install Python and other dependencies
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    gcc \
+    g++ \
+    musl-dev \
+    python3-dev \
+    nginx \
+    curl
+
+# Set working directory
+WORKDIR /app
+
+# Copy package files
+COPY frontend/package*.json ./frontend/
+COPY backend/requirements.txt ./backend/
+
+# Install Node.js dependencies
+WORKDIR /app/frontend
+RUN npm install
+
+# Install Python dependencies
+WORKDIR /app/backend
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copy source code
+COPY frontend/ /app/frontend/
+COPY backend/ /app/backend/
+
+# Create temp_audio directory
+RUN mkdir -p /app/backend/temp_audio
+
+# Copy nginx configuration for development
+COPY nginx.dev.conf /etc/nginx/nginx.conf
+
+# Copy startup script
+COPY start-dev.sh /app/start-dev.sh
+RUN chmod +x /app/start-dev.sh
+
+# Expose ports
+EXPOSE 3000 8000
+
+# Set environment variables
+ENV PYTHONPATH=/app/backend
+ENV PYTHONUNBUFFERED=1
+
+# Start the development environment
+CMD ["/app/start-dev.sh"] 

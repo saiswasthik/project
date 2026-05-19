@@ -15,3 +15,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Custom styles for summary formatting */
+.summary-content h3 {
+  @apply text-lg font-bold text-gray-800 mt-6 mb-3 pb-2 border-b border-gray-200;
+}
+
+.summary-content ul {
+  @apply list-disc list-inside space-y-2 mt-3 mb-4 ml-4;
+}
+
+.summary-content li {
+  @apply text-gray-700 leading-relaxed;
+}
+
+.summary-content p {
+  @apply text-gray-700 leading-relaxed mb-3;
+}
+
+.summary-content strong {
+  @apply font-semibold text-gray-800;
+}
+
+.summary-content em {
+  @apply italic text-gray-600;
+}

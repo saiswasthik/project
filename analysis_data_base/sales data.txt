@@ -1,0 +1,43 @@
+OrderID,Date,CustomerName,Product,Category,Quantity,Price,TotalAmount,PaymentMethod,Region,SalesRep,Status
+1001,2024-01-01,John Doe,iPhone 14,Electronics,1,800,800,Credit Card,North,Rahul,Completed
+1002,01/02/2024,Jane Smith,Samsung TV,Electronics,1,1200,1200,Debit Card,South,Anita,Completed
+1003,2024/01/03,Mike Ross,AirPods,Electronics,2,150,300,Cash,East,,Completed
+1004,2024-01-04,Rachel Zane,Laptop,Electronics,1,INVALID,1000,Credit Card,West,Rohit,Completed
+1005,2024-01-05,Harvey Specter,Office Chair,Furniture,2,200,400,,North,Rahul,Completed
+1006,2024-01-06,Louis Litt,Desk,Furniture,1,350,350,Credit Card,South,Rahul,Cancelled
+1006,2024-01-06,Louis Litt,Desk,Furniture,1,350,350,Credit Card,South,Rahul,Cancelled   # duplicate
+
+1007,2024-01-07,Donna Paulsen,Coffee Machine,Appliances,1,250,250,Cash,East,Anita,Completed
+1008,2024-01-08,John Doe,iPhone 14,Electronics,1,800,800,Credit Card,North,Rahul,Completed   # repeat customer
+1009,2024-01-09,Jane Smith,Blender,Appliances,2,100,200,Debit Card,South,Anita,Completed
+
+1010,2024-13-10,Mike Ross,Microwave,Appliances,1,300,300,Cash,East,Rohit,Completed   # invalid date
+1011,2024-01-11,Rachel Zane,Table,Furniture,,150,300,Credit Card,West,Rohit,Completed   # missing quantity
+
+1012,2024-01-12,Harvey Specter,Sofa,Furniture,1,700,700,Credit Card,North,,Completed
+1013,2024-01-13,Louis Litt,Sofa,Furniture,1,700,700,Credit Card,South,Rahul,Completed
+1014,2024-01-14,Donna Paulsen,Toaster,Appliances,3,50,150,Cash,East,Anita,Completed
+
+1015,2024-01-15,John Doe,TV,Electronics,1,1000,1000,UPI,North,Rahul,Completed
+1016,2024-01-16,Jane Smith,TV,Electronics,1,1000,1000,upi,South,Anita,Completed   # inconsistent case
+
+1017,2024-01-17,Mike Ross,Chair,Furniture,4,75,300,Cash,East,Rohit,Returned
+1018,2024-01-18,Rachel Zane,Chair,Furniture,4,75,300,Cash,East,Rohit,Returned
+
+1019,2024-01-19,Unknown,Unknown,Unknown,1,0,0,Cash,Unknown,,Completed
+1020,2024-01-20,,Laptop,Electronics,1,900,900,Credit Card,West,Rahul,Completed   # missing customer
+
+1021,2024-01-21,Harvey Specter,Desk,Furniture,1,350,350,Credit Card,North,Rahul,Completed
+1022,2024-01-22,Louis Litt,Desk,Furniture,1,350,350,Credit Card,South,Rahul,Completed
+
+1023,2024-01-23,Donna Paulsen,Coffee Machine,Appliances,1,250,250,Cash,East,Anita,Completed
+1024,2024-01-23,Donna Paulsen,Coffee Machine,Appliances,1,250,250,Cash,East,Anita,Completed   # duplicate
+
+1025,2024-01-24,John Doe,iPhone 14,Electronics,1,800,800,Credit Card,North,Rahul,Completed
+1026,2024-01-25,Jane Smith,Blender,Appliances,2,100,200,Debit Card,South,Anita,Completed
+
+1027,2024-01-26,Mike Ross,Microwave,Appliances,1,300,300,Cash,East,Rohit,Completed
+1028,2024-01-27,Rachel Zane,Table,Furniture,2,150,300,Credit Card,West,Rohit,Completed
+
+1029,2024-01-28,Harvey Specter,Sofa,Furniture,1,700,700,Credit Card,North,Rahul,Completed
+1030,2024-01-29,Louis Litt,Sofa,Furniture,1,700,700,Credit Card,South,Rahul,Completed

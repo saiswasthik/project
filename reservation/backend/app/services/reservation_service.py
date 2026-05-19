@@ -1,8 +1,8 @@
-from ..schemas.reservation_schema import Reservation_Validation
-from ..models.reservation_model import ReservationTable
-from ..models.resturants_model import Resturant
-from ..models.setting_model import Settings
-from ..models.table_model import PartyTable
+from schemas.reservation_schema import Reservation_Validation
+from models.reservation_model import ReservationTable
+from models.resturants_model import Resturant
+from models.setting_model import Settings
+from models.table_model import PartyTable
 from fastapi import HTTPException
 from datetime import datetime,timedelta
 
@@ -82,7 +82,7 @@ class ReservationService:
         # Check if booking fits in operating hours
         if req_end_actual > shift_end:
             raise HTTPException(status_code=400, detail="Reservation duration exceeds shift end time")
-
+        
         # Find the first available table that has no conflicts
         target_table = None
         for table in tables:
@@ -157,7 +157,7 @@ class ReservationService:
             ReservationTable.table_id == int(table_id),
             ReservationTable.resturant_id == resturant_id,
             ReservationTable.date == selected_date
-        ).all() 
+        ).all()
         booked_ranges = []
         for res in existing_reservations:
             start_m = self._time_to_minutes(res.start_time)
@@ -166,11 +166,6 @@ class ReservationService:
         available_slots = []
         current_m = shift_start
         
-        # from datetime import time
-        # # (
-        # time_a=datetime.now()
-        # aa=self._time_to_minutes(time_a)
-        # )
         today = datetime.now().date()
         current_time_m = self._time_to_minutes(datetime.now().strftime("%H:%M"))
          

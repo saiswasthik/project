@@ -1,0 +1,35 @@
+{
+  "containedComponents": [
+    {
+      "id": "1043cdd5-6e55-40de-9b11-b930051cba3e",
+      "componentId": "44736c3d-4e4d-45bf-b5bc-8db34b33cbf4",
+      "componentType": "DocTable"
+    },
+    {
+      "id": "273acf53-4e82-41e5-8a6c-d9ce5f9d1ad9",
+      "componentId": "166c55cc-9216-4d68-ae84-a32d94350686",
+      "componentType": "Topic"
+    },
+    {
+      "id": "5e4a1e9c-e22c-4f8f-9b23-b6638431dd77",
+      "componentId": "d05f3b08-243e-436c-a496-06430ac46df8",
+      "componentType": "Equation"
+    }
+  ],
+  "content": {
+    "title": "automation template",
+    "isTemplate": true,
+    "sections": [
+      {
+        "title": "<p dir=\"ltr\">data_table</p>",
+        "html": "<p dir=\"ltr\">changed topic</p>",
+        "latex": "\\frac{z}{x}",
+        "content": [
+          "1043cdd5-6e55-40de-9b11-b930051cba3e",
+          "273acf53-4e82-41e5-8a6c-d9ce5f9d1ad9",
+          "5e4a1e9c-e22c-4f8f-9b23-b6638431dd77"
+        ]
+      }
+    ]
+  }
+}

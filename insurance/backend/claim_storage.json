@@ -1,0 +1,444 @@
+{
+    "CLM-2024-001": {
+        "claim_details": {
+            "health_policy_number": "pol-12345678",
+            "insurance_company": "Medicare Ltd",
+            "tpa_name": "qwer",
+            "claim_id_ref_no": "CLM-2024-001",
+            "patient_name": "Ramesh Kumar",
+            "policyholder_name": "ramesh",
+            "employee_id": "2345",
+            "valid_id_proof": "1234567"
+        },
+        "document_paths": [
+            "uploaded_files\\Hospital_Bill_Ramesh_Kumar.pdf",
+            "uploaded_files\\Prescription_Ramesh_Kumar.pdf",
+            "uploaded_files\\Lab_Report_Ramesh_Kumar.pdf",
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar.pdf"
+        ],
+        "extracted_text": {
+            "Hospital_Bill_Ramesh_Kumar.pdf": "HOSPITAL BILL\nPatient Name: Ramesh Kumar\nAdmission: 12-03-2024\nDischarge: 17-03-2024\nCharges:\nRoom: n10,000\nDoctor: n3,000\nLab: n4,500\nMedicines: n2,800\nNursing: n1,200\nTotal: n21,500\n",
+            "Prescription_Ramesh_Kumar.pdf": "PRESCRIPTION\nPatient Name: Ramesh Kumar\nDate: 12-03-2024\nMedicines:\nParacetamol 650mg \u2013 5 days\nOndansetron 4mg \u2013 3 days\nDoctor:\nDr. Anil Sharma\n",
+            "Lab_Report_Ramesh_Kumar.pdf": "LAB REPORT\nPatient Name: Ramesh Kumar\nTest Date: 13-03-2024\nTests:\nCBC \u2013 Platelets: 98,000 /cumm\nDengue NS1: POSITIVE\nPathologist:\nDr. Meera Joshi\n",
+            "Discharge_Summary_Ramesh_Kumar.pdf": "DISCHARGE SUMMARY\nHospital: CityCare Multispecialty Hospital\nPatient Name: Ramesh Kumar\nPolicy Number: POL-12345678\nAdmission Date: 12-03-2024\nDischarge Date: 17-03-2024\nDiagnosis:\nDengue Fever (NS1 Positive)\nTreatment:\nIV Fluids, Paracetamol, Monitoring\nCondition at Discharge:\nStable\nDoctor:\nDr. Anil Sharma\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "Hospital Name",
+                    "Policy Number",
+                    "Doctor Name",
+                    "Diagnosis",
+                    "Treatment",
+                    "Prescription",
+                    "Lab Report"
+                ],
+                "details": "Hospital Bill lacks Hospital Name, Policy Number, Doctor Name, Diagnosis, Treatment, Prescription, and Lab Report information."
+            },
+            "Document 2": {
+                "missing_fields": [
+                    "Admission Date",
+                    "Discharge Date",
+                    "Hospital Name",
+                    "Policy Number",
+                    "Diagnosis",
+                    "Treatment",
+                    "Lab Report",
+                    "Bill Details"
+                ],
+                "details": "Prescription file does not contain Admission Date, Discharge Date, Hospital Name, Policy Number, Diagnosis, Treatment, Lab Report, or Bill Details."
+            },
+            "Document 3": {
+                "missing_fields": [
+                    "Admission Date",
+                    "Discharge Date",
+                    "Hospital Name",
+                    "Policy Number",
+                    "Doctor Name",
+                    "Diagnosis",
+                    "Treatment",
+                    "Prescription",
+                    "Bill Details"
+                ],
+                "details": "Lab Report is missing Admission Date, Discharge Date, Hospital Name, Policy Number, Doctor Name, Diagnosis, Treatment, Prescription, and Bill Details."
+            },
+            "Document 4": {
+                "missing_fields": [
+                    "Bill Details",
+                    "Prescription",
+                    "Lab Report"
+                ],
+                "details": "Discharge Summary does not include Bill Details, Prescription, or Lab Report information."
+            }
+        },
+        "status": "Submitted",
+        "updated_text": {
+            "Hospital_Bill_Ramesh_Kumar.pdf": "HOSPITAL BILL1234567890-\r\nPatient Name: Ramesh Kumar\r\nAdmission: 12-03-2024\r\nDischarge: 17-03-2024\r\nCharges:\r\nRoom: n10,000\r\nDoctor: n3,000\r\nLab: n4,500\r\nMedicines: n2,800\r\nNursing: n1,200\r\nTotal: n21,500\r\n"
+        }
+    },
+    "111": {
+        "claim_details": {
+            "health_policy_number": "ERT",
+            "insurance_company": "FGH",
+            "tpa_name": "HJ",
+            "claim_id_ref_no": "111",
+            "patient_name": "K",
+            "policyholder_name": "K",
+            "employee_id": "K",
+            "valid_id_proof": "K"
+        },
+        "document_paths": [
+            "uploaded_files\\Hospital_Bill_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Prescription_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Lab_Report_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar_v3.pdf"
+        ],
+        "extracted_text": {
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "HOSPITAL BILL / TAX INVOICE\nHospital: CityCare Multispecialty Hospital | GSTIN: 36ABCDE1234F1Z5\nInvoice No: INV-CC-2024-8899 | Invoice Date: 17-03-2024\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nAdmission Date: 12-03-2024 | Discharge Date: 17-03-2024\nItemized Charges\nDescription Qty/Days Rate (n) Amount (n)\nRoom Charges (General Ward) 5 Days 2,000 10,000\nDoctor Consultation \u2014 \u2014 3,000\nLaboratory Charges \u2014 \u2014 4,500\nMedicines & Consumables \u2014 \u2014 2,800\nNursing Charges \u2014 \u2014 1,200\nTotal Amount Paid: n21,500\nMode of Payment: Cash | Receipt No: RCPT-778899\nBilling Officer: Rajesh Kumar\n",
+            "Prescription_Ramesh_Kumar_v3.pdf": "MEDICAL PRESCRIPTION\nHospital: CityCare Multispecialty Hospital\nPatient Name: Ramesh Kumar | Age/Gender: 45/M\nDate: 12-03-2024\nDiagnosis: Dengue Fever\nMedicine Name Dose Frequency Duration\nParacetamol 650 mg Every 6 hours 5 days\nOndansetron 4 mg Twice daily 3 days\nORS - As needed 5 days\nDoctor: Dr. Anil Sharma | Reg No: AP/MD/334455\n",
+            "Lab_Report_Ramesh_Kumar_v3.pdf": "LABORATORY INVESTIGATION REPORT\nLab Name: CityCare Diagnostic Laboratory | Reg No: LAB/AP/998877\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nSample Collection Date: 13-03-2024 08:30 AM | Report Date: 13-03-2024\nTest Results\nTest Name Result Normal Range Remarks\nHemoglobin 13.2 g/dL 13\u201317 Normal\nWBC Count 4,200 /cumm 4,000\u201311,000 Normal\nPlatelet Count 98,000 /cumm 150,000\u2013450,000 Low\nDengue NS1 Antigen Positive Negative Abnormal\nSGOT 68 U/L <40 High\nSGPT 72 U/L <40 High\nAuthorized By: Dr. Meera Joshi (MD Pathology)\n",
+            "Discharge_Summary_Ramesh_Kumar_v3.pdf": "DISCHARGE SUMMARY\nHospital Name: CityCare Multispecialty Hospital\nHospital Reg No: HOSP/AP/556677 | NABH Accredited\nHospital Address: Jubilee Hills, Hyderabad \u2013 500033 | Phone: 040-44556677\nPatient Information\nPatient Name: Ramesh Kumar | Age: 45 | Gender: Male\nUHID: HSP-556677 | Aadhaar: XXXX-XXXX-1234\nPolicy Number: POL-12345678 | Claim ID: CLM-2024-001\nInsurance Company: Medicare Ltd | TPA: HealthAssist TPA\nHospitalization Details\nAdmission Date & Time: 12-03-2024 10:45 AM\nDischarge Date & Time: 17-03-2024 04:30 PM\nWard/Room: General Ward | Bed No: GW-12\nClinical Details\nProvisional Diagnosis: Viral Fever\nFinal Diagnosis: Dengue Fever (NS1 Positive), Thrombocytopenia\nComorbidities: None\nProcedures Performed: IV Fluid Therapy, Platelet Monitoring\nTreating Team\nPrimary Consultant: Dr. Anil Sharma, MD (General Medicine), Reg No: AP/MD/334455\nDuty Medical Officer: Dr. P. Ravi\nDischarge Advice\nMedications on Discharge: Paracetamol 650mg, ORS\nDiet: Normal Diet | Activity: As tolerated\nFollow-up: After 7 days with CBC report\nAuthorized Signatory & Hospital Seal\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "health_policy_number",
+                    "insurance_company",
+                    "tpa_name",
+                    "claim_id_ref_no",
+                    "policyholder_name",
+                    "employee_id",
+                    "valid_id_proof"
+                ],
+                "details": "Patient name in the bill is 'Ramesh Kumar', which does not match the claim patient name 'K'. The bill does not contain the required health policy number, insurance company, TPA name, claim ID reference number, policyholder name, employee ID, or valid ID proof. All other bill fields (patient name, admission/discharge dates, itemized charges, payment mode, receipt number) are present."
+            },
+            "Document 2": {
+                "missing_fields": [
+                    "health_policy_number",
+                    "insurance_company",
+                    "tpa_name",
+                    "claim_id_ref_no",
+                    "policyholder_name",
+                    "employee_id",
+                    "valid_id_proof"
+                ],
+                "details": "Patient name in the discharge summary is 'Ramesh Kumar', which does not match the claim patient name 'K'. The summary does not contain the required health policy number, insurance company, TPA name, claim ID reference number, policyholder name, employee ID, or valid ID proof. All other discharge summary fields (patient name, admission/discharge dates, diagnosis, procedures, discharge advice) are present."
+            }
+        },
+        "status": "Submitted",
+        "updated_text": {
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "HOSPITAL BILL / TAX INVOICE\r\nHospital: CityCare Multispecialty Hospital | GSTIN: 36ABCDE1234F1Z5\r\nInvoice No: INV-CC-2024-8899 | Invoice Date: 17-03-2024\r\nPatient Name: Ramesh Kumar | UHID: HSP-556677\r\nAdmission Date: 12-03-2024 | Discharge Date: 17-03-2024\r\nItemized Charges\r\nDescription Qty/Days Rate (n) Amount (n)\r\nRoom Charges (General Ward) 5 Days 2,000 10,000\r\nDoctor Consultation \u2014 \u2014 3,000\r\nLaboratory Charges \u2014 \u2014 4,500\r\nMedicines & Consumables \u2014 \u2014 2,800\r\nNursing Charges \u2014 \u2014 1,200\r\nTotal Amount Paid: 21,500\r\nMode of Payment: Cash | Receipt No: RCPT-778899\r\nBilling Officer: Rajesh Kumar\r\nbill 123456789000\r\n ",
+            "Discharge_Summary_Ramesh_Kumar_v3.pdf": "DISCHARGE SUMMARY\r\nHospital Name: CityCare Multispecialty Hospital\r\nHospital Reg No: HOSP/AP/556677 | NABH Accredited\r\nHospital Address: Jubilee Hills, Hyderabad \u2013 500033 | Phone: 040-44556677\r\nPatient Information\r\nPatient Name: Ramesh Kumar | Age: 45 | Gender: Male\r\nUHID: HSP-556677 | Aadhaar: XXXX-XXXX-1234\r\nPolicy Number: POL-12345678 | Claim ID: CLM-2024-001\r\nInsurance Company: Medicare Ltd | TPA: HealthAssist TPA\r\nHospitalization Details\r\nAdmission Date & Time: 12-03-2024 10:45 AM\r\nDischarge Date & Time: 17-03-2024 04:30 PM\r\nWard/Room: General Ward | Bed No: GW-12\r\nClinical Details\r\nProvisional Diagnosis: Viral Fever\r\nFinal Diagnosis: Dengue Fever (NS1 Positive), Thrombocytopenia\r\nComorbidities: None\r\nProcedures Performed: IV Fluid Therapy, Platelet Monitoring\r\nTreating Team\r\nPrimary Consultant: Dr. Anil Sharma, MD (General Medicine), Reg No: AP/MD/334455\r\nDuty Medical Officer: Dr. P. Ravi\r\nDischarge Advice\r\nMedications on Discharge: Paracetamol 650mg, ORS\r\nDiet: Normal Diet | Activity: As tolerated\r\nFollow-up: After 7 days with CBC report\r\nAuthorized Signatory & Hospital Seal\r\n"
+        }
+    },
+    "string": {
+        "claim_details": {
+            "health_policy_number": "string",
+            "insurance_company": "string",
+            "tpa_name": "string",
+            "claim_id_ref_no": "string",
+            "patient_name": "string",
+            "policyholder_name": "string",
+            "employee_id": "string",
+            "valid_id_proof": "string"
+        },
+        "document_paths": [
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar_v4.pdf"
+        ],
+        "extracted_text": {
+            "Discharge_Summary_Ramesh_Kumar_v4.pdf": "DISCHARGE SUMMARY\nHospital Information\nHospital Name: CityCare Multispecialty Hospital\nHospital Registration No: HOSP/AP/556677 (NABH Accredited)\nAddress: Plot No. 45, Jubilee Hills, Hyderabad \u2013 500033\nContact: +91-40-44556677\nPatient & Insurance Details\nPatient Name: Ramesh Kumar\nAge / Gender: 45 Years / Male\nUHID: HSP-556677\nGovernment ID: Aadhaar (XXXX-XXXX-1234)\nHealth Policy Number: POL-12345678\nClaim ID / Reference No: CLM-2024-001\nInsurance Company: Medicare Ltd\nTPA Name: HealthAssist TPA\nHospitalization Details\nDate & Time of Admission: 12-03-2024 at 10:45 AM\nDate & Time of Discharge: 17-03-2024 at 04:30 PM\nTotal Length of Stay: 5 Days\nWard / Room Category: General Ward\nBed Number: GW-12\nChief Complaints at Admission\n(cid:127) High-grade fever for 3 days\n(cid:127) Severe body aches and headache\n(cid:127) Nausea and multiple episodes of vomiting\n(cid:127) Generalized weakness and reduced oral intake\nClinical History\nThe patient was apparently well three days prior to admission when he developed sudden onset high-grade fever\nassociated with chills, myalgia, retro-orbital pain, and vomiting. There was no history of bleeding manifestations,\nbreathlessness, chest pain, or altered sensorium. No significant past medical history of diabetes, hypertension,\ncardiac illness, or previous similar episodes was reported.\nExamination Findings on Admission\nGeneral Condition: Moderately ill, conscious, oriented to time, place, and person.\nPulse Rate: 96/min, regular\nBlood Pressure: 110/70 mmHg\nTemperature: 102\u00b0F\nRespiratory Rate: 18/min\nSystemic Examination: Cardiovascular, respiratory, and central nervous systems were clinically normal. Mild\nhepatomegaly was noted on abdominal examination.\nInvestigations\n(cid:127) Complete Blood Count (CBC)\n(cid:127) Dengue NS1 Antigen Test (Positive)\n(cid:127) Liver Function Tests (SGOT & SGPT elevated)\n(cid:127) Renal Function Tests (Within normal limits)\nDiagnosis\nProvisional Diagnosis: Viral Fever\nFinal Diagnosis: Dengue Fever (NS1 Positive) with Mild Thrombocytopenia\nTreatment & Hospital Course\nThe patient was managed conservatively with intravenous fluids, antipyretics, anti-emetics, and close monitoring of\nplatelet counts and vital parameters. Platelet counts were monitored daily and showed gradual improvement. No\nplatelet transfusion was required during the hospital stay. The patient remained hemodynamically stable throughout\nthe hospitalization and showed symptomatic improvement.\nCondition at Discharge\nThe patient was afebrile, clinically stable, and tolerating oral diet well. Vital signs were within normal limits. There\nwere no active complaints at the time of discharge.\nMedications at Discharge\n(cid:127) Tablet Paracetamol 650 mg \u2013 One tablet orally every 6 hours as needed for fever\n(cid:127) Oral Rehydration Solution (ORS) \u2013 As advised\nDischarge Advice\n(cid:127) Adequate oral fluid intake\n(cid:127) Avoid strenuous physical activity for one week\n(cid:127) Monitor for warning signs such as bleeding, persistent vomiting, or abdominal pain\n(cid:127) Follow up with CBC after 7 days or earlier if symptoms worsen\nFollow-up\nFollow-up consultation scheduled after 7 days with treating physician along with repeat blood investigations.\nTreating Doctor\nDr. Anil Sharma\nMD (General Medicine)\nMedical Registration No: AP/MD/334455\nAuthorized Signatory & Hospital Seal\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "itemized_bill",
+                    "total_amount",
+                    "bill_date",
+                    "policyholder_name",
+                    "employee_id",
+                    "valid_id_proof"
+                ],
+                "details": "Itemized bill, total charges, bill date, policyholder name, employee ID, and valid ID proof are not present in the discharge summary."
+            }
+        },
+        "status": "Submitted",
+        "updated_text": {
+            "Discharge_Summary_Ramesh_Kumar_v4.pdf": "DISCHARGE SUMMARY\r\nHospital Information\r\nHospital Name: CityCare Multispecialty Hospital\r\nHospital Registration No: HOSP/AP/556677 (NABH Accredited)\r\nAddress: Plot No. 45, Jubilee Hills, Hyderabad \u2013 500033\r\nContact: +91-40-44556677\r\nPatient & Insurance Details\r\nPatient Name: Ramesh Kumar\r\nAge / Gender: 45 Years / Male\r\nUHID: HSP-556677\r\nGovernment ID: Aadhaar (XXXX-XXXX-1234)\r\nHealth Policy Number: POL-12345678\r\nClaim ID / Reference No: CLM-2024-001\r\nInsurance Company: Medicare Ltd\r\nTPA Name: HealthAssist TPA\r\nHospitalization Details\r\nDate & Time of Admission: 12-03-2024 at 10:45 AM\r\nDate & Time of Discharge: 17-03-2024 at 04:30 PM\r\nTotal Length of Stay: 5 Days\r\nWard / Room Category: General Ward\r\nBed Number: GW-12\r\nChief Complaints at Admission\r\n(cid:127) High-grade fever for 3 days\r\n(cid:127) Severe body aches and headache\r\n(cid:127) Nausea and multiple episodes of vomiting\r\n(cid:127) Generalized weakness and reduced oral intake\r\nClinical History\r\nThe patient was apparently well three days prior to admission when he developed sudden onset high-grade fever\r\nassociated with chills, myalgia, retro-orbital pain, and vomiting. There was no history of bleeding manifestations,\r\nbreathlessness, chest pain, or altered sensorium. No significant past medical history of diabetes, hypertension,\r\ncardiac illness, or previous similar episodes was reported.\r\nExamination Findings on Admission\r\nGeneral Condition: Moderately ill, conscious, oriented to time, place, and person.\r\nPulse Rate: 96/min, regular\r\nBlood Pressure: 110/70 mmHg\r\nTemperature: 102\u00b0F\r\nRespiratory Rate: 18/min\r\nSystemic Examination: Cardiovascular, respiratory, and central nervous systems were clinically normal. Mild\r\nhepatomegaly was noted on abdominal examination.\r\nInvestigations\r\n(cid:127) Complete Blood Count (CBC)\r\n(cid:127) Dengue NS1 Antigen Test (Positive)\r\n(cid:127) Liver Function Tests (SGOT & SGPT elevated)\r\n(cid:127) Renal Function Tests (Within normal limits)\r\nDiagnosis\r\nProvisional Diagnosis: Viral Fever\r\nFinal Diagnosis: Dengue Fever (NS1 Positive) with Mild Thrombocytopenia\r\nTreatment & Hospital Course\r\nThe patient was managed conservatively with intravenous fluids, antipyretics, anti-emetics, and close monitoring of\r\nplatelet counts and vital parameters. Platelet counts were monitored daily and showed gradual improvement. No\r\nplatelet transfusion was required during the hospital stay. The patient remained hemodynamically stable throughout\r\nthe hospitalization and showed symptomatic improvement.\r\nCondition at Discharge\r\nThe patient was afebrile, clinically stable, and tolerating oral diet well. Vital signs were within normal limits. There\r\nwere no active complaints at the time of discharge.\r\nMedications at Discharge\r\n(cid:127) Tablet Paracetamol 650 mg \u2013 One tablet orally every 6 hours as needed for fever\r\n(cid:127) Oral Rehydration Solution (ORS) \u2013 As advised\r\nDischarge Advice\r\n(cid:127) Adequate oral fluid intake\r\n(cid:127) Avoid strenuous physical activity for one week\r\n(cid:127) Monitor for warning signs such as bleeding, persistent vomiting, or abdominal pain\r\n(cid:127) Follow up with CBC after 7 days or earlier if symptoms worsen\r\nFollow-up\r\nFollow-up consultation scheduled after 7 days with treating physician along with repeat blood investigations.\r\nTreating Doctor\r\nDr. Anil Sharma\r\nMD (General Medicine)\r\nMedical Registration No: AP/MD/334455\r\nAuthorized Signatory & Hospital Seal\r\n"
+        }
+    },
+    "1": {
+        "claim_details": {
+            "health_policy_number": "kjhHj",
+            "insurance_company": "hjkhj",
+            "tpa_name": "hk",
+            "claim_id_ref_no": "1",
+            "patient_name": "hjk",
+            "policyholder_name": "khn",
+            "employee_id": ",m",
+            "valid_id_proof": "mn"
+        },
+        "document_paths": [
+            "uploaded_files\\Hospital_Bill_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Prescription_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Lab_Report_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar_v3.pdf"
+        ],
+        "extracted_text": {
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "HOSPITAL BILL / TAX INVOICE\nHospital: CityCare Multispecialty Hospital | GSTIN: 36ABCDE1234F1Z5\nInvoice No: INV-CC-2024-8899 | Invoice Date: 17-03-2024\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nAdmission Date: 12-03-2024 | Discharge Date: 17-03-2024\nItemized Charges\nDescription Qty/Days Rate (n) Amount (n)\nRoom Charges (General Ward) 5 Days 2,000 10,000\nDoctor Consultation \u2014 \u2014 3,000\nLaboratory Charges \u2014 \u2014 4,500\nMedicines & Consumables \u2014 \u2014 2,800\nNursing Charges \u2014 \u2014 1,200\nTotal Amount Paid: n21,500\nMode of Payment: Cash | Receipt No: RCPT-778899\nBilling Officer: Rajesh Kumar\n",
+            "Prescription_Ramesh_Kumar_v3.pdf": "MEDICAL PRESCRIPTION\nHospital: CityCare Multispecialty Hospital\nPatient Name: Ramesh Kumar | Age/Gender: 45/M\nDate: 12-03-2024\nDiagnosis: Dengue Fever\nMedicine Name Dose Frequency Duration\nParacetamol 650 mg Every 6 hours 5 days\nOndansetron 4 mg Twice daily 3 days\nORS - As needed 5 days\nDoctor: Dr. Anil Sharma | Reg No: AP/MD/334455\n",
+            "Lab_Report_Ramesh_Kumar_v3.pdf": "LABORATORY INVESTIGATION REPORT\nLab Name: CityCare Diagnostic Laboratory | Reg No: LAB/AP/998877\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nSample Collection Date: 13-03-2024 08:30 AM | Report Date: 13-03-2024\nTest Results\nTest Name Result Normal Range Remarks\nHemoglobin 13.2 g/dL 13\u201317 Normal\nWBC Count 4,200 /cumm 4,000\u201311,000 Normal\nPlatelet Count 98,000 /cumm 150,000\u2013450,000 Low\nDengue NS1 Antigen Positive Negative Abnormal\nSGOT 68 U/L <40 High\nSGPT 72 U/L <40 High\nAuthorized By: Dr. Meera Joshi (MD Pathology)\n",
+            "Discharge_Summary_Ramesh_Kumar_v3.pdf": "DISCHARGE SUMMARY\nHospital Name: CityCare Multispecialty Hospital\nHospital Reg No: HOSP/AP/556677 | NABH Accredited\nHospital Address: Jubilee Hills, Hyderabad \u2013 500033 | Phone: 040-44556677\nPatient Information\nPatient Name: Ramesh Kumar | Age: 45 | Gender: Male\nUHID: HSP-556677 | Aadhaar: XXXX-XXXX-1234\nPolicy Number: POL-12345678 | Claim ID: CLM-2024-001\nInsurance Company: Medicare Ltd | TPA: HealthAssist TPA\nHospitalization Details\nAdmission Date & Time: 12-03-2024 10:45 AM\nDischarge Date & Time: 17-03-2024 04:30 PM\nWard/Room: General Ward | Bed No: GW-12\nClinical Details\nProvisional Diagnosis: Viral Fever\nFinal Diagnosis: Dengue Fever (NS1 Positive), Thrombocytopenia\nComorbidities: None\nProcedures Performed: IV Fluid Therapy, Platelet Monitoring\nTreating Team\nPrimary Consultant: Dr. Anil Sharma, MD (General Medicine), Reg No: AP/MD/334455\nDuty Medical Officer: Dr. P. Ravi\nDischarge Advice\nMedications on Discharge: Paracetamol 650mg, ORS\nDiet: Normal Diet | Activity: As tolerated\nFollow-up: After 7 days with CBC report\nAuthorized Signatory & Hospital Seal\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name"
+                ],
+                "details": "The hospital bill contains patient name, admission and discharge dates, and itemized charges, but it does not include the policy number, claim ID, insurance company, or TPA information required for claim validation."
+            },
+            "Document 2": {
+                "missing_fields": [
+                    "admission_date",
+                    "discharge_date",
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name"
+                ],
+                "details": "The prescription lists patient name, date, and medications, but lacks admission and discharge dates, policy number, claim ID, insurance company, and TPA details."
+            },
+            "Document 3": {
+                "missing_fields": [
+                    "admission_date",
+                    "discharge_date",
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name"
+                ],
+                "details": "The lab report provides test results and patient name, but it does not contain admission/discharge dates, policy number, claim ID, insurance company, or TPA information."
+            },
+            "Document 4": {
+                "missing_fields": [],
+                "details": "The discharge summary includes patient name, admission and discharge dates, policy number, claim ID, insurance company, and TPA, covering all required claim fields."
+            },
+            "Overall Validation": {
+                "Patient Name Match": "No",
+                "explanation_patient_name": "Documents refer to patient \"Ramesh Kumar\" while the claim details list the patient name as \"hjk\".",
+                "Policy Match": "No",
+                "explanation_policy": "Claim policy number is \"kjhHj\" whereas the documents show policy number \"POL-12345678\".",
+                "Critical Discrepancies": [
+                    "Patient name mismatch between claim and documents.",
+                    "Policy number mismatch.",
+                    "Claim ID mismatch: claim has ID '1' but documents use 'CLM-2024-001'.",
+                    "Insurance company mismatch: claim lists 'hjkhj' but documents show 'Medicare Ltd'.",
+                    "TPA mismatch: claim lists 'hk' while documents show 'HealthAssist TPA'.",
+                    "Date alignment issue: claim dates are not provided, but document dates are in March 2024."
+                ]
+            }
+        },
+        "status": "Submitted",
+        "updated_text": {
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "1111"
+        }
+    },
+    "123": {
+        "claim_details": {
+            "health_policy_number": "kj",
+            "insurance_company": "KJLK",
+            "tpa_name": "NM",
+            "claim_id_ref_no": "123",
+            "patient_name": "N,",
+            "policyholder_name": "M,",
+            "employee_id": "MN,",
+            "valid_id_proof": "MN,"
+        },
+        "document_paths": [
+            "uploaded_files\\Hospital_Bill_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Prescription_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Lab_Report_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar_v3.pdf"
+        ],
+        "extracted_text": {
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "HOSPITAL BILL / TAX INVOICE\nHospital: CityCare Multispecialty Hospital | GSTIN: 36ABCDE1234F1Z5\nInvoice No: INV-CC-2024-8899 | Invoice Date: 17-03-2024\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nAdmission Date: 12-03-2024 | Discharge Date: 17-03-2024\nItemized Charges\nDescription Qty/Days Rate (n) Amount (n)\nRoom Charges (General Ward) 5 Days 2,000 10,000\nDoctor Consultation \u2014 \u2014 3,000\nLaboratory Charges \u2014 \u2014 4,500\nMedicines & Consumables \u2014 \u2014 2,800\nNursing Charges \u2014 \u2014 1,200\nTotal Amount Paid: n21,500\nMode of Payment: Cash | Receipt No: RCPT-778899\nBilling Officer: Rajesh Kumar\n",
+            "Prescription_Ramesh_Kumar_v3.pdf": "MEDICAL PRESCRIPTION\nHospital: CityCare Multispecialty Hospital\nPatient Name: Ramesh Kumar | Age/Gender: 45/M\nDate: 12-03-2024\nDiagnosis: Dengue Fever\nMedicine Name Dose Frequency Duration\nParacetamol 650 mg Every 6 hours 5 days\nOndansetron 4 mg Twice daily 3 days\nORS - As needed 5 days\nDoctor: Dr. Anil Sharma | Reg No: AP/MD/334455\n",
+            "Lab_Report_Ramesh_Kumar_v3.pdf": "LABORATORY INVESTIGATION REPORT\nLab Name: CityCare Diagnostic Laboratory | Reg No: LAB/AP/998877\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nSample Collection Date: 13-03-2024 08:30 AM | Report Date: 13-03-2024\nTest Results\nTest Name Result Normal Range Remarks\nHemoglobin 13.2 g/dL 13\u201317 Normal\nWBC Count 4,200 /cumm 4,000\u201311,000 Normal\nPlatelet Count 98,000 /cumm 150,000\u2013450,000 Low\nDengue NS1 Antigen Positive Negative Abnormal\nSGOT 68 U/L <40 High\nSGPT 72 U/L <40 High\nAuthorized By: Dr. Meera Joshi (MD Pathology)\n",
+            "Discharge_Summary_Ramesh_Kumar_v3.pdf": "DISCHARGE SUMMARY\nHospital Name: CityCare Multispecialty Hospital\nHospital Reg No: HOSP/AP/556677 | NABH Accredited\nHospital Address: Jubilee Hills, Hyderabad \u2013 500033 | Phone: 040-44556677\nPatient Information\nPatient Name: Ramesh Kumar | Age: 45 | Gender: Male\nUHID: HSP-556677 | Aadhaar: XXXX-XXXX-1234\nPolicy Number: POL-12345678 | Claim ID: CLM-2024-001\nInsurance Company: Medicare Ltd | TPA: HealthAssist TPA\nHospitalization Details\nAdmission Date & Time: 12-03-2024 10:45 AM\nDischarge Date & Time: 17-03-2024 04:30 PM\nWard/Room: General Ward | Bed No: GW-12\nClinical Details\nProvisional Diagnosis: Viral Fever\nFinal Diagnosis: Dengue Fever (NS1 Positive), Thrombocytopenia\nComorbidities: None\nProcedures Performed: IV Fluid Therapy, Platelet Monitoring\nTreating Team\nPrimary Consultant: Dr. Anil Sharma, MD (General Medicine), Reg No: AP/MD/334455\nDuty Medical Officer: Dr. P. Ravi\nDischarge Advice\nMedications on Discharge: Paracetamol 650mg, ORS\nDiet: Normal Diet | Activity: As tolerated\nFollow-up: After 7 days with CBC report\nAuthorized Signatory & Hospital Seal\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name",
+                    "patient_age_gender",
+                    "patient_address",
+                    "hospital_reg_no"
+                ],
+                "details": "The hospital bill lacks policy number, claim ID, insurance company, TPA, patient age/gender, patient address and hospital registration number."
+            },
+            "Document 2": {
+                "missing_fields": [
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name",
+                    "hospital_reg_no",
+                    "hospital_address",
+                    "patient_address",
+                    "patient_uhid",
+                    "admission_date",
+                    "discharge_date"
+                ],
+                "details": "The prescription does not contain policy number, claim ID, insurance company, TPA, hospital registration number, hospital address, patient address, UHID, admission or discharge dates."
+            },
+            "Document 3": {
+                "missing_fields": [
+                    "policy_number",
+                    "claim_id",
+                    "insurance_company",
+                    "tpa_name",
+                    "hospital_reg_no",
+                    "hospital_name",
+                    "patient_address",
+                    "patient_age_gender",
+                    "admission_date",
+                    "discharge_date"
+                ],
+                "details": "The lab report is missing policy number, claim ID, insurance company, TPA, hospital registration number, hospital name, patient address, patient age/gender, admission and discharge dates."
+            },
+            "Document 4": {
+                "missing_fields": [
+                    "patient_address",
+                    "hospital_gstin",
+                    "invoice_no",
+                    "mode_of_payment",
+                    "receipt_no",
+                    "billing_officer"
+                ],
+                "details": "The discharge summary does not include patient address, hospital GSTIN, invoice number, mode of payment, receipt number, or billing officer details."
+            }
+        },
+        "status": "Submitted",
+        "updated_text": {
+            "Discharge_Summary_Ramesh_Kumar_v3.pdf": "DISCHARGE SUMMARY\r\nHospital Name: CityCare Multispecialty Hospital\r\nHospital Reg No: HOSP/AP/556677 | NABH Accredited\r\nHospital Address: Jubilee Hills, Hyderabad \u2013 500033 | Phone: 040-44556677\r\nPatient Information\r\nPatient Name: Ramesh Kumar | Age: 45 | Gender: Male\r\nUHID: HSP-556677 | Aadhaar: XXXX-XXXX-1234\r\nPolicy Number: POL-12345678 | Claim ID: CLM-2024-001\r\nInsurance Company: Medicare Ltd | TPA: HealthAssist TPA\r\nHospitalization Details\r\nAdmission Date & Time: 12-03-2024 10:45 AM\r\nDischarge Date & Time: 17-03-2024 04:30 PM\r\nWard/Room: General Ward | Bed No: GW-12\r\nClinical Details\r\nProvisional Diagnosis: Viral Fever\r\nFinal Diagnosis: Dengue Fever (NS1 Positive), Thrombocytopenia\r\nComorbidities: None\r\nProcedures Performed: IV Fluid Therapy, Platelet Monitoring\r\nTreating Team\r\nPrimary Consultant: Dr. Anil Sharma, MD (General Medicine), Reg No: AP/MD/334455\r\nDuty Medical Officer: Dr. P. Ravi\r\nDischarge Advice\r\nMedications on Discharge: Paracetamol 650mg, ORS\r\nDiet: Normal Diet | Activity: As tolerated\r\nFollow-up: After 7 days with CBC report\r\nAuthorized Signatory & Hospital Seal\r\n",
+            "Prescription_Ramesh_Kumar_v3.pdf": "MEDICAL PRESCRIPTION\r\nHospital: CityCare Multispecialty Hospital\r\nPatient Name: Ramesh Kumar | Age/Gender: 45/M\r\nDate: 12-03-2024\r\nDiagnosis: Dengue Fever\r\nMedicine Name Dose Frequency Duration\r\nParacetamol 650 mg Every 6 hours 5 days\r\nOndansetron 4 mg Twice daily 3 days\r\nORS - As needed 5 days\r\nDoctor: Dr. Anil Sharma | Reg No: AP/MD/334455\r\nbill amount :\r\n"
+        }
+    },
+    "12345": {
+        "claim_details": {
+            "health_policy_number": "string",
+            "insurance_company": "string",
+            "tpa_name": "string",
+            "claim_id_ref_no": "12345",
+            "patient_name": "string",
+            "policyholder_name": "string",
+            "employee_id": "string",
+            "valid_id_proof": "string"
+        },
+        "document_paths": [
+            "uploaded_files\\Lab_Report_Ramesh_Kumar.pdf"
+        ],
+        "extracted_text": {
+            "Lab_Report_Ramesh_Kumar.pdf": "LAB REPORT\nPatient Name: Ramesh Kumar\nTest Date: 13-03-2024\nTests:\nCBC \u2013 Platelets: 98,000 /cumm\nDengue NS1: POSITIVE\nPathologist:\nDr. Meera Joshi\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "hospital_name",
+                    "admission_date",
+                    "discharge_date",
+                    "diagnosis",
+                    "treatment_details",
+                    "prescription",
+                    "billing_info"
+                ],
+                "details": "Patient name in claim details ('string') does not match the name in the document ('Ramesh Kumar'). The document also lacks hospital name, admission date, discharge date, diagnosis, treatment details, prescription, and billing information required for claim processing."
+            }
+        },
+        "status": "Submitted"
+    },
+    "v": {
+        "claim_details": {
+            "health_policy_number": "wr",
+            "insurance_company": "bg",
+            "tpa_name": "vc",
+            "claim_id_ref_no": "v",
+            "patient_name": "v",
+            "policyholder_name": "n",
+            "employee_id": "n",
+            "valid_id_proof": "h"
+        },
+        "document_paths": [
+            "uploaded_files\\Discharge_Summary_Ramesh_Kumar_v4.pdf",
+            "uploaded_files\\Hospital_Bill_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Prescription_Ramesh_Kumar_v3.pdf",
+            "uploaded_files\\Lab_Report_Ramesh_Kumar_v3.pdf"
+        ],
+        "extracted_text": {
+            "Discharge_Summary_Ramesh_Kumar_v4.pdf": "DISCHARGE SUMMARY\nHospital Information\nHospital Name: CityCare Multispecialty Hospital\nHospital Registration No: HOSP/AP/556677 (NABH Accredited)\nAddress: Plot No. 45, Jubilee Hills, Hyderabad \u2013 500033\nContact: +91-40-44556677\nPatient & Insurance Details\nPatient Name: Ramesh Kumar\nAge / Gender: 45 Years / Male\nUHID: HSP-556677\nGovernment ID: Aadhaar (XXXX-XXXX-1234)\nHealth Policy Number: POL-12345678\nClaim ID / Reference No: CLM-2024-001\nInsurance Company: Medicare Ltd\nTPA Name: HealthAssist TPA\nHospitalization Details\nDate & Time of Admission: 12-03-2024 at 10:45 AM\nDate & Time of Discharge: 17-03-2024 at 04:30 PM\nTotal Length of Stay: 5 Days\nWard / Room Category: General Ward\nBed Number: GW-12\nChief Complaints at Admission\n(cid:127) High-grade fever for 3 days\n(cid:127) Severe body aches and headache\n(cid:127) Nausea and multiple episodes of vomiting\n(cid:127) Generalized weakness and reduced oral intake\nClinical History\nThe patient was apparently well three days prior to admission when he developed sudden onset high-grade fever\nassociated with chills, myalgia, retro-orbital pain, and vomiting. There was no history of bleeding manifestations,\nbreathlessness, chest pain, or altered sensorium. No significant past medical history of diabetes, hypertension,\ncardiac illness, or previous similar episodes was reported.\nExamination Findings on Admission\nGeneral Condition: Moderately ill, conscious, oriented to time, place, and person.\nPulse Rate: 96/min, regular\nBlood Pressure: 110/70 mmHg\nTemperature: 102\u00b0F\nRespiratory Rate: 18/min\nSystemic Examination: Cardiovascular, respiratory, and central nervous systems were clinically normal. Mild\nhepatomegaly was noted on abdominal examination.\nInvestigations\n(cid:127) Complete Blood Count (CBC)\n(cid:127) Dengue NS1 Antigen Test (Positive)\n(cid:127) Liver Function Tests (SGOT & SGPT elevated)\n(cid:127) Renal Function Tests (Within normal limits)\nDiagnosis\nProvisional Diagnosis: Viral Fever\nFinal Diagnosis: Dengue Fever (NS1 Positive) with Mild Thrombocytopenia\nTreatment & Hospital Course\nThe patient was managed conservatively with intravenous fluids, antipyretics, anti-emetics, and close monitoring of\nplatelet counts and vital parameters. Platelet counts were monitored daily and showed gradual improvement. No\nplatelet transfusion was required during the hospital stay. The patient remained hemodynamically stable throughout\nthe hospitalization and showed symptomatic improvement.\nCondition at Discharge\nThe patient was afebrile, clinically stable, and tolerating oral diet well. Vital signs were within normal limits. There\nwere no active complaints at the time of discharge.\nMedications at Discharge\n(cid:127) Tablet Paracetamol 650 mg \u2013 One tablet orally every 6 hours as needed for fever\n(cid:127) Oral Rehydration Solution (ORS) \u2013 As advised\nDischarge Advice\n(cid:127) Adequate oral fluid intake\n(cid:127) Avoid strenuous physical activity for one week\n(cid:127) Monitor for warning signs such as bleeding, persistent vomiting, or abdominal pain\n(cid:127) Follow up with CBC after 7 days or earlier if symptoms worsen\nFollow-up\nFollow-up consultation scheduled after 7 days with treating physician along with repeat blood investigations.\nTreating Doctor\nDr. Anil Sharma\nMD (General Medicine)\nMedical Registration No: AP/MD/334455\nAuthorized Signatory & Hospital Seal\n",
+            "Hospital_Bill_Ramesh_Kumar_v3.pdf": "HOSPITAL BILL / TAX INVOICE\nHospital: CityCare Multispecialty Hospital | GSTIN: 36ABCDE1234F1Z5\nInvoice No: INV-CC-2024-8899 | Invoice Date: 17-03-2024\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nAdmission Date: 12-03-2024 | Discharge Date: 17-03-2024\nItemized Charges\nDescription Qty/Days Rate (n) Amount (n)\nRoom Charges (General Ward) 5 Days 2,000 10,000\nDoctor Consultation \u2014 \u2014 3,000\nLaboratory Charges \u2014 \u2014 4,500\nMedicines & Consumables \u2014 \u2014 2,800\nNursing Charges \u2014 \u2014 1,200\nTotal Amount Paid: n21,500\nMode of Payment: Cash | Receipt No: RCPT-778899\nBilling Officer: Rajesh Kumar\n",
+            "Prescription_Ramesh_Kumar_v3.pdf": "MEDICAL PRESCRIPTION\nHospital: CityCare Multispecialty Hospital\nPatient Name: Ramesh Kumar | Age/Gender: 45/M\nDate: 12-03-2024\nDiagnosis: Dengue Fever\nMedicine Name Dose Frequency Duration\nParacetamol 650 mg Every 6 hours 5 days\nOndansetron 4 mg Twice daily 3 days\nORS - As needed 5 days\nDoctor: Dr. Anil Sharma | Reg No: AP/MD/334455\n",
+            "Lab_Report_Ramesh_Kumar_v3.pdf": "LABORATORY INVESTIGATION REPORT\nLab Name: CityCare Diagnostic Laboratory | Reg No: LAB/AP/998877\nPatient Name: Ramesh Kumar | UHID: HSP-556677\nSample Collection Date: 13-03-2024 08:30 AM | Report Date: 13-03-2024\nTest Results\nTest Name Result Normal Range Remarks\nHemoglobin 13.2 g/dL 13\u201317 Normal\nWBC Count 4,200 /cumm 4,000\u201311,000 Normal\nPlatelet Count 98,000 /cumm 150,000\u2013450,000 Low\nDengue NS1 Antigen Positive Negative Abnormal\nSGOT 68 U/L <40 High\nSGPT 72 U/L <40 High\nAuthorized By: Dr. Meera Joshi (MD Pathology)\n"
+        },
+        "validation_report": {
+            "Document 1": {
+                "missing_fields": [
+                    "itemized_bill",
+                    "prescriptions",
+                    "lab_report"
+                ],
+                "details": "Itemized bill, prescriptions, and laboratory report are not present in the discharge summary."
+            },
+            "Document 2": {
+                "missing_fields": [
+                    "health_policy_number",
+                    "claim_id_ref_no",
+                    "insurance_company",
+                    "tpa_name"
+                ],
+                "details": "The bill lacks the health policy number, claim reference number, insurance company, and TPA name."
+            },
+            "Document 3": {
+                "missing_fields": [
+                    "health_policy_number",
+                    "claim_id_ref_no",
+                    "insurance_company",
+                    "tpa_name",
+                    "hospital_name",
+                    "admission_date",
+                    "discharge_date",
+                    "itemized_bill",
+                    "lab_report",
+                    "diagnosis"
+                ],
+                "details": "Prescription does not include policy details, hospital admission/discharge dates, itemized charges, lab results, or a formal diagnosis statement."
+            },
+            "Document 4": {
+                "missing_fields": [
+                    "health_policy_number",
+                    "claim_id_ref_no",
+                    "insurance_company",
+                    "tpa_name",
+                    "hospital_name",
+                    "admission_date",
+                    "discharge_date",
+                    "itemized_bill",
+                    "prescriptions",
+                    "diagnosis"
+                ],
+                "details": "Lab report omits policy information, claim identifiers, insurance details, hospital admission/discharge dates, itemized billing, prescriptions, and a diagnosis summary."
+            },
+            "Overall Validation": {
+                "Patient Name Match": "No \u2013 the documents list the patient as \"Ramesh Kumar\" while the claim detail specifies \"v\".",
+                "Policy Match": "No \u2013 the documents contain Health Policy Number \"POL-12345678\" and Claim ID \"CLM-2024-001\", whereas the claim detail lists placeholders \"wr\" and \"v\".",
+                "Critical Discrepancies": "Mismatch in patient name, health policy number, claim reference number, insurance company, and TPA name across all documents."
+            }
+        },
+        "status": "Submitted"
+    }
+}

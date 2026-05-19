@@ -1,25 +1,23 @@
 from fastapi import APIRouter,FastAPI
-from .api.endpoints.table_endpoints import router as table_router
-from .api.endpoints.reservation_endpoints import router as  reservation_router
-from .api.endpoints.setting_endpoints import router as Setting_router
-from .api.endpoints.resturants_endpoints import router as resturant_router
-from .db.base import Base
-from .db.session import engine
+from api.endpoints.table_endpoints import router as table_router
+from api.endpoints.reservation_endpoints import router as  reservation_router
+from api.endpoints.setting_endpoints import router as Setting_router
+from api.endpoints.resturants_endpoints import router as resturant_router
+from db.base import Base
+from db.session import engine
 from fastapi.middleware.cors import CORSMiddleware
 
 Base.metadata.create_all(bind=engine)
 app=FastAPI()
-# router=APIRouter()
 
 origins = [
-    "http://localhost:5173",
+    "http://localhost:8000",
     "http://127.0.0.1:5173",
-    "https://tablereservations-pi.vercel.app"
 ]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],         
+    allow_origins=origins,         
     allow_credentials=True,
     allow_methods=["*"],            
     allow_headers=["*"],           

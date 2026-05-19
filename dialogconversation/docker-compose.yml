@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  conversationai:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - PYTHONPATH=/app/backend
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./backend/temp_audio:/app/backend/temp_audio
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Development service (optional)
+  conversationai-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3000:3000"  # Frontend
+      - "8000:8000"  # Backend
+    environment:
+      - PYTHONPATH=/app/backend
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./frontend:/app/frontend
+      - ./backend:/app/backend
+      - ./backend/temp_audio:/app/backend/temp_audio
+    profiles:
+      - dev 
